@@ -1,10 +1,7 @@
 package Model;
 
 import Model.Felter.EjendomFelt;
-import Model.Felter.TilFaengselFelt;
-import Model.Kort.BetalKort;
 import Model.Kort.BlivBetaltKort;
-import Model.Kort.FaengselKort;
 import Model.Kort.GratisFeltKort;
 
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ public class Spil {
     private final int RUNDE_PENGE = 2;
     private final int FAENGSEL_PRIS = 1;
 
-    private int[] muligeStartPenge = {20, 18, 16};
+    //private int[] muligeStartPenge = {20, 18, 16};
     private int startPenge;
 
     private Spiller[] spillere;
@@ -55,7 +52,7 @@ public class Spil {
 
     private void opretSpillere(String[] spillerNavne){
 
-        this.startPenge = muligeStartPenge[spillerNavne.length - 2];
+        this.startPenge = Config.START_PENGE;
 
         Spiller[] spillere = new Spiller[spillerNavne.length];
         for (int i = 0; i < spillerNavne.length; i++) {

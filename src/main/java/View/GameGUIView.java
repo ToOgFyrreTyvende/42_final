@@ -1,6 +1,7 @@
 package View;
 
 import Model.ChanceKort;
+import Model.Config;
 import Model.GameBoard;
 import Model.Spiller;
 import gui_fields.*;
@@ -28,7 +29,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public int getAntalSpillere() {
-        return ui.getUserInteger("Hvor mange spillere?", 2,4);
+        return ui.getUserInteger("Hvor mange spillere?", Config.MIN_SPILLERE,Config.MAX_SPILLERE);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public void setSpillere(Spiller ... spillereModel) {
-        Color[] farver = {Color.blue, Color.red, Color.yellow, Color.green};
+        Color[] farver = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
 
         for (int i = 0; i < spillereModel.length; i++){
 
