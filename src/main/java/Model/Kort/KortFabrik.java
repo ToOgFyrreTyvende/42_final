@@ -1,21 +1,10 @@
-package Model;
-import Model.Kort.*;
+package Model.Kort;
 
 import java.awt.*;
-import java.util.Random;
 
-abstract public class ChanceKort {
-
-    private String tekst;
-    private String navn;
-
-    public ChanceKort(String tekst, String navn) {
-        this.tekst = tekst;
-        this.navn = navn;
-    }
-
-    public static ChanceKort[] opretKort(){
-        ChanceKort[] temp = {
+public class KortFabrik {
+    public static ChanceKort[] lavKort(){
+        return new ChanceKort[]{
                 new RykKort("Ryk til start", "Start", 0),
                 new BetalKort("Du har spist for meget slik. BETAL 2M til baken", "Slik", 2),
                 new FaengselKort("Du løslades uden omkostninger. \n" +
@@ -54,10 +43,5 @@ abstract public class ChanceKort {
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
                         "GUL", Color.cyan)
         };
-        return temp;
-    }
-
-    public void kortHandling(Spiller spiller){
-        spiller.setChaneKort(this);
     }
 }

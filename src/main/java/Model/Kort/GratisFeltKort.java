@@ -1,6 +1,5 @@
 package Model.Kort;
 
-import Model.ChanceKort;
 import Model.Spiller;
 
 import java.awt.*;

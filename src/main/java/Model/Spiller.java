@@ -1,6 +1,6 @@
 package Model;
 
-import gui_fields.GUI_Player;
+import Model.Kort.ChanceKort;
 
 /**
  * ------------------------------------------------------------/

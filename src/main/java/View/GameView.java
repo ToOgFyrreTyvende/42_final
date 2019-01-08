@@ -1,8 +1,6 @@
 package View;
 
-import Model.ChanceKort;
 import Model.GameBoard;
-import Model.Spil;
 import Model.Spiller;
 
 public abstract class GameView {

@@ -2,6 +2,7 @@ package Model;
 
 import Model.Felter.EjendomFelt;
 import Model.Kort.BlivBetaltKort;
+import Model.Kort.ChanceKort;
 import Model.Kort.GratisFeltKort;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class Spil {
 
     private void opretSpillere(String[] spillerNavne){
 
-        this.startPenge = Config.START_PENGE;
+        this.startPenge = Global.START_PENGE;
 
         Spiller[] spillere = new Spiller[spillerNavne.length];
         for (int i = 0; i < spillerNavne.length; i++) {

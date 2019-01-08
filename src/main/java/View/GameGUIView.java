@@ -1,7 +1,6 @@
 package View;
 
-import Model.ChanceKort;
-import Model.Config;
+import Model.Global;
 import Model.GameBoard;
 import Model.Spiller;
 import gui_fields.*;
@@ -9,7 +8,6 @@ import gui_main.GUI;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Random;
 
 // Vi ved godt, at mange elementer i denne klasse er gentagende fra vores model
 // Men vi har været nødt til at "tvinge" noget data ind i UIets format igennem denne klasse.
@@ -29,7 +27,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public int getAntalSpillere() {
-        return ui.getUserInteger("Hvor mange spillere?", Config.MIN_SPILLERE,Config.MAX_SPILLERE);
+        return ui.getUserInteger("Hvor mange spillere?", Global.MIN_SPILLERE, Global.MAX_SPILLERE);
     }
 
     @Override
