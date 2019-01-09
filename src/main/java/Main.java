@@ -1,7 +1,6 @@
-import Controller.SpilController;
+import Controller.GameController;
 import Model.*;
 import View.GameGUIView;
-import View.GameView;
 
 /**
  * ------------------------------------------------------------/ 
@@ -13,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         GameBoard braet = new GameBoard();
         GameGUIView view = new GameGUIView();
-        SpilController spil = new SpilController(braet, view);
+        GameController spil = new GameController(braet, view);
 
     }
 

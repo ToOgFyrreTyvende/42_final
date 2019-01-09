@@ -2,7 +2,7 @@ package View;
 
 import Model.Global;
 import Model.GameBoard;
-import Model.Spiller;
+import Model.Player;
 import gui_fields.*;
 import gui_main.GUI;
 
@@ -16,50 +16,50 @@ public class GameGUIView extends GameView {
     private GUI ui;
     private GUI_Field[] felter;
 
-    private HashMap<Spiller, GUI_Player> spillere = new HashMap<>();
+    private HashMap<Player, GUI_Player> spillere = new HashMap<>();
 
     @Override
-    public void setSpilBraet(GameBoard spilBraet) {
-        super.setSpilBraet(spilBraet);
-        this.felter = getSpilBraet().getFelterGUI();
+    public void setGameBoard(GameBoard gameBoard) {
+        super.setGameBoard(gameBoard);
+        this.felter = getGameBoard().getFelterGUI();
         this.ui = new GUI(felter);
     }
 
     @Override
-    public int getAntalSpillere() {
+    public int getPlayerCount() {
         return ui.getUserInteger("Hvor mange spillere?", Global.MIN_SPILLERE, Global.MAX_SPILLERE);
     }
 
     @Override
-    public String getSpillerNavn(String tekst) {
-        return ui.getUserString(tekst);
+    public String getPlayerName(String text) {
+        return ui.getUserString(text);
     }
 
 
     @Override
-    public String getRundeValg(String... valg) {
-        return ui.getUserButtonPressed("Foretag venligst en handling.", valg);
+    public String getRundeValg(String... choice) {
+        return ui.getUserButtonPressed("Foretag venligst en handling.", choice);
     }
 
     @Override
-    public String getRundeValgMedTekst(String tekst, String... valg) {
-        return ui.getUserButtonPressed(tekst, valg);
+    public String getRundeValgMedTekst(String tekst, String... choice) {
+        return ui.getUserButtonPressed(tekst, choice);
     }
 
     @Override
-    public void setSpillere(Spiller ... spillereModel) {
+    public void setPlayers(Player... players) {
         Color[] farver = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
 
-        for (int i = 0; i < spillereModel.length; i++){
+        for (int i = 0; i < players.length; i++){
 
             GUI_Car tempcar = new GUI_Car();
             tempcar.setPrimaryColor(farver[i]);
 
-            GUI_Player tempSpillerGUI = new GUI_Player(spillereModel[i].getNavn(),
-                                        spillereModel[i].getPenge(), tempcar);
+            GUI_Player tempSpillerGUI = new GUI_Player(players[i].getName(),
+                                        players[i].getMoney(), tempcar);
             
-            this.spillere.put(spillereModel[i], tempSpillerGUI);
-            ui.addPlayer(this.spillere.get(spillereModel[i]));
+            this.spillere.put(players[i], tempSpillerGUI);
+            ui.addPlayer(this.spillere.get(players[i]));
         }
     }
 
@@ -69,56 +69,55 @@ public class GameGUIView extends GameView {
     }
 
     @Override
-    public void setSpillerFelt(Spiller spillerModel, int felt) {
-        int feltIndex = (felt % 24) -1;
+    public void setPlayerField(Player player, int field) {
+        int feltIndex = (field % 24) -1;
 
-        GUI_Player spillerGUI = this.spillere.get(spillerModel);
+        GUI_Player spillerGUI = this.spillere.get(player);
 
         this.felter[feltIndex].setCar(spillerGUI, true);
     }
 
     @Override
-    public void setSpillerFelt(Spiller spillerModel, int felt, int forrigeFelt) {
-        int feltIndex = felt;
+    public void setPlayerField(Player player, int felt, int previousField) {
 
-        GUI_Player spillerGUI = this.spillere.get(spillerModel);
-        GUI_Field field = this.felter[forrigeFelt];
+        GUI_Player spillerGUI = this.spillere.get(player);
+        GUI_Field field = this.felter[previousField];
 
         if(field.hasCar(spillerGUI)){
             field.setCar(spillerGUI, false);
         }
 
 
-        this.felter[feltIndex].setCar(spillerGUI, true);
+        this.felter[felt].setCar(spillerGUI, true);
     }
 
     @Override
-    public void setSpillerPenge(Spiller spiller, int penge) {
-        this.spillere.get(spiller).setBalance(penge);
+    public void setPlayerMoney(Player player, int money) {
+        this.spillere.get(player).setBalance(money);
     }
 
     @Override
-    public void opdaterSpillerData(Spiller spiller, int forrigeFelt) {
-        setSpillerFelt(spiller, spiller.getFelt(), forrigeFelt);
+    public void renderPlayerData(Player player, int previousField) {
+        setPlayerField(player, player.getField(), previousField);
 
         this.spillere.forEach((spillerModel, spillerBrik) ->
-                                spillerBrik.setBalance(spillerModel.getPenge()));
+                                spillerBrik.setBalance(spillerModel.getMoney()));
 
     }
 
     @Override
-    public void slutTekst(String tekst) {
-        this.ui.getUserButtonPressed(tekst, "Afslut");
+    public void endText(String text) {
+        this.ui.getUserButtonPressed(text, "Afslut");
     }
 
     @Override
-    public void setTerning(int slag) {
-        this.ui.setDice(1,2,1,slag,2,1);
+    public void setDice(int result) {
+        this.ui.setDice(1,2,1, result,2,1);
     }
 
 
     @Override
-    public void setCenterTekst(String tekst) {
-        ui.displayChanceCard(tekst);
+    public void setCenterText(String text) {
+        ui.displayChanceCard(text);
     }
 }

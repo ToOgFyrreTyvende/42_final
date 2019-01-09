@@ -1,34 +1,34 @@
 package View;
 
 import Model.GameBoard;
-import Model.Spiller;
+import Model.Player;
 
 public abstract class GameView {
 
-    protected GameBoard spilBraet;
+    private GameBoard gameBoard;
 
-    public abstract void setSpillere(Spiller[] spillere);
-    public abstract int getAntalSpillere();
-    public abstract String getSpillerNavn(String tekst);
-    public abstract String getRundeValg(String ... valg);
-    public abstract String getRundeValgMedTekst(String tekst, String ... valg);
+    public abstract void setPlayers(Player[] players);
+    public abstract int getPlayerCount();
+    public abstract String getPlayerName(String text);
+    public abstract String getRundeValg(String ... choice);
+    public abstract String getRundeValgMedTekst(String tekst, String ... choice);
     public abstract void resetBoard();
-    public abstract void setSpillerFelt(Spiller spiller, int felt);
-    public abstract void setSpillerFelt(Spiller spiller, int felt, int forrigeFelt);
+    public abstract void setPlayerField(Player player, int field);
+    public abstract void setPlayerField(Player player, int field, int previousField);
 
-    public abstract void setSpillerPenge(Spiller spiller, int penge);
-    public abstract void opdaterSpillerData(Spiller spiller, int forrigeFelt);
-    public abstract void slutTekst(String tekst);
+    public abstract void setPlayerMoney(Player player, int money);
+    public abstract void renderPlayerData(Player player, int previousField);
+    public abstract void endText(String text);
 
-    public abstract void setTerning(int slag);
+    public abstract void setDice(int result);
 
-    public abstract void setCenterTekst(String tekst);
+    public abstract void setCenterText(String text);
 
-    public GameBoard getSpilBraet() {
-        return spilBraet;
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
-    public void setSpilBraet(GameBoard spilBraet) {
-        this.spilBraet = spilBraet;
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 }
