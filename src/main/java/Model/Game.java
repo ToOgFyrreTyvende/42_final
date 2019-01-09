@@ -1,9 +1,10 @@
 package Model;
 
-import Model.Felter.PropertyField;
-import Model.Kort.GetPaidCard;
-import Model.Kort.ChanceCard;
-import Model.Kort.FreePropertyCard;
+import Model.Fields.Field;
+import Model.Fields.PropertyField;
+import Model.ChanceCards.GetPaidCard;
+import Model.ChanceCards.ChanceCard;
+import Model.ChanceCards.FreePropertyCard;
 
 import java.util.ArrayList;
 import java.util.List;
