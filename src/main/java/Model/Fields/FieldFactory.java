@@ -70,7 +70,7 @@ public class FieldFactory {
 
                 new PropertyField("Nygade", "Pris: kr. 6400", "Nygade", 6400, Color.yellow),
 
-                new CompanyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221), false),
+                new CompanyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221), true),
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
