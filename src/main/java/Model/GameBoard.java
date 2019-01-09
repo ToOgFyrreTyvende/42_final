@@ -14,8 +14,8 @@ public class GameBoard {
     private ChanceCard[] chanceCard;
 
     public GameBoard() {
-        this.fieldsModel = new Field[24];
-        this.fieldsGUI = new gui_fields.GUI_Field[24];
+        this.fieldsModel = new Field[Global.FIELD_COUNT];
+        this.fieldsGUI = new gui_fields.GUI_Field[Global.FIELD_COUNT];
 
         this.chanceCard = lavKort();
         this.fieldsModel = lavFelter();
@@ -58,7 +58,7 @@ public class GameBoard {
     }
 
     int getFaengsel(){
-        return 6;
+        return Global.JAIL_INDEX;
     }
 
     private ChanceCard[] getChanceCard() {
@@ -90,6 +90,31 @@ public class GameBoard {
         }
 
         return -1;
+    }
+
+    public Field[] getPlayerProperties(Player player){
+
+        Field[] tempProperties = new Field[Global.COLORED_PROPERTIES];
+
+        int counter = 0;
+
+        // Tjekker om et felt er et "property-felt" og om det ejes af den aktuelle spiller og indsætter i "tempProp..".
+        // Counteren tæller en op hver gang et ejet felt er registreret.
+        for (int i = 0; i < fieldsModel.length; i++) {
+            if(fieldsModel[i] instanceof PropertyField && ((PropertyField) fieldsModel[i]).getOwner() == player){
+                tempProperties[counter] = fieldsModel[i];
+                counter++;
+            }
+        }
+
+        // tempProperties vil i næsten alle tilfælde være for lang da længden er antal property-felter.
+        // Her oprettes en ny array med den rigtige længde i forhold til hvor mange felter spilleren egentlig ejer.
+        Field[] ownedProperties = new Field[counter-1];
+        for (int i = 0; i < counter-1; i++) {
+            ownedProperties[i] = tempProperties[i];
+        }
+
+        return ownedProperties;
     }
 
 }
