@@ -1,4 +1,4 @@
-package Model.Kort;
+package Model.ChanceCards;
 
 import Model.Player;
 

@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Felter.PropertyField;
+import Model.Fields.PropertyField;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

@@ -1,15 +1,14 @@
-package Model.Felter;
+package Model.Fields;
 
-import Model.Field;
 import Model.Player;
-import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
+import gui_fields.GUI_Start;
 
 import java.awt.*;
 
-public class ChanceField extends Field {
+public class StartField extends Field {
 
-    ChanceField(String name, String subText, String description) {
+    StartField(String name, String subText, String description) {
         super(name, subText, description);
     }
 
@@ -31,12 +30,10 @@ public class ChanceField extends Field {
 
     @Override
     public GUI_Field makeGUIFields() {
-        return new GUI_Chance("?", this.getSubText(), this.getDescription(), Color.white, Color.black);
+        return new GUI_Start(this.getName(), this.getSubText(), this.getDescription(), Color.red, Color.BLACK);
     }
 
     @Override
     public void fieldAction(Player player) {
-        player.setLastAction(player.getLastAction() + "\n - Er landet på et chancekort.");
-        player.setChanceField(true);
     }
 }

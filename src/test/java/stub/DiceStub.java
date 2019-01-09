@@ -13,7 +13,7 @@ public class DiceStub extends Dice {
     }
 
     @Override
-    public int getResult() {
+    public int setAndGetResult() {
         return testRes;
     }
 }

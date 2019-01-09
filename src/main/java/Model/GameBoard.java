@@ -1,7 +1,7 @@
 package Model;
-import Model.Felter.*;
-import Model.Kort.ChanceCard;
-import Model.Kort.CardFactory;
+import Model.Fields.*;
+import Model.ChanceCards.ChanceCard;
+import Model.ChanceCards.CardFactory;
 import gui_fields.*;
 
 import java.awt.*;

@@ -1,6 +1,4 @@
-package Model.Felter;
-
-import Model.Field;
+package Model.Fields;
 
 import java.awt.*;
 
