@@ -5,20 +5,24 @@ import Model.GameBoard;
 import Model.Player;
 import View.GameView;
 
+import java.util.Arrays;
+
 public class GameController {
+    public final String[] DefaultActions = new String[]{"Rul terning"};
+
     private Game game;
     private GameView view;
     private GameBoard gameBoard;
+
     
     // #----------Constructor----------#
-    public GameController(GameBoard braet, GameView view){
-        this.gameBoard = braet;
+    public GameController(GameBoard board, GameView view){
+        this.gameBoard = board;
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
 
         initalizeGame();
         playerTurn(game.getActivePlayer());
-
     }
 
     private void initalizeGame(){

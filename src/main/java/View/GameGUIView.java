@@ -21,7 +21,7 @@ public class GameGUIView extends GameView {
     @Override
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
-        this.fields = getGameBoard().getFelterGUI();
+        this.fields = getGameBoard().getFieldsGUI();
         this.ui = new GUI(fields);
     }
 
