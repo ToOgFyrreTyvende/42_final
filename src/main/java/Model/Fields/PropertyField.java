@@ -42,12 +42,6 @@ public class PropertyField extends Field {
         return super.getDescription();
     }
 
-    @Override
-    public GUI_Field makeGUIFields() {
-        return new GUI_Street(this.getName(), this.getSubText(),
-                this.getDescription(), this.getPrice() + "M", this.getColor(), Color.black);
-
-    }
 
     @Override
     public void fieldAction(Player player) {
@@ -104,11 +98,11 @@ public class PropertyField extends Field {
     }
 
 
-    private int getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    private int getRent() {
+    public int getRent() {
         return rent;
     }
 
@@ -116,7 +110,7 @@ public class PropertyField extends Field {
         return owner;
     }
 
-    private boolean isOwned(){
+    public boolean isOwned(){
         Player owner = this.getOwner();
         return owner != null;
     }

@@ -150,7 +150,7 @@ public class Game {
             int feltIndex = this.getGameBoard().closestColor(
                     activePlayer.getField(),
                     ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFieldsModel()[feltIndex];
+            Field tempField = this.getGameBoard().getFields()[feltIndex];
 
             if (tempField instanceof PropertyField){
                 ((PropertyField) tempField).fieldAction(activePlayer, 0);

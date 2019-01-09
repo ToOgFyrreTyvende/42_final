@@ -31,4 +31,6 @@ public abstract class GameView {
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
+
+    public abstract void createViewBoard();
 }

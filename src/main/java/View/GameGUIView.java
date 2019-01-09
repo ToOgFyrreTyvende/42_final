@@ -1,10 +1,12 @@
 package View;
 
+import gui_fields.*;
+import gui_main.GUI;
+import gui_resources.Attrs;
+import Model.Fields.*;
 import Model.Global;
 import Model.GameBoard;
 import Model.Player;
-import gui_fields.*;
-import gui_main.GUI;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -21,9 +23,14 @@ public class GameGUIView extends GameView {
     @Override
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
-        this.fields = getGameBoard().getFieldsGUI();
+        createViewBoard();
         this.ui = new GUI(fields);
     }
+
+    public void setFields(GUI_Field[] fields){
+        this.fields = fields;
+    }
+
 
     @Override
     public int getPlayerCount() {
@@ -119,5 +126,61 @@ public class GameGUIView extends GameView {
     @Override
     public void setCenterText(String text) {
         ui.displayChanceCard(text);
+    }
+
+
+
+    @Override
+    public void createViewBoard() {
+        GUI_Field[] fields = new GUI_Field[Global.FIELD_COUNT];
+        Model.Fields.Field[] fieldModel = this.getGameBoard().getFields();
+
+        for (int i = 0; i < Global.FIELD_COUNT; i++) {
+            fields[i] = translateModel(fieldModel[i]);
+        }
+
+        this.setFields(fields);
+    }
+
+
+
+    public GUI_Field translateModel(Model.Fields.Field modelField){
+        if (modelField instanceof PropertyField){
+            return new GUI_Street(modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), ((PropertyField)modelField).getPrice() + "M",
+                    ((PropertyField)modelField).getColor(), Color.black);
+        }else if(modelField instanceof StartField){
+            return new GUI_Start(modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.red, Color.BLACK);
+        }else if(modelField instanceof ChanceField){
+            return new GUI_Chance("?", modelField.getSubText(), modelField.getDescription(),
+                    Color.white, Color.black);
+        }else if(modelField instanceof JailField){
+            return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.white, Color.BLACK);
+        }else if(modelField instanceof ToJailField){
+            return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.white, Color.BLACK);
+        }else if(modelField instanceof FreeParkingField){
+            return new GUI_Refuge("default", modelField.getName(),
+                    modelField.getSubText(), modelField.getDescription(), Color.white, Color.black);
+        }else if(modelField instanceof CompanyField){
+            if(((CompanyField)modelField).isShipping()){
+
+                GUI_Shipping field = new GUI_Shipping(Attrs.getString("GUI_Field.Default_Picture",
+                        new Object[0]), modelField.getName(), modelField.getSubText(),
+                        modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
+                return field;
+            }else{
+                GUI_Brewery field = new GUI_Brewery(Attrs.getString("GUI_Field.Default_Picture", new Object[0]),
+                        modelField.getName(), modelField.getSubText(),
+                        modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
+                return field;
+            }
+        }
+
+
+        return null;
+
     }
 }

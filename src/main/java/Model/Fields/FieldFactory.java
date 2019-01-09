@@ -16,7 +16,7 @@ public class FieldFactory {
 
                 new FreeParkingField("Betal indkomstskat", "10% eller kr. 4000", "Betal plz"), // PLZ CHANGE THIS FIELD
 
-                new PropertyField("SFL", "Pris: kr. 4000", "SFL Færgen", 4000, new Color(57,101,221)),
+                new CompanyField("SFL", "Pris: kr. 4000", "SFL Færgen", 4000, new Color(57,101,221), true),
 
                 new PropertyField("Roskildevej", "Pris: kr. 2000", "Roskildevej", 2000, Color.pink),
 
@@ -29,12 +29,12 @@ public class FieldFactory {
 
                 new PropertyField("Frederiksberg Allé", "Pris: kr. 2800", "Frederiksberg Allé", 2800, new Color(111,209,111)),
 
-                new PropertyField("Tuborg", "Pris: kr. 3000", "Tuborg bryggeriet", 3000, new Color(68,135,32)),
+                new CompanyField("Tuborg", "Pris: kr. 3000", "Tuborg bryggeriet", 3000, new Color(68,135,32), false),
 
                 new PropertyField("Bülowsvej", "Pris: kr. 2800", "Bülowsvej", 2800, new Color(111,209,111)),
                 new PropertyField("Gl. Kongevej", "Pris: kr. 3200", "Gl. Kongevej", 3200, new Color(111,209,111)),
 
-                new PropertyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221)),
+                new CompanyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221), true),
 
                 new PropertyField("Bernstorffsvej", "Pris: kr. 3600", "Bernstorffsvej", 3600, Color.lightGray),
 
@@ -52,12 +52,12 @@ public class FieldFactory {
                 new PropertyField("Østerbrogade", "Pris: kr. 4400", "Østerbrogade", 4400, new Color(165,16,0)),
                 new PropertyField("Grønningen", "Pris: kr. 4800", "Grønningen", 4800, new Color(165,16,0)),
 
-                new PropertyField("DFDS Seaways", "Pris: kr. 4000", "DFDS Seaways Færgen", 4000, new Color(57,101,221)),
+                new CompanyField("DFDS Seaways", "Pris: kr. 4000", "DFDS Seaways Færgen", 4000, new Color(57,101,221), true),
 
                 new PropertyField("Bredgade", "Pris: kr. 5200", "Bredgade", 5200, Color.white),
                 new PropertyField("Kgs. Nytorv", "Pris: kr. 5200", "Kgs. Nytorv", 5200, Color.white),
 
-                new PropertyField("Coca Cola", "Pris: kr. 3000", "Coca Cola Bryggeriet", 3000, new Color(220,43,25)),
+                new CompanyField("Coca Cola", "Pris: kr. 3000", "Coca Cola Bryggeriet", 3000, new Color(220,43,25), false),
 
                 new PropertyField("Østergade", "Pris: kr. 5500", "Østergade", 5500, Color.white),
 
@@ -70,7 +70,7 @@ public class FieldFactory {
 
                 new PropertyField("Nygade", "Pris: kr. 6400", "Nygade", 6400, Color.yellow),
 
-                new PropertyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221)),
+                new CompanyField("DSB", "Pris: kr. 4000", "DSB Færgen", 4000, new Color(57,101,221), false),
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 

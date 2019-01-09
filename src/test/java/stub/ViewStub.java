@@ -83,4 +83,8 @@ public class ViewStub extends GameView {
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
     }
+
+    @Override
+    public void createViewBoard() {
+    }
 }
