@@ -70,7 +70,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public void setPlayerField(Player player, int field) {
-        int fieldIndex = (field % 24) -1;
+        int fieldIndex = (field % Global.FIELD_COUNT) -1;
 
         GUI_Player playerGUI = this.players.get(player);
 

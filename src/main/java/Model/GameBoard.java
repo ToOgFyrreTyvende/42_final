@@ -41,7 +41,7 @@ public class GameBoard {
 
     Field getFeltModel(int index){
         //System.out.println(index);
-        return fieldsModel[index % 24];
+        return fieldsModel[index % Global.FIELD_COUNT];
     }
 
     public gui_fields.GUI_Field[] getFieldsGUI() {
@@ -49,7 +49,7 @@ public class GameBoard {
     }
 
     public boolean erEjet(int index){
-        Field field = this.getFieldsModel()[index % 24];
+        Field field = this.getFieldsModel()[index % Global.FIELD_COUNT];
         if (field instanceof PropertyField){
             Player ejer = ((PropertyField) field).getOwner();
             return ejer != null;
@@ -82,10 +82,10 @@ public class GameBoard {
 
         for (int i = 0; i < felter.length; i++) {
             int korrektIndex = i + index;
-            Field tempField = felter[korrektIndex % 24];
+            Field tempField = felter[korrektIndex % Global.FIELD_COUNT];
             if (tempField instanceof PropertyField &&
                 ((PropertyField) tempField).getColor() == farve){
-                return korrektIndex % 24;
+                return korrektIndex % Global.FIELD_COUNT;
             }
         }
 
@@ -116,8 +116,6 @@ public class GameBoard {
             for (int i = 0; i < counter; i++) {
                 ownedProperties[i] = tempProperties[i];
             }
-
-
             return ownedProperties;
 
         }

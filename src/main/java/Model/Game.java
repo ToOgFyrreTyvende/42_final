@@ -75,7 +75,7 @@ public class Game {
             int[] tempTurn = {diceThrow, nowIndex};
 
             Player _activePlayer = activePlayer;
-            int fieldId = (activePlayer.getField() + diceThrow) % 24;
+            int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
 
             fieldId = gameRules(fieldId);
 
