@@ -1,16 +1,16 @@
 package Model;
 
-import Model.Runde;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class rundeTest {
-    Runde runde = new Runde();
+class roundTest {
+    private Round round = new Round();
+
     @Test
-    void rundeTest(){
+    void round_Test(){
         int[] p1tur = new int[]{1,1,2,1};
         int[] p2tur = new int[]{1,2,3,2};
 
@@ -18,10 +18,10 @@ public class rundeTest {
             kontrolRunde.add(p1tur);
             kontrolRunde.add(p2tur);
 
-        runde.tilfoejTur(p1tur);
-        runde.tilfoejTur(p2tur);
+        round.addTurn(p1tur);
+        round.addTurn(p2tur);
 
-        assertEquals(kontrolRunde, runde.getTure());
+        assertEquals(kontrolRunde, round.getTurns());
 
     }
 }

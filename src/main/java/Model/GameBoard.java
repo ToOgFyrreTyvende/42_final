@@ -1,45 +1,45 @@
 package Model;
 import Model.Felter.*;
-import Model.Kort.ChanceKort;
-import Model.Kort.KortFabrik;
+import Model.Kort.ChanceCard;
+import Model.Kort.CardFactory;
 import gui_fields.*;
 
 import java.awt.*;
 
 public class GameBoard {
 
-    private Felt[] felterModel;
+    private Field[] felterModel;
     private GUI_Field[] felterGUI;
 
-    private ChanceKort[] chanceKort;
+    private ChanceCard[] chanceCard;
 
     public GameBoard() {
-        this.felterModel = new Felt[24];
+        this.felterModel = new Field[24];
         this.felterGUI = new GUI_Field[24];
 
-        this.chanceKort = lavKort();
+        this.chanceCard = lavKort();
         this.felterModel = lavFelter();
 
         for (int i = 0; i < felterGUI.length; i++) {
-            GUI_Field temp = felterModel[i].lavGUIFelt();
+            GUI_Field temp = felterModel[i].makeGUIFields();
             felterGUI[i] = temp;
         }
     }
 
-    private Felt[] lavFelter() {
-        return FeltFabrik.lavFelter();
+    private Field[] lavFelter() {
+        return FieldFactory.makeFields();
     }
 
-    public ChanceKort[] lavKort(){
-        return KortFabrik.lavKort();
+    private ChanceCard[] lavKort(){
+        return CardFactory.makeCards();
     }
 
 
-    public Felt[] getFelterModel(){
+    Field[] getFelterModel(){
         return felterModel;
     }
 
-    public Felt getFeltModel(int index){
+    Field getFeltModel(int index){
         //System.out.println(index);
         return felterModel[index % 24];
     }
@@ -49,42 +49,42 @@ public class GameBoard {
     }
 
     public boolean erEjet(int index){
-        Felt felt = this.getFelterModel()[index % 24];
-        if (felt instanceof EjendomFelt){
-            Spiller ejer = ((EjendomFelt) felt).getEjer();
+        Field field = this.getFelterModel()[index % 24];
+        if (field instanceof PropertyField){
+            Player ejer = ((PropertyField) field).getOwner();
             return ejer != null;
         }
         return false;
     }
 
-    public int getFaengsel(){
+    int getFaengsel(){
         return 6;
     }
 
-    public ChanceKort[] getChanceKort() {
-        return chanceKort;
+    private ChanceCard[] getChanceCard() {
+        return chanceCard;
     }
 
-    public void setChanceKort(ChanceKort[] chanceKort) {
-        this.chanceKort = chanceKort;
+    public void setChanceCard(ChanceCard[] chanceCard) {
+        this.chanceCard = chanceCard;
     }
 
-    ChanceKort tilfaeldigKort(){
+    ChanceCard tilfaeldigKort(){
         float _random1 = (float) Math.random();
-        int _random2 = (int) (_random1 * (this.getChanceKort().length - 1));
+        int _random2 = (int) (_random1 * (this.getChanceCard().length - 1));
         int nr = _random2 + 1;
 
-        return this.getChanceKort()[nr];
+        return this.getChanceCard()[nr];
     }
 
-    public int taettestFarve(int index, Color farve){
-        Felt[] felter = this.getFelterModel();
+    int taettestFarve(int index, Color farve){
+        Field[] felter = this.getFelterModel();
 
         for (int i = 0; i < felter.length; i++) {
             int korrektIndex = i + index;
-            Felt tempFelt = felter[korrektIndex % 24];
-            if (tempFelt instanceof EjendomFelt &&
-                ((EjendomFelt) tempFelt).getFarve() == farve){
+            Field tempField = felter[korrektIndex % 24];
+            if (tempField instanceof PropertyField &&
+                ((PropertyField) tempField).getColor() == farve){
                 return korrektIndex % 24;
             }
         }

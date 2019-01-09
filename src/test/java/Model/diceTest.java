@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TerningTest {
-    Terning testTerning1;
+class diceTest {
+    private Terning testTerning1;
 
     @BeforeEach
     void setUp() {
