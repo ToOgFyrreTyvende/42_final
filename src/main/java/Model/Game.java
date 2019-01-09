@@ -131,7 +131,7 @@ public class Game {
     private void chanceFieldAction(Player activePlayer) {
         activePlayer.setChanceField(false);
 
-        ChanceCard card = this.getGameBoard().tilfaeldigKort();
+        ChanceCard card = this.getGameBoard().randomChanceCard();
         activePlayer.setChanceCard(card);
 
         activePlayer.getChanceCard().cardAction(activePlayer);
@@ -147,7 +147,7 @@ public class Game {
                 activePlayer.addMoney(((GetPaidCard) card).getMoney());
             }
         }else if(card instanceof FreePropertyCard){
-            int feltIndex = this.getGameBoard().taettestFarve(
+            int feltIndex = this.getGameBoard().closestColor(
                     activePlayer.getField(),
                     ((FreePropertyCard) card).getColor());
             Field tempField = this.getGameBoard().getFieldsModel()[feltIndex];
@@ -178,7 +178,7 @@ public class Game {
 
     private void UpdateActivePlayerWithThrow(int feltId, int slag) {
         if (activePlayer.isInJail()){
-            activePlayer.setFelt(this.getGameBoard().getFaengsel());
+            activePlayer.setFelt(this.getGameBoard().getJail());
             activePlayer.setLastDiceResult(slag);
         }else{
             activePlayer.setFelt(feltId);

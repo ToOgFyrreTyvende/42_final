@@ -48,7 +48,7 @@ class GameTest {
         // Sætter aktiv player i fængsel
         testGame.getActivePlayer().setInJail(true);
         // Sætter aktiv player på fængsel feltet
-        testGame.getActivePlayer().setFelt(testBoard.getFaengsel());
+        testGame.getActivePlayer().setFelt(testBoard.getJail());
         // Sætter aktiv player's pengeværdi til 2000
         // - (For at undgå spilleren går falit og afslutter spillet)
         testGame.getActivePlayer().setMoney(2000);

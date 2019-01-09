@@ -17,8 +17,8 @@ public class GameBoard {
         this.fieldsModel = new Field[Global.FIELD_COUNT];
         this.fieldsGUI = new gui_fields.GUI_Field[Global.FIELD_COUNT];
 
-        this.chanceCard = lavKort();
-        this.fieldsModel = lavFelter();
+        this.chanceCard = makeCards();
+        this.fieldsModel = makeFields();
 
         for (int i = 0; i < fieldsGUI.length; i++) {
             gui_fields.GUI_Field temp = fieldsModel[i].makeGUIFields();
@@ -26,11 +26,11 @@ public class GameBoard {
         }
     }
 
-    private Field[] lavFelter() {
+    private Field[] makeFields() {
         return FieldFactory.makeFields();
     }
 
-    private ChanceCard[] lavKort(){
+    private ChanceCard[] makeCards(){
         return CardFactory.makeCards();
     }
 
@@ -48,7 +48,7 @@ public class GameBoard {
         return fieldsGUI;
     }
 
-    public boolean erEjet(int index){
+    public boolean isOwned(int index){
         Field field = this.getFieldsModel()[index % Global.FIELD_COUNT];
         if (field instanceof PropertyField){
             Player ejer = ((PropertyField) field).getOwner();
@@ -57,7 +57,7 @@ public class GameBoard {
         return false;
     }
 
-    int getFaengsel(){
+    int getJail(){
         return Global.JAIL_INDEX;
     }
 
@@ -69,7 +69,7 @@ public class GameBoard {
         this.chanceCard = chanceCard;
     }
 
-    ChanceCard tilfaeldigKort(){
+    ChanceCard randomChanceCard(){
         float _random1 = (float) Math.random();
         int _random2 = (int) (_random1 * (this.getChanceCard().length - 1));
         int nr = _random2 + 1;
@@ -77,15 +77,15 @@ public class GameBoard {
         return this.getChanceCard()[nr];
     }
 
-    int taettestFarve(int index, Color farve){
-        Field[] felter = this.getFieldsModel();
+    int closestColor(int index, Color color){
+        Field[] fields = this.getFieldsModel();
 
-        for (int i = 0; i < felter.length; i++) {
-            int korrektIndex = i + index;
-            Field tempField = felter[korrektIndex % Global.FIELD_COUNT];
+        for (int i = 0; i < fields.length; i++) {
+            int correctIndex = i + index;
+            Field tempField = fields[correctIndex % Global.FIELD_COUNT];
             if (tempField instanceof PropertyField &&
-                ((PropertyField) tempField).getColor() == farve){
-                return korrektIndex % Global.FIELD_COUNT;
+                ((PropertyField) tempField).getColor() == color){
+                return correctIndex % Global.FIELD_COUNT;
             }
         }
 
