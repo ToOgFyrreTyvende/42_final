@@ -2,27 +2,27 @@ package Model;
 import Model.Fields.*;
 import Model.ChanceCards.ChanceCard;
 import Model.ChanceCards.CardFactory;
-import gui_fields.*;
+
 
 import java.awt.*;
 
 public class GameBoard {
 
-    private Field[] felterModel;
-    private GUI_Field[] felterGUI;
+    private Field[] fieldsModel;
+    private gui_fields.GUI_Field[] fieldsGUI;
 
     private ChanceCard[] chanceCard;
 
     public GameBoard() {
-        this.felterModel = new Field[24];
-        this.felterGUI = new GUI_Field[24];
+        this.fieldsModel = new Field[24];
+        this.fieldsGUI = new gui_fields.GUI_Field[24];
 
         this.chanceCard = lavKort();
-        this.felterModel = lavFelter();
+        this.fieldsModel = lavFelter();
 
-        for (int i = 0; i < felterGUI.length; i++) {
-            GUI_Field temp = felterModel[i].makeGUIFields();
-            felterGUI[i] = temp;
+        for (int i = 0; i < fieldsGUI.length; i++) {
+            gui_fields.GUI_Field temp = fieldsModel[i].makeGUIFields();
+            fieldsGUI[i] = temp;
         }
     }
 
@@ -35,21 +35,21 @@ public class GameBoard {
     }
 
 
-    Field[] getFelterModel(){
-        return felterModel;
+    Field[] getFieldsModel(){
+        return fieldsModel;
     }
 
     Field getFeltModel(int index){
         //System.out.println(index);
-        return felterModel[index % 24];
+        return fieldsModel[index % 24];
     }
 
-    public GUI_Field[] getFelterGUI() {
-        return felterGUI;
+    public gui_fields.GUI_Field[] getFieldsGUI() {
+        return fieldsGUI;
     }
 
     public boolean erEjet(int index){
-        Field field = this.getFelterModel()[index % 24];
+        Field field = this.getFieldsModel()[index % 24];
         if (field instanceof PropertyField){
             Player ejer = ((PropertyField) field).getOwner();
             return ejer != null;
@@ -78,7 +78,7 @@ public class GameBoard {
     }
 
     int taettestFarve(int index, Color farve){
-        Field[] felter = this.getFelterModel();
+        Field[] felter = this.getFieldsModel();
 
         for (int i = 0; i < felter.length; i++) {
             int korrektIndex = i + index;
