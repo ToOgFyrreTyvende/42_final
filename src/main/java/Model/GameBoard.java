@@ -92,7 +92,7 @@ public class GameBoard {
         return -1;
     }
 
-    public Field[] getPlayerProperties(Player player){
+    public Field[] getPlayerProperties(Player player) {
 
         Field[] tempProperties = new Field[Global.COLORED_PROPERTIES];
 
@@ -101,7 +101,7 @@ public class GameBoard {
         // Tjekker om et felt er et "property-felt" og om det ejes af den aktuelle spiller og indsætter i "tempProp..".
         // Counteren tæller en op hver gang et ejet felt er registreret.
         for (int i = 0; i < fieldsModel.length; i++) {
-            if(fieldsModel[i] instanceof PropertyField && ((PropertyField) fieldsModel[i]).getOwner() == player){
+            if (fieldsModel[i] instanceof PropertyField && ((PropertyField) fieldsModel[i]).getOwner() == player) {
                 tempProperties[counter] = fieldsModel[i];
                 counter++;
             }
@@ -109,12 +109,17 @@ public class GameBoard {
 
         // tempProperties vil i næsten alle tilfælde være for lang da længden er antal property-felter.
         // Her oprettes en ny array med den rigtige længde i forhold til hvor mange felter spilleren egentlig ejer.
-        Field[] ownedProperties = new Field[counter-1];
-        for (int i = 0; i < counter-1; i++) {
-            ownedProperties[i] = tempProperties[i];
+        if (counter == 0) {
+            return new Field[]{};
+        } else {
+            Field[] ownedProperties = new Field[counter];
+            for (int i = 0; i < counter; i++) {
+                ownedProperties[i] = tempProperties[i];
+            }
+
+
+            return ownedProperties;
+
         }
-
-        return ownedProperties;
     }
-
 }
