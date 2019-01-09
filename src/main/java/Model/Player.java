@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Kort.ChanceCard;
+import Model.ChanceCards.ChanceCard;
 
 /**
  * ------------------------------------------------------------/

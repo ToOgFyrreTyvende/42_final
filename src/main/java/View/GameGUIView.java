@@ -14,20 +14,20 @@ import java.util.HashMap;
 
 public class GameGUIView extends GameView {
     private GUI ui;
-    private GUI_Field[] felter;
+    private GUI_Field[] fields;
 
-    private HashMap<Player, GUI_Player> spillere = new HashMap<>();
+    private HashMap<Player, GUI_Player> players = new HashMap<>();
 
     @Override
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
-        this.felter = getGameBoard().getFelterGUI();
-        this.ui = new GUI(felter);
+        this.fields = getGameBoard().getFieldsGUI();
+        this.ui = new GUI(fields);
     }
 
     @Override
     public int getPlayerCount() {
-        return ui.getUserInteger("Hvor mange spillere?", Global.MIN_SPILLERE, Global.MAX_SPILLERE);
+        return ui.getUserInteger("Hvor mange players?", Global.MIN_SPILLERE, Global.MAX_SPILLERE);
     }
 
     @Override
@@ -37,12 +37,12 @@ public class GameGUIView extends GameView {
 
 
     @Override
-    public String getRundeValg(String... choice) {
+    public String getRoundChoice(String... choice) {
         return ui.getUserButtonPressed("Foretag venligst en handling.", choice);
     }
 
     @Override
-    public String getRundeValgMedTekst(String tekst, String... choice) {
+    public String getRoundChoiceWithText(String tekst, String... choice) {
         return ui.getUserButtonPressed(tekst, choice);
     }
 
@@ -58,50 +58,50 @@ public class GameGUIView extends GameView {
             GUI_Player tempSpillerGUI = new GUI_Player(players[i].getName(),
                                         players[i].getMoney(), tempcar);
             
-            this.spillere.put(players[i], tempSpillerGUI);
-            ui.addPlayer(this.spillere.get(players[i]));
+            this.players.put(players[i], tempSpillerGUI);
+            ui.addPlayer(this.players.get(players[i]));
         }
     }
 
     @Override
     public void resetBoard() {
-        this.spillere.forEach((spillerModel, spillerBrik) -> this.felter[0].setCar(spillerBrik, true));
+        this.players.forEach((playerModel, playerPiece) -> this.fields[0].setCar(playerPiece, true));
     }
 
     @Override
     public void setPlayerField(Player player, int field) {
-        int feltIndex = (field % 24) -1;
+        int fieldIndex = (field % Global.FIELD_COUNT) -1;
 
-        GUI_Player spillerGUI = this.spillere.get(player);
+        GUI_Player playerGUI = this.players.get(player);
 
-        this.felter[feltIndex].setCar(spillerGUI, true);
+        this.fields[fieldIndex].setCar(playerGUI, true);
     }
 
     @Override
-    public void setPlayerField(Player player, int felt, int previousField) {
+    public void setPlayerField(Player player, int field, int previousField) {
 
-        GUI_Player spillerGUI = this.spillere.get(player);
-        GUI_Field field = this.felter[previousField];
+        GUI_Player playerGUI = this.players.get(player);
+        GUI_Field _field = this.fields[previousField];
 
-        if(field.hasCar(spillerGUI)){
-            field.setCar(spillerGUI, false);
+        if(_field.hasCar(playerGUI)){
+            _field.setCar(playerGUI, false);
         }
 
 
-        this.felter[felt].setCar(spillerGUI, true);
+        this.fields[field].setCar(playerGUI, true);
     }
 
     @Override
     public void setPlayerMoney(Player player, int money) {
-        this.spillere.get(player).setBalance(money);
+        this.players.get(player).setBalance(money);
     }
 
     @Override
     public void renderPlayerData(Player player, int previousField) {
         setPlayerField(player, player.getField(), previousField);
 
-        this.spillere.forEach((spillerModel, spillerBrik) ->
-                                spillerBrik.setBalance(spillerModel.getMoney()));
+        this.players.forEach((playerModel, playerPiece) ->
+                                playerPiece.setBalance(playerModel.getMoney()));
 
     }
 

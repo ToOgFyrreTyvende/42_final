@@ -5,20 +5,24 @@ import Model.GameBoard;
 import Model.Player;
 import View.GameView;
 
+import java.util.Arrays;
+
 public class GameController {
+    public final String[] DefaultActions = new String[]{"Rul terning"};
+
     private Game game;
     private GameView view;
     private GameBoard gameBoard;
+
     
     // #----------Constructor----------#
-    public GameController(GameBoard braet, GameView view){
-        this.gameBoard = braet;
+    public GameController(GameBoard board, GameView view){
+        this.gameBoard = board;
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
 
         initalizeGame();
-        spillerTur(game.getActivePlayer());
-
+        playerTurn(game.getActivePlayer());
     }
 
     private void initalizeGame(){
@@ -41,30 +45,34 @@ public class GameController {
     }
 
 
-    private void spillerTur(Player player){
-        view.getRundeValgMedTekst(player.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
+    private void playerTurn(Player player){
 
-        int forrigeFelt = player.getField();
+        Player activePlayer = player;
+        while(!this.game.isEnded()){
+            view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
 
-        Player muligPlayer = game.playTurn();
+            int forrigeFelt = activePlayer.getField();
 
-        if (muligPlayer != null && !this.game.isEnded()){
-            opdaterUIspiller(muligPlayer, forrigeFelt);
-            view.setDice(muligPlayer.getLastDiceResult());
-            view.setCenterText(muligPlayer.toString());
-            muligPlayer.setChanceCard(null);
-            muligPlayer.setLastAction("");
+            Player nextPlayer = game.playTurn();
 
-            spillerTur(game.getActivePlayer());
-        }else {
-            view.renderPlayerData(player, forrigeFelt);
-            view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                    this.game.getWinner().getName());
-            view.endText("spillet er slut!");
+            if (nextPlayer != null && !this.game.isEnded()){
+                updateUIPlayer(nextPlayer, forrigeFelt);
+                view.setDice(nextPlayer.getLastDiceResult());
+                view.setCenterText(nextPlayer.toString());
+                nextPlayer.setChanceCard(null);
+                nextPlayer.setLastAction("");
+
+                activePlayer = game.getActivePlayer();
+            }else {
+                view.renderPlayerData(activePlayer, forrigeFelt);
+                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                        this.game.getWinner().getName());
+                view.endText("spillet er slut!");
+            }
         }
     }
 
-    private void opdaterUIspiller(Player player, int forrigeFelt){
+    private void updateUIPlayer(Player player, int forrigeFelt){
         view.renderPlayerData(player, forrigeFelt);
     }
 

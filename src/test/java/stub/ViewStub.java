@@ -7,7 +7,7 @@ import View.GameView;
 public class ViewStub extends GameView {
 
     private Player[] spillere;
-    private final int SPILLERE_ANTAL = 2;
+    private final int SPILLERE_ANTAL = 4;
 
     public ViewStub() {
     }
@@ -33,12 +33,12 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public String getRundeValg(String... choice) {
+    public String getRoundChoice(String... choice) {
         return "Rul terning";
     }
 
     @Override
-    public String getRundeValgMedTekst(String tekst, String... choice) {
+    public String getRoundChoiceWithText(String tekst, String... choice) {
         return "Rul terning";
     }
 

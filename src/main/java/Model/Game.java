@@ -1,9 +1,10 @@
 package Model;
 
-import Model.Felter.PropertyField;
-import Model.Kort.GetPaidCard;
-import Model.Kort.ChanceCard;
-import Model.Kort.FreePropertyCard;
+import Model.Fields.Field;
+import Model.Fields.PropertyField;
+import Model.ChanceCards.GetPaidCard;
+import Model.ChanceCards.ChanceCard;
+import Model.ChanceCards.FreePropertyCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Game {
     private Player winner;
     private Player activePlayer;
 
-    private Terning dice;
+    private Dice dice;
     private List<Round> round;
     private Round activeRound;
     private boolean ended;
@@ -45,7 +46,7 @@ public class Game {
         //Kodedelen med round er taget fra vores forrige opgave: 42_del1
         round = new ArrayList<>();
         round.add(new Round());
-        dice = new Terning();
+        dice = new Dice();
 
         activePlayer = players[0];
         activeRound = round.get(round.size()-1);
@@ -70,11 +71,11 @@ public class Game {
         if (!ended) {
             int nowIndex = java.util.Arrays.asList(players).indexOf(activePlayer);
             int newIndex = (nowIndex + 1) % players.length;
-            int diceThrow = dice.getResultat();
+            int diceThrow = dice.setAndGetResult();
             int[] tempTurn = {diceThrow, nowIndex};
 
             Player _activePlayer = activePlayer;
-            int fieldId = (activePlayer.getField() + diceThrow) % 24;
+            int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
 
             fieldId = gameRules(fieldId);
 
@@ -130,7 +131,7 @@ public class Game {
     private void chanceFieldAction(Player activePlayer) {
         activePlayer.setChanceField(false);
 
-        ChanceCard card = this.getGameBoard().tilfaeldigKort();
+        ChanceCard card = this.getGameBoard().randomChanceCard();
         activePlayer.setChanceCard(card);
 
         activePlayer.getChanceCard().cardAction(activePlayer);
@@ -146,10 +147,10 @@ public class Game {
                 activePlayer.addMoney(((GetPaidCard) card).getMoney());
             }
         }else if(card instanceof FreePropertyCard){
-            int feltIndex = this.getGameBoard().taettestFarve(
+            int feltIndex = this.getGameBoard().closestColor(
                     activePlayer.getField(),
                     ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFelterModel()[feltIndex];
+            Field tempField = this.getGameBoard().getFieldsModel()[feltIndex];
 
             if (tempField instanceof PropertyField){
                 ((PropertyField) tempField).fieldAction(activePlayer, 0);
@@ -177,7 +178,7 @@ public class Game {
 
     private void UpdateActivePlayerWithThrow(int feltId, int slag) {
         if (activePlayer.isInJail()){
-            activePlayer.setFelt(this.getGameBoard().getFaengsel());
+            activePlayer.setFelt(this.getGameBoard().getJail());
             activePlayer.setLastDiceResult(slag);
         }else{
             activePlayer.setFelt(feltId);
@@ -239,7 +240,7 @@ public class Game {
         return activePlayer;
     }
 
-    void setDice(Terning dice) {
+    void setDice(Dice dice) {
         this.dice = dice;
     }
 

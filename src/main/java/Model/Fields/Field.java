@@ -1,5 +1,6 @@
-package Model;
+package Model.Fields;
 
+import Model.Player;
 import gui_fields.GUI_Field;
 
 /**

@@ -1,15 +1,14 @@
-package Model.Felter;
+package Model.Fields;
 
-import Model.Field;
 import Model.Player;
 import gui_fields.GUI_Field;
-import gui_fields.GUI_Start;
+import gui_fields.GUI_Refuge;
 
 import java.awt.*;
 
-public class StartField extends Field {
+public class FreeParkingField extends Field {
 
-    StartField(String name, String subText, String description) {
+    FreeParkingField(String name, String subText, String description) {
         super(name, subText, description);
     }
 
@@ -31,10 +30,11 @@ public class StartField extends Field {
 
     @Override
     public GUI_Field makeGUIFields() {
-        return new GUI_Start(this.getName(), this.getSubText(), this.getDescription(), Color.red, Color.BLACK);
+        return new GUI_Refuge("default", this.getName(), this.getSubText(), this.getDescription(), Color.white, Color.black);
     }
 
     @Override
     public void fieldAction(Player player) {
+        player.setLastAction(" - Har fået gratis parkering. Intet sker.");
     }
 }

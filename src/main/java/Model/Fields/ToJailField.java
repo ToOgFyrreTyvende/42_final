@@ -1,6 +1,5 @@
-package Model.Felter;
+package Model.Fields;
 
-import Model.Field;
 import Model.Player;
 import gui_fields.GUI_Field;
 import gui_fields.GUI_Jail;
