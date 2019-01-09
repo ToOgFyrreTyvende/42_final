@@ -8,13 +8,12 @@ import View.GameView;
 import java.util.Arrays;
 
 public class GameController {
+    public final String[] DefaultActions = new String[]{"Rul terning"};
+
     private Game game;
     private GameView view;
     private GameBoard gameBoard;
 
-    public enum DefaultActions {
-        RollDice
-    }
     
     // #----------Constructor----------#
     public GameController(GameBoard board, GameView view){
