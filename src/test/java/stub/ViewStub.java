@@ -1,44 +1,44 @@
 package stub;
 
 import Model.GameBoard;
-import Model.Spiller;
+import Model.Player;
 import View.GameView;
 
 public class ViewStub extends GameView {
 
-    private Spiller[] spillere;
+    private Player[] spillere;
     private final int SPILLERE_ANTAL = 2;
 
     public ViewStub() {
     }
 
     @Override
-    public void setSpillere(Spiller[] spillere) {
-        this.spillere = spillere;
+    public void setPlayers(Player[] players) {
+        this.spillere = players;
     }
 
     @Override
-    public int getAntalSpillere() {
+    public int getPlayerCount() {
         return SPILLERE_ANTAL;
     }
 
     @Override
-    public String getSpillerNavn(String tekst) {
+    public String getPlayerName(String text) {
         int sum = 0;
         float _random1 = (float) Math.random();
-        int _random2 = (int) (_random1 * this.getAntalSpillere());
+        int _random2 = (int) (_random1 * this.getPlayerCount());
         int resultat = _random2 + 1;
 
-        return "Spiller " + resultat;
+        return "Player " + resultat;
     }
 
     @Override
-    public String getRundeValg(String... valg) {
+    public String getRundeValg(String... choice) {
         return "Rul terning";
     }
 
     @Override
-    public String getRundeValgMedTekst(String tekst, String... valg) {
+    public String getRundeValgMedTekst(String tekst, String... choice) {
         return "Rul terning";
     }
 
@@ -47,40 +47,40 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public void setSpillerFelt(Spiller spiller, int felt) {
+    public void setPlayerField(Player player, int field) {
     }
 
     @Override
-    public void setSpillerFelt(Spiller spiller, int felt, int forrigeFelt) {
+    public void setPlayerField(Player player, int field, int previousField) {
     }
 
     @Override
-    public void setSpillerPenge(Spiller spiller, int penge) {
+    public void setPlayerMoney(Player player, int money) {
     }
 
     @Override
-    public void opdaterSpillerData(Spiller spiller, int forrigeFelt) {
+    public void renderPlayerData(Player player, int previousField) {
     }
 
     @Override
-    public void slutTekst(String tekst) {
+    public void endText(String text) {
     }
 
     @Override
-    public void setTerning(int slag) {
+    public void setDice(int result) {
     }
 
     @Override
-    public void setCenterTekst(String tekst) {
+    public void setCenterText(String text) {
     }
 
     @Override
-    public GameBoard getSpilBraet() {
-        return super.getSpilBraet();
+    public GameBoard getGameBoard() {
+        return super.getGameBoard();
     }
 
     @Override
-    public void setSpilBraet(GameBoard spilBraet) {
-        super.setSpilBraet(spilBraet);
+    public void setGameBoard(GameBoard gameBoard) {
+        super.setGameBoard(gameBoard);
     }
 }
