@@ -26,7 +26,7 @@ public class Game {
     private Player winner;
     private Player activePlayer;
 
-    private Terning dice;
+    private Dice dice;
     private List<Round> round;
     private Round activeRound;
     private boolean ended;
@@ -45,7 +45,7 @@ public class Game {
         //Kodedelen med round er taget fra vores forrige opgave: 42_del1
         round = new ArrayList<>();
         round.add(new Round());
-        dice = new Terning();
+        dice = new Dice();
 
         activePlayer = players[0];
         activeRound = round.get(round.size()-1);
@@ -70,7 +70,7 @@ public class Game {
         if (!ended) {
             int nowIndex = java.util.Arrays.asList(players).indexOf(activePlayer);
             int newIndex = (nowIndex + 1) % players.length;
-            int diceThrow = dice.getResultat();
+            int diceThrow = dice.getResult();
             int[] tempTurn = {diceThrow, nowIndex};
 
             Player _activePlayer = activePlayer;
@@ -239,7 +239,7 @@ public class Game {
         return activePlayer;
     }
 
-    void setDice(Terning dice) {
+    void setDice(Dice dice) {
         this.dice = dice;
     }
 

@@ -2,7 +2,7 @@ package Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stub.TerningStub;
+import stub.DiceStub;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,7 @@ class GameTest {
     private String[] testNavne;
     private Player[] testSpillere;
     private GameBoard testBoard;
-    private TerningStub testTerning;
+    private DiceStub testTerning;
 
     @BeforeEach
     void setUp() {
@@ -22,7 +22,7 @@ class GameTest {
 
         testBoard = new GameBoard();
 
-        testTerning = new TerningStub(1);
+        testTerning = new DiceStub(1);
 
         testGame = new Game(testBoard, testNavne);
     }
@@ -62,7 +62,7 @@ class GameTest {
 
     @Test
     void spilReglerStartTest() {
-        // Sætter spillet til at bruge vores TerningStub som kun ruller værdien 1
+        // Sætter spillet til at bruge vores DiceStub som kun ruller værdien 1
         testGame.setDice(testTerning);
         int testVal = 42;
         // Sætter player 1's pengeværdi til 42
