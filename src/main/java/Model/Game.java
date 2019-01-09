@@ -70,7 +70,7 @@ public class Game {
         if (!ended) {
             int nowIndex = java.util.Arrays.asList(players).indexOf(activePlayer);
             int newIndex = (nowIndex + 1) % players.length;
-            int diceThrow = dice.getResult();
+            int diceThrow = dice.setAndGetResult();
             int[] tempTurn = {diceThrow, nowIndex};
 
             Player _activePlayer = activePlayer;
