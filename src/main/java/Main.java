@@ -10,9 +10,9 @@ import View.GameGUIView;
 
 public class Main {
     public static void main(String[] args) {
-        GameBoard braet = new GameBoard();
+        GameBoard board = new GameBoard();
         GameGUIView view = new GameGUIView();
-        GameController spil = new GameController(braet, view);
+        GameController game = new GameController(board, view);
 
     }
 

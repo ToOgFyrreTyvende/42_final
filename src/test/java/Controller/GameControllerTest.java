@@ -4,7 +4,8 @@ import Model.GameBoard;
 import Model.Game;
 import View.GameView;
 import org.junit.jupiter.api.BeforeEach;
-import stub.TerningStub;
+import org.junit.jupiter.api.Test;
+import stub.DiceStub;
 import stub.ViewStub;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,16 +16,12 @@ class GameControllerTest {
     private String[] testNavne;
     private GameView testView;
     private GameBoard testBoard;
-    TerningStub testTerning;
+    DiceStub testTerning;
     private GameController testSpilCtrl;
 
 
     @BeforeEach
     void setUp() {
-        testNavne = new String[2];
-        testNavne[0] = "dummyOne";
-        testNavne[1] = "dummyTwo";
-
         testBoard = new GameBoard();
 
         testView = new ViewStub();

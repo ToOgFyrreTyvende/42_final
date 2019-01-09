@@ -10,8 +10,8 @@ public abstract class GameView {
     public abstract void setPlayers(Player[] players);
     public abstract int getPlayerCount();
     public abstract String getPlayerName(String text);
-    public abstract String getRundeValg(String ... choice);
-    public abstract String getRundeValgMedTekst(String tekst, String ... choice);
+    public abstract String getRoundChoice(String ... choice);
+    public abstract String getRoundChoiceWithText(String tekst, String ... choice);
     public abstract void resetBoard();
     public abstract void setPlayerField(Player player, int field);
     public abstract void setPlayerField(Player player, int field, int previousField);
