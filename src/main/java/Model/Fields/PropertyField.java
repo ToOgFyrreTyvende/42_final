@@ -75,11 +75,11 @@ public class PropertyField extends Field {
 
     private void payToPlayerLogic(Player player) {
         player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                this.getPrice() + " kr. til " +
+                this.getRent() + " kr. til " +
                 this.getOwner().getName());
 
         System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                this.getPrice() + " kr. til " +
+                this.getRent() + " kr. til " +
                 this.getOwner().getName());
         payToPlayerField(player);
     }
