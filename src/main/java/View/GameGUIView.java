@@ -59,7 +59,7 @@ public class GameGUIView extends GameView {
 
         for (int i = 0; i < players.length; i++){
 
-            GUI_Car tempcar = new GUI_Car(farver[i], Color.white,GUI_Car.Type.UFO, GUI_Car.Pattern.CHECKERED);
+            GUI_Car tempcar = new GUI_Car(farver[i], Color.white,GUI_Car.Type.TRACTOR, GUI_Car.Pattern.HORIZONTAL_GRADIANT);
             tempcar.setPrimaryColor(farver[i]);
 
             GUI_Player tempSpillerGUI = new GUI_Player(players[i].getName(),

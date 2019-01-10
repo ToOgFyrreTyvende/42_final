@@ -40,7 +40,7 @@ public class Game {
 
 
     public void play(){
-        gameLogic.Beforeturn();
+        gameLogic.BeforeTurn();
         gameLogic.PlayTurn();
         gameLogic.AfterTurn(); 
     }
