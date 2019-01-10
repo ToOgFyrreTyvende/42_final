@@ -33,7 +33,7 @@ public class Player {
         // Returnerer nuværende field af spiller
         return field;
     }
-    public int setFelt(int newField){
+    public int setField(int newField){
         // Returnerer nye field af spiller
         field = newField;
         return field;
@@ -109,7 +109,7 @@ public class Player {
     @Override
     public String toString() {
         if (this.lastAction.equals("")) {
-            return "Player: " + this.getName() + " er landet på field nr. " + this.getField() + 1;
+            return "Player: " + this.getName() + " er landet på felt nr. " + (this.getField() + 1);
         }else {
             return "Player: " + this.getName() + " " + this.getLastAction();
         }

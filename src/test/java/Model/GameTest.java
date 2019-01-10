@@ -48,7 +48,7 @@ class GameTest {
         // Sætter aktiv player i fængsel
         testGame.getActivePlayer().setInJail(true);
         // Sætter aktiv player på fængsel feltet
-        testGame.getActivePlayer().setFelt(testBoard.getJail());
+        testGame.getActivePlayer().setField(testBoard.getJail());
         // Sætter aktiv player's pengeværdi til 2000
         // - (For at undgå spilleren går falit og afslutter spillet)
         testGame.getActivePlayer().setMoney(2000);
@@ -68,7 +68,7 @@ class GameTest {
         // Sætter player 1's pengeværdi til 42
         testGame.getPlayers()[0].setMoney(testVal);
         // Sætter player 1 på brættets sidste felt
-        testGame.getPlayers()[0].setFelt(Global.FIELD_COUNT-1);
+        testGame.getPlayers()[0].setField(Global.FIELD_COUNT-1);
         // Kører player 1's tur færdig
         testGame.playTurn();
         // Tjækker player 1's pengeværdi er steget med 2

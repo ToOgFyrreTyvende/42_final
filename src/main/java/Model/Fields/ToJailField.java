@@ -1,11 +1,6 @@
 package Model.Fields;
 
 import Model.Player;
-import gui_fields.GUI_Field;
-import gui_fields.GUI_Jail;
-
-
-import java.awt.*;
 
 public class ToJailField extends Field {
 
@@ -39,7 +34,7 @@ public class ToJailField extends Field {
 
     private void throwInJail(Player player){
         player.setLastAction(player.getLastAction() + "\n - Er sat i fængsel");
-        player.setFelt(JAIL_ID);
+        player.setField(JAIL_ID);
         player.setInJail(true);
     }
 }

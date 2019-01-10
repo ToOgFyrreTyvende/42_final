@@ -18,7 +18,7 @@ class playerTest {
     @Test
     void playerFeltTest(){
         int testFelt = 3;
-        player.setFelt(testFelt);
+        player.setField(testFelt);
         assertEquals(testFelt, player.getField());
     }
 
