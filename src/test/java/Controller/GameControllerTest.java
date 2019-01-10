@@ -29,7 +29,7 @@ class GameControllerTest {
 
     }
 
-    @Test
+    //@Test
     void spilAktivtTest() {
         assertTrue(testGameCtrl.getGame().isEnded());
     }
