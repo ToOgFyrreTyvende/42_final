@@ -20,17 +20,17 @@ public class TaxField extends Field {
             payTax(player);
 
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                    this.getName() + " kr. i indkomstskat.");
+                    this.getTax() + " kr. i indkomstskat.");
             System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                    this.getName() + " kr. i indkomstskat.");
+                    this.getTax() + " kr. i indkomstskat.");
         }else{
 
             payTax(player);
 
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                    this.getName() + " kr. i ekstraordinær statsskat.");
+                    this.getTax() + " kr. i ekstraordinær statsskat.");
             System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                    this.getName() + " kr. i ekstraordinær statsskat.");
+                    this.getTax() + " kr. i ekstraordinær statsskat.");
         }
     }
 
