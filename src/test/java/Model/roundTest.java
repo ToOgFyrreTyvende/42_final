@@ -11,17 +11,17 @@ class roundTest {
 
     @Test
     void round_Test(){
-        int[] p1tur = new int[]{1,1,2,1};
-        int[] p2tur = new int[]{1,2,3,2};
+        int[] p1Turn = new int[]{1,1,2,1};
+        int[] p2Turn = new int[]{1,2,3,2};
 
-        ArrayList<int[]> kontrolRunde = new ArrayList<>();
-            kontrolRunde.add(p1tur);
-            kontrolRunde.add(p2tur);
+        ArrayList<int[]> controlRound = new ArrayList<>();
+            controlRound.add(p1Turn);
+            controlRound.add(p2Turn);
 
-        round.addTurn(p1tur);
-        round.addTurn(p2tur);
+        round.addTurn(p1Turn);
+        round.addTurn(p2Turn);
 
-        assertEquals(kontrolRunde, round.getTurns());
+        assertEquals(controlRound, round.getTurns());
 
     }
 }

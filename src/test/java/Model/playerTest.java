@@ -10,25 +10,25 @@ class playerTest {
 
     @Test
     void playerInitTest(){
-        String testTekst = "kontrolNavn";
-        player = new Player(testTekst);
-        assertEquals(testTekst, player.getName());
+        String testText = "kontrolNavn";
+        player = new Player(testText);
+        assertEquals(testText, player.getName());
     }
 
     @Test
-    void playerFeltTest(){
-        int testFelt = 3;
-        player.setFelt(testFelt);
-        assertEquals(testFelt, player.getField());
+    void playerFieldTest(){
+        int testField = 3;
+        player.setFelt(testField);
+        assertEquals(testField, player.getField());
     }
 
     @Test
-    void playerKontoTest(){
-        int testEkstraPenge = 100;
-        player.addMoney(testEkstraPenge);
+    void playerAccountTest(){
+        int testExtraMoney = 100;
+        player.addMoney(testExtraMoney);
         // Vi tilføjer 1 til ekstra pengene, siden en player starter med kun at have 1 M
         // - før spillet tjekker hvor mange spillere der er og sætter deres pengeværdi udfra dette
-        assertEquals(testEkstraPenge + 1, player.getMoney());
+        assertEquals(testExtraMoney + 1, player.getMoney());
     }
 
     @Test

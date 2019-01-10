@@ -6,20 +6,20 @@ import View.GameView;
 
 public class ViewStub extends GameView {
 
-    private Player[] spillere;
-    private final int SPILLERE_ANTAL = 4;
+    private Player[] players;
+    private final int PLAYER_AMOUNT = 4;
 
     public ViewStub() {
     }
 
     @Override
     public void setPlayers(Player[] players) {
-        this.spillere = players;
+        this.players = players;
     }
 
     @Override
     public int getPlayerCount() {
-        return SPILLERE_ANTAL;
+        return PLAYER_AMOUNT;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class ViewStub extends GameView {
         int sum = 0;
         float _random1 = (float) Math.random();
         int _random2 = (int) (_random1 * this.getPlayerCount());
-        int resultat = _random2 + 1;
+        int result = _random2 + 1;
 
-        return "Player " + resultat;
+        return "Player " + result;
     }
 
     @Override
