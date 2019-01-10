@@ -57,7 +57,7 @@ public class GameController {
 
             if (nextPlayer != null && !this.game.isEnded()){
                 updateUIPlayer(nextPlayer, forrigeFelt);
-                view.setDice(nextPlayer.getLastDiceResult());
+                view.setDice(nextPlayer.getLastDicePair());
                 view.setCenterText(nextPlayer.toString());
                 nextPlayer.setChanceCard(null);
                 nextPlayer.setLastAction("");

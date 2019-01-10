@@ -12,36 +12,37 @@ public class CardFactory {
                 new MoveToCard("Ryk frem til STRANDPROMMENADEN", "Strandprommenaden", 23),
                 new GetPaidCard("Det er din fødselsdag! Alle giver dig 1M. TILLYKKE MED FØDSELSDAGEN!", "Fødselsdag", 1, true),
                 new GetPaidCard("Du har lavet alle dine lektier. MODTAG 2M fra banken.", "Lektier", 2, false),
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et GRÅT felt. " +
+                new FreePropertyCard("GRATIS FELT! Ryk frem til et RØDT felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.gray),
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et BLÅT felt. " +
+                        "GUL", Color.red),
+
+                /*new FreePropertyCard("GRATIS FELT! Ryk frem til et GRØNT felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.blue),
+                        "GUL", new Color(111,209,111)),*/
+
+                new FreePropertyCard("GRATIS FELT! Ryk frem til et TURKIS felt. " +
+                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
+                        "GUL", Color.cyan),
 
                 new FreePropertyCard("GRATIS FELT! Ryk frem til et PINK felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
                         "GUL", Color.pink),
 
+                new FreePropertyCard("GRATIS FELT! Ryk frem til et GRÅT felt. " +
+                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
+                        "GUL", Color.lightGray),
+
+                new FreePropertyCard("GRATIS FELT! Ryk frem til et BLÅT felt. " +
+                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
+                        "GUL", Color.white),
+
+                /*new FreePropertyCard("GRATIS FELT! Ryk frem til et LILLA felt. " +
+                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
+                        "GUL", new Color(134,4,190)),*/
+
                 new FreePropertyCard("GRATIS FELT! Ryk frem til et GULT felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.yellow),
-
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et RØDT felt. " +
-                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.red),
-
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et ORANGE felt. " +
-                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.orange),
-
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et GRØNT felt. " +
-                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.green),
-
-                new FreePropertyCard("GRATIS FELT! Ryk frem til et TURKIS felt. " +
-                        "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", Color.cyan)
+                        "GUL", Color.yellow)
         };
     }
 }

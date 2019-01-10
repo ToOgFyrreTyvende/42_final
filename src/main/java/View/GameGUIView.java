@@ -1,10 +1,12 @@
 package View;
 
+import gui_fields.*;
+import gui_main.GUI;
+import gui_resources.Attrs;
+import Model.Fields.*;
 import Model.Global;
 import Model.GameBoard;
 import Model.Player;
-import gui_fields.*;
-import gui_main.GUI;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -21,9 +23,14 @@ public class GameGUIView extends GameView {
     @Override
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
-        this.fields = getGameBoard().getFieldsGUI();
-        this.ui = new GUI(fields);
+        createViewBoard();
+        this.ui = new GUI(fields,Global.GUI_BOARD_COLOR);
     }
+
+    public void setFields(GUI_Field[] fields){
+        this.fields = fields;
+    }
+
 
     @Override
     public int getPlayerCount() {
@@ -111,13 +118,79 @@ public class GameGUIView extends GameView {
     }
 
     @Override
-    public void setDice(int result) {
-        this.ui.setDice(1,2,1, result,2,1);
+    public void setDice(int[] pair) {
+        int[] dicePos = new int[2];
+        for (int i = 0 ; i < 2 ; i++){
+            float _random1 = (float) Math.random();    // 0-1 float
+            int _random2 = (int) (_random1 * 3);   // 0-2
+            dicePos[i] = _random2;
+        }
+
+        this.ui.setDice(pair[0],1+dicePos[0],6, pair[1],1+dicePos[1],7);
     }
 
 
     @Override
     public void setCenterText(String text) {
         ui.displayChanceCard(text);
+    }
+
+
+
+    @Override
+    public void createViewBoard() {
+        GUI_Field[] fields = new GUI_Field[Global.FIELD_COUNT];
+        Model.Fields.Field[] fieldModel = this.getGameBoard().getFields();
+
+        for (int i = 0; i < Global.FIELD_COUNT; i++) {
+            fields[i] = translateModel(fieldModel[i]);
+        }
+
+        this.setFields(fields);
+    }
+
+
+
+    public GUI_Field translateModel(Model.Fields.Field modelField){
+        if (modelField instanceof PropertyField){
+            return new GUI_Street(modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), ((PropertyField)modelField).getPrice() + "M",
+                    ((PropertyField)modelField).getColor(), Color.black);
+        }else if(modelField instanceof StartField){
+            return new GUI_Start(modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.red, Color.BLACK);
+        }else if(modelField instanceof ChanceField){
+            return new GUI_Chance("?", modelField.getSubText(), modelField.getDescription(),
+                    Color.black, Color.white);
+        }else if(modelField instanceof JailField){
+            return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.white, Color.BLACK);
+        }else if(modelField instanceof ToJailField){
+            return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
+                    modelField.getDescription(), Color.white, Color.BLACK);
+        }else if(modelField instanceof FreeParkingField){
+            return new GUI_Refuge("default", modelField.getName(),
+                    modelField.getSubText(), modelField.getDescription(), Color.white, Color.black);
+        }else if(modelField instanceof CompanyField){
+            if(((CompanyField)modelField).isShipping()){
+
+                GUI_Shipping field = new GUI_Shipping(Attrs.getString("GUI_Field.Default_Picture",
+                        new Object[0]), modelField.getName(), modelField.getSubText(),
+                        modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
+                return field;
+            }else{
+                GUI_Brewery field = new GUI_Brewery(Attrs.getString("GUI_Field.Default_Picture", new Object[0]),
+                        modelField.getName(), modelField.getSubText(),
+                        modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
+                return field;
+            }
+        }else if(modelField instanceof TaxField){
+            return new GUI_Tax(modelField.getName(),
+                    modelField.getSubText(), modelField.getDescription(), Color.white, Color.black);
+        }
+
+
+        return null;
+
     }
 }

@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameControllerTest {
     // Variables
     private Game testGame;
-    private String[] testNavne;
+    private String[] testNames;
     private GameView testView;
     private GameBoard testBoard;
-    DiceStub testTerning;
-    private GameController testSpilCtrl;
+    DiceStub testDice;
+    private GameController testGameCtrl;
 
 
     @BeforeEach
@@ -25,12 +25,12 @@ class GameControllerTest {
         testBoard = new GameBoard();
 
         testView = new ViewStub();
-        testSpilCtrl = new GameController(testBoard, testView);
+        testGameCtrl = new GameController(testBoard, testView);
 
     }
 
     //@Test
     void spilAktivtTest() {
-        assertTrue(testSpilCtrl.getGame().isEnded());
+        assertTrue(testGameCtrl.getGame().isEnded());
     }
 }

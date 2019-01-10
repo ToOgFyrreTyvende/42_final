@@ -14,7 +14,7 @@ public class MoveToCard extends ChanceCard {
     @Override
     public void cardAction(Player player) {
         super.cardAction(player);
-        player.setFelt(fieldIndex);
+        player.setField(fieldIndex);
         player.setLastAction(player.getLastAction() + "\n - Er rykket til feltet " + fieldIndex + 1);
     }
 }

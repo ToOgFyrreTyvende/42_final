@@ -16,15 +16,15 @@ class diceTest {
     }
 
     @Test
-    void getResultatTest() {
+    void getResultTest() {
         Random rng = new Random();
         int[] dist = new int[11];
-        int[] slag = new int[11];
+        int[] Throw = new int[11];
 
         // Vi slår 50000 gange
         for (int i = 1; i <= 50000; i++) {
-            int tempSlag = testDice1.setAndGetResult();
-            slag[tempSlag - 2]++;
+            int tempThrow = testDice1.setAndGetResult();
+            Throw[tempThrow - 2]++;
 
             // Samtidig med de to terningekast, opretter
             // bi et normalfordelt tilfældigt tal i tempGaus arrayer med samme størrelse
@@ -36,12 +36,12 @@ class diceTest {
         }
 
         // Ud fra vores normalfordeling tjekkes hvert resultat
-        for (int i = 0; i < slag.length; i++) {
+        for (int i = 0; i < Throw.length; i++) {
             int goal = dist[i];
-            double pr = (double) slag[i]/50000*100;
+            double pr = (double) Throw[i]/50000*100;
             int rounded = (int) pr;
             System.out.println((i+1) + " : "+ rounded + "%");
-            assertTrue(slag[i] >= goal-2000 && slag[i] <= goal+2000);
+            assertTrue(Throw[i] >= goal-2000 && Throw[i] <= goal+2000);
         }
     }
 }

@@ -29,11 +29,6 @@ public class StartField extends Field {
     }
 
     @Override
-    public GUI_Field makeGUIFields() {
-        return new GUI_Start(this.getName(), this.getSubText(), this.getDescription(), Color.red, Color.BLACK);
-    }
-
-    @Override
     public void fieldAction(Player player) {
     }
 }

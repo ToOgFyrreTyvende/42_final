@@ -20,7 +20,7 @@ public abstract class GameView {
     public abstract void renderPlayerData(Player player, int previousField);
     public abstract void endText(String text);
 
-    public abstract void setDice(int result);
+    public abstract void setDice(int[] pair);
 
     public abstract void setCenterText(String text);
 
@@ -31,4 +31,6 @@ public abstract class GameView {
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
+
+    public abstract void createViewBoard();
 }

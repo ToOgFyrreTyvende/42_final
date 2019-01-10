@@ -29,11 +29,6 @@ public class FreeParkingField extends Field {
     }
 
     @Override
-    public GUI_Field makeGUIFields() {
-        return new GUI_Refuge("default", this.getName(), this.getSubText(), this.getDescription(), Color.white, Color.black);
-    }
-
-    @Override
     public void fieldAction(Player player) {
         player.setLastAction(" - Har fået gratis parkering. Intet sker.");
     }

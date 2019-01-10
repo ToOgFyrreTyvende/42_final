@@ -16,7 +16,7 @@ class GameBoardTest {
     @Test
     void getPlayerProperties() {
         PropertyField field1 = (PropertyField) gameBoardTest.getFeltModel(1);
-        PropertyField field2 = (PropertyField) gameBoardTest.getFeltModel(5);
+        PropertyField field2 = (PropertyField) gameBoardTest.getFeltModel(3);
 
         field1.fieldAction(dummyPlayer,0);
         field2.fieldAction(dummyPlayer,0);

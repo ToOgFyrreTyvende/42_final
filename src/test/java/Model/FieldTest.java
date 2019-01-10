@@ -11,17 +11,17 @@ class FieldTest {
 
 
     @Test
-    void Ejendomsfelt() {
+    void PropertyFieldTest() {
         //Vi opretter 2 spillere
         Player player1 = new Player("Markus");
         Player player2 = new Player("Sebastian");
         player1.setMoney(10);
         player2.setMoney(10);
 
-        PropertyField felt = new PropertyField("Skaterparken", "","",2, Color.green);
+        PropertyField field = new PropertyField("Skaterparken", "","",2, Color.green);
 
-        felt.fieldAction(player1);
-        felt.fieldAction(player2);
+        field.fieldAction(player1);
+        field.fieldAction(player2);
 
         assertEquals(8, player2.getMoney());
         assertEquals(10, player1.getMoney());

@@ -1,5 +1,7 @@
 package Model;
 
+import java.awt.*;
+
 public class Global {
     static final int START_PENGE = 30000;
 
@@ -20,4 +22,6 @@ public class Global {
     public static final int FIELD_COUNT = 40;
 
     public static final int JAIL_INDEX = 10;
+
+    public static final Color GUI_BOARD_COLOR = new Color(54, 175, 54);
 }
