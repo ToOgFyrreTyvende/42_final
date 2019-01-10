@@ -67,7 +67,7 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public void setDice(int result) {
+    public void setDice(int[] result) {
     }
 
     @Override

@@ -14,6 +14,7 @@ package Model;
 
 public class Dice {
     private int result;
+    private int[] pair;
     private int sides;
     private int amount;
 
@@ -24,27 +25,28 @@ public class Dice {
         this.amount = Global.DICE_AMOUNT;
     }
 
-    // #--------------Get--------------#
     public int setAndGetResult(){ // Returner en værdi af terningen.
-/*        int sum = 0;
-        float _random1 = (float) Math.random();         // 0-1 float
-        int _random2 = (int) (_random1 * sides);   // 0-5 integer
-        result = _random2 + 1;                        // 1-6 integer
 
-        return result;*/
-
-        //int[] diceThrow = new int[amount + 1];
+        int[] diceThrow = new int[amount + 1];
         int sum = 0;
         for (int i = 0 ; i < amount ; i++){
             float _random1 = (float) Math.random();    // 0-1 float
             int _random2 = (int) (_random1 * sides);   // 0-5 integer
             int random = _random2 + 1;                 // 1-6 integer
-            //diceThrow[i] = random;
+            diceThrow[i] = random;
             sum += random;
         }
 
         this.result = sum;
-        //diceThrow[diceThrow.length - 1] = sum;
+        setPair(diceThrow);
         return sum;
+    }
+
+    public int[] getPair() {
+        return pair;
+    }
+
+    public void setPair(int[] pair) {
+        this.pair = pair;
     }
 }

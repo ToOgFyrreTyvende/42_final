@@ -118,8 +118,8 @@ public class GameGUIView extends GameView {
     }
 
     @Override
-    public void setDice(int result) {
-        this.ui.setDice(1,2,1, result,2,1);
+    public void setDice(int[] pair) {
+        this.ui.setDice(pair[0],2,6, pair[1],3,7);
     }
 
 
