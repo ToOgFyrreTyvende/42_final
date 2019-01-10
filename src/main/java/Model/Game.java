@@ -180,9 +180,11 @@ public class Game {
         if (activePlayer.isInJail()){
             activePlayer.setField(this.getGameBoard().getJail());
             activePlayer.setLastDiceResult(slag);
+            activePlayer.setLastDicePair(this.dice.getPair());
         }else{
             activePlayer.setField(feltId);
             activePlayer.setLastDiceResult(slag);
+            activePlayer.setLastDicePair(this.dice.getPair());
         }
     }
 

@@ -14,6 +14,7 @@ public class Player {
     private String name;
     private int currentMoney = 1;
     private int lastDiceResult = 0;
+    private int[] lastDicePair;
     private boolean inJail = false;
 
     private ChanceCard chanceCard;
@@ -59,6 +60,10 @@ public class Player {
         this.lastDiceResult = lastDiceResult;
     }
 
+    public void setLastDicePair(int[] lastDicePair) {
+        this.lastDicePair = lastDicePair;
+    }
+
     public void setChanceCard(ChanceCard chanceCard) {
         this.chanceCard = chanceCard;
     }
@@ -79,6 +84,14 @@ public class Player {
 
     public int getLastDiceResult() {
         return lastDiceResult;
+    }
+
+    public int[] getLastDicePair() {
+        return lastDicePair;
+    }
+
+    public int[] getDicePair(){
+        return null;
     }
 
     ChanceCard getChanceCard() {

@@ -24,7 +24,7 @@ public class GameGUIView extends GameView {
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
         createViewBoard();
-        this.ui = new GUI(fields);
+        this.ui = new GUI(fields,Global.GUI_BOARD_COLOR);
     }
 
     public void setFields(GUI_Field[] fields){
@@ -118,8 +118,15 @@ public class GameGUIView extends GameView {
     }
 
     @Override
-    public void setDice(int result) {
-        this.ui.setDice(1,2,1, result,2,1);
+    public void setDice(int[] pair) {
+        int[] dicePos = new int[2];
+        for (int i = 0 ; i < 2 ; i++){
+            float _random1 = (float) Math.random();    // 0-1 float
+            int _random2 = (int) (_random1 * 3);   // 0-2
+            dicePos[i] = _random2;
+        }
+
+        this.ui.setDice(pair[0],1+dicePos[0],6, pair[1],1+dicePos[1],7);
     }
 
 
@@ -154,7 +161,7 @@ public class GameGUIView extends GameView {
                     modelField.getDescription(), Color.red, Color.BLACK);
         }else if(modelField instanceof ChanceField){
             return new GUI_Chance("?", modelField.getSubText(), modelField.getDescription(),
-                    Color.white, Color.black);
+                    Color.black, Color.white);
         }else if(modelField instanceof JailField){
             return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
                     modelField.getDescription(), Color.white, Color.BLACK);
@@ -177,6 +184,9 @@ public class GameGUIView extends GameView {
                         modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
                 return field;
             }
+        }else if(modelField instanceof TaxField){
+            return new GUI_Tax(modelField.getName(),
+                    modelField.getSubText(), modelField.getDescription(), Color.white, Color.black);
         }
 
 

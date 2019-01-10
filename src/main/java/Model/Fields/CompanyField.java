@@ -13,17 +13,56 @@ public class CompanyField extends Field {
     private Color color;
     private boolean isShipping;
     private int price;
+    private int rent;
+    private Player owner;
 
     public CompanyField(String name, String subText, String description, int price, Color color, boolean isShipping) {
         super(name, subText, description);
         this.price = price;
+        this.rent = price/2; // SKAL ÆNDRET SENERE !!!
         this.color = color;
         this.isShipping = isShipping;
     }
 
     @Override
     public void fieldAction(Player player) {
+        if (this.isOwned()){
+            payToPlayerLogic(player);
+        }else{
+            player.setLastAction(player.getLastAction() + "\n - Har købt " +
+                    this.getName() + " for " +
+                    this.getPrice() + " kr.");
 
+            System.out.println("[INFO] " + player.getName() + " Har købt " +
+                    this.getName() + " for " +
+                    this.getPrice()+ " kr.");
+
+            buyField(player);
+        }
+    }
+
+    private void payToPlayerLogic(Player player) {
+        player.setLastAction(player.getLastAction() + "\n - Har betalt " +
+                this.getRent() + " kr. til " +
+                this.getOwner().getName());
+
+        System.out.println("[INFO] " + player.getName() + " Har betalt " +
+                this.getRent() + " kr. til " +
+                this.getOwner().getName());
+        payToPlayerField(player);
+    }
+
+    private void payToPlayerField(Player player){
+        Player ejer = this.getOwner();
+        int payment = this.getRent();
+        player.addMoney( - payment);
+        ejer.addMoney(payment);
+    }
+
+    private void buyField(Player player) {
+        int betaling = this.getPrice();
+        player.addMoney( - betaling);
+        this.setOwner(player);
     }
 
     @Override
@@ -39,6 +78,11 @@ public class CompanyField extends Field {
     @Override
     public String getDescription() {
         return super.getDescription();
+    }
+
+    public boolean isOwned(){
+        Player owner = this.getOwner();
+        return owner != null;
     }
 
     public Color getColor() {
@@ -63,5 +107,21 @@ public class CompanyField extends Field {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public int getRent() {
+        return rent;
+    }
+
+    public void setRent(int rent) {
+        this.rent = rent;
     }
 }

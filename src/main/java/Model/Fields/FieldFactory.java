@@ -14,7 +14,7 @@ public class FieldFactory {
 
                 new PropertyField("Hvidovrevej", "Pris: kr. 1200", "Hvidovrevej", 1, Color.cyan),
 
-                new FreeParkingField("Betal indkomstskat", "10% eller kr. 4000", "Betal plz"), // PLZ CHANGE THIS FIELD
+                new TaxField("Betal indkomstskat", "10%/4000 kr.", "Betal enten 10% eller 4000 kr.",4000,true),
 
                 new CompanyField("SFL", "Pris: kr. 4000", "SFL Færgen", 4000, new Color(57,101,221), true),
 
@@ -45,12 +45,12 @@ public class FieldFactory {
 
                 new FreeParkingField("Fri", "Gratis Parkering", "Hold en fridag"),
 
-                new PropertyField("Trianglen", "Pris: kr. 4400", "Trianglen", 4400, new Color(165,16,0)),
+                new PropertyField("Trianglen", "Pris: kr. 4400", "Trianglen", 4400, Color.red),
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
-                new PropertyField("Østerbrogade", "Pris: kr. 4400", "Østerbrogade", 4400, new Color(165,16,0)),
-                new PropertyField("Grønningen", "Pris: kr. 4800", "Grønningen", 4800, new Color(165,16,0)),
+                new PropertyField("Østerbrogade", "Pris: kr. 4400", "Østerbrogade", 4400, Color.red),
+                new PropertyField("Grønningen", "Pris: kr. 4800", "Grønningen", 4800, Color.red),
 
                 new CompanyField("DFDS Seaways", "Pris: kr. 4000", "DFDS Seaways Færgen", 4000, new Color(57,101,221), true),
 
@@ -74,11 +74,11 @@ public class FieldFactory {
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
-                new PropertyField("Frederiksberggade", "Pris: kr. 7000", "Frederiksberggade", 7000, new Color(134,4,190)),
+                new PropertyField("Frederiksberggade", "Pris: kr. 7000", "Frederiksberggade", 7000, new Color(165, 90, 232)),
 
-                new FreeParkingField("Ekstraordinær statsskat", "betal kr. 2000", "Ekstraordinær statsskat"), // PLZ CHANGE THIS FIELD
+                new TaxField("Ekstraordinær statsskat", "betal kr. 2000", "Ekstraordinær statsskat",2000,false), // PLZ CHANGE THIS FIELD
 
-                new PropertyField("Rådhuspladsen", "Pris: kr. 8000", "Rådhuspladsen", 8000, new Color(134,4,190))
+                new PropertyField("Rådhuspladsen", "Pris: kr. 8000", "Rådhuspladsen", 8000, new Color(165, 90, 232))
         };
     }
 }

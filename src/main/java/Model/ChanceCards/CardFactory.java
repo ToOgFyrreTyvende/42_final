@@ -12,9 +12,9 @@ public class CardFactory {
                 new MoveToCard("Ryk frem til STRANDPROMMENADEN", "Strandprommenaden", 23),
                 new GetPaidCard("Det er din fødselsdag! Alle giver dig 1M. TILLYKKE MED FØDSELSDAGEN!", "Fødselsdag", 1, true),
                 new GetPaidCard("Du har lavet alle dine lektier. MODTAG 2M fra banken.", "Lektier", 2, false),
-                /*new FreePropertyCard("GRATIS FELT! Ryk frem til et RØDT felt. " +
+                new FreePropertyCard("GRATIS FELT! Ryk frem til et RØDT felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
-                        "GUL", new Color(165,16,0)),*/
+                        "GUL", Color.red),
 
                 /*new FreePropertyCard("GRATIS FELT! Ryk frem til et GRØNT felt. " +
                         "Hvis det er ledig, får du det GRATIS! Ellers skal du BETALE leje til ejeren",
