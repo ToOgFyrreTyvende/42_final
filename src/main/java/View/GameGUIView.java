@@ -154,7 +154,7 @@ public class GameGUIView extends GameView {
                     modelField.getDescription(), Color.red, Color.BLACK);
         }else if(modelField instanceof ChanceField){
             return new GUI_Chance("?", modelField.getSubText(), modelField.getDescription(),
-                    Color.white, Color.black);
+                    Color.black, Color.white);
         }else if(modelField instanceof JailField){
             return new GUI_Jail("default", modelField.getName(), modelField.getSubText(),
                     modelField.getDescription(), Color.white, Color.BLACK);
@@ -177,6 +177,9 @@ public class GameGUIView extends GameView {
                         modelField.getDescription(), "" + ((CompanyField)modelField).getPrice(), Color.white, ((CompanyField)modelField).getColor());
                 return field;
             }
+        }else if(modelField instanceof TaxField){
+            return new GUI_Tax(modelField.getName(),
+                    modelField.getSubText(), modelField.getDescription(), Color.white, Color.black);
         }
 
 
