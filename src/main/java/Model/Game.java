@@ -5,6 +5,7 @@ import Model.Fields.PropertyField;
 import Model.ChanceCards.GetPaidCard;
 import Model.ChanceCards.ChanceCard;
 import Model.ChanceCards.FreePropertyCard;
+import Model.GameLogic.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,18 @@ public class Game {
     private boolean ended;
 
     private GameBoard gameBoard;
+    private GameLogic gameLogic;
 
-    // #----------Constructor----------#
 
+
+
+    public void play(){
+        gameLogic.Beforeturn();
+        gameLogic.PlayTurn();
+        gameLogic.AfterTurn(); 
+    }
+
+    // #----------Constructor----------#    
     public Game(GameBoard gameboard, String[] playerNames){
         this.startMoney = Global.START_PENGE;
         this.JAIL_PRICE = Global.JAIL_PRICE;
