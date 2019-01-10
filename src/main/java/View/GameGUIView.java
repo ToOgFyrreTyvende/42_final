@@ -24,7 +24,7 @@ public class GameGUIView extends GameView {
     public void setGameBoard(GameBoard gameBoard) {
         super.setGameBoard(gameBoard);
         createViewBoard();
-        this.ui = new GUI(fields);
+        this.ui = new GUI(fields,Global.GUI_BOARD_COLOR);
     }
 
     public void setFields(GUI_Field[] fields){
@@ -119,7 +119,14 @@ public class GameGUIView extends GameView {
 
     @Override
     public void setDice(int[] pair) {
-        this.ui.setDice(pair[0],2,6, pair[1],3,7);
+        int[] dicePos = new int[2];
+        for (int i = 0 ; i < 2 ; i++){
+            float _random1 = (float) Math.random();    // 0-1 float
+            int _random2 = (int) (_random1 * 3);   // 0-2
+            dicePos[i] = _random2;
+        }
+
+        this.ui.setDice(pair[0],1+dicePos[0],6, pair[1],1+dicePos[1],7);
     }
 
 

@@ -74,11 +74,11 @@ public class FieldFactory {
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
-                new PropertyField("Frederiksberggade", "Pris: kr. 7000", "Frederiksberggade", 7000, new Color(134,4,190)),
+                new PropertyField("Frederiksberggade", "Pris: kr. 7000", "Frederiksberggade", 7000, new Color(165, 90, 232)),
 
                 new TaxField("Ekstraordinær statsskat", "betal kr. 2000", "Ekstraordinær statsskat",2000,false), // PLZ CHANGE THIS FIELD
 
-                new PropertyField("Rådhuspladsen", "Pris: kr. 8000", "Rådhuspladsen", 8000, new Color(134,4,190))
+                new PropertyField("Rådhuspladsen", "Pris: kr. 8000", "Rådhuspladsen", 8000, new Color(165, 90, 232))
         };
     }
 }
