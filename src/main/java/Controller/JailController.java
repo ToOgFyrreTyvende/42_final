@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Global;
+import Model.Player;
 
 public class JailController {
     public final String[] JailActions = new String[]{
@@ -9,16 +10,19 @@ public class JailController {
             "Brug frikort"
     };
 
-    public void handleActions(String action){
+    private int bailPrice = 1000;
+
+
+    public void handleActions(String action, Player player){
         switch(action){
             case "Betal 1000":
-                payBail();
+                payBail(player);
                 break;
             case "Rul terning":
-                feelingLucky();
+                feelingLucky(player);
                 break;
             case "Brug frikort":
-                bailCard();
+                bailCard(player);
                 break;
             default:
             // Indsæt auktion funktionalitet?
@@ -27,15 +31,18 @@ public class JailController {
     }
 
 
-    public void payBail(){
+    public void payBail(Player player){
+        player.addMoney( - bailPrice);
+
+        player.setLastAction(player.getLastAction() + "\n - har betalt 1000 kr for at komme ud af faengsel.");
+        System.out.println("[INFO] " + player.getName() + " Har betalt 1000 kr for at komme ud af faengsel.");
+    }
+
+    public void feelingLucky(Player player){
 
     }
 
-    public void feelingLucky(){
-
-    }
-
-    public void bailCard(){
+    public void bailCard(Player player){
 
     }
 
