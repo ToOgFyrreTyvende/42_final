@@ -34,7 +34,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public int getPlayerCount() {
-        return ui.getUserInteger("Hvor mange players?", Global.MIN_SPILLERE, Global.MAX_SPILLERE);
+        return ui.getUserInteger("Hvor mange spillere?", Global.MIN_PLAYERS, Global.MAX_PLAYERS);
     }
 
     @Override
@@ -49,23 +49,23 @@ public class GameGUIView extends GameView {
     }
 
     @Override
-    public String getRoundChoiceWithText(String tekst, String... choice) {
-        return ui.getUserButtonPressed(tekst, choice);
+    public String getRoundChoiceWithText(String text, String... choice) {
+        return ui.getUserButtonPressed(text, choice);
     }
 
     @Override
     public void setPlayers(Player... players) {
-        Color[] farver = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
+        Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
 
         for (int i = 0; i < players.length; i++){
 
-            GUI_Car tempcar = new GUI_Car();
-            tempcar.setPrimaryColor(farver[i]);
+            GUI_Car tempCar = new GUI_Car();
+            tempCar.setPrimaryColor(colors[i]);
 
-            GUI_Player tempSpillerGUI = new GUI_Player(players[i].getName(),
-                                        players[i].getMoney(), tempcar);
+            GUI_Player tempPlayerGUI = new GUI_Player(players[i].getName(),
+                                        players[i].getMoney(), tempCar);
             
-            this.players.put(players[i], tempSpillerGUI);
+            this.players.put(players[i], tempPlayerGUI);
             ui.addPlayer(this.players.get(players[i]));
         }
     }
