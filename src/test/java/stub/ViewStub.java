@@ -38,7 +38,7 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public String getRoundChoiceWithText(String tekst, String... choice) {
+    public String getRoundChoiceWithText(String text, String... choice) {
         return "Rul terning";
     }
 

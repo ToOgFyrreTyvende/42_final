@@ -35,8 +35,8 @@ public class TaxField extends Field {
     }
 
     private void payTax(Player player) {
-        int betaling = this.getTax();
-        player.addMoney( - betaling);
+        int payment = this.getTax();
+        player.addMoney( - payment);
     }
 
     public int getTax() {

@@ -52,8 +52,8 @@ public class Player {
         return this.currentMoney;
     }
 
-    void setMoney(int penge){
-        this.currentMoney = penge;
+    void setMoney(int money){
+        this.currentMoney = money;
     }
 
     void setLastDiceResult(int lastDiceResult) {
