@@ -76,6 +76,7 @@ public class Game {
 
             Player _activePlayer = activePlayer;
             int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
+            activePlayer.setField(fieldId);
 
             fieldId = gameRules(fieldId);
 
