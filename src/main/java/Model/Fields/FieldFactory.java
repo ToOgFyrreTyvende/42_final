@@ -57,7 +57,7 @@ public class FieldFactory {
                 new PropertyField("Bredgade", "Pris: kr. 5200", "Bredgade", 5200, Color.white),
                 new PropertyField("Kgs. Nytorv", "Pris: kr. 5200", "Kgs. Nytorv", 5200, Color.white),
 
-                new CompanyField("Coca Cola", "Pris: kr. 3000", "Coca Cola Bryggeriet", 3000, new Color(220,43,25), false),
+                new CompanyField("Carlsberg", "Pris: kr. 3000", "Coca Cola Bryggeriet", 3000, new Color(220,43,25), false),
 
                 new PropertyField("Østergade", "Pris: kr. 5500", "Østergade", 5500, Color.white),
 

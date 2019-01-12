@@ -98,7 +98,7 @@ public class Player {
         return chanceCard;
     }
 
-    boolean isOutOfJailFree() {
+    public boolean isOutOfJailFree() {
         return outOfJailFree;
     }
 
