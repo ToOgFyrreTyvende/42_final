@@ -33,7 +33,7 @@ public class GameBoard {
         return fields;
     }
 
-    public Field getFeltModel(int index){
+    public Field getFieldModel(int index){
         //System.out.println(index);
         return fields[index % Global.FIELD_COUNT];
     }
@@ -41,8 +41,8 @@ public class GameBoard {
     public boolean isOwned(int index){
         Field field = this.getFields()[index % Global.FIELD_COUNT];
         if (field instanceof PropertyField){
-            Player ejer = ((PropertyField) field).getOwner();
-            return ejer != null;
+            Player owner = ((PropertyField) field).getOwner();
+            return owner != null;
         }
         return false;
     }
