@@ -5,6 +5,7 @@ import Model.Game;
 abstract public class Controller {
     private String[] menuActions;
     protected GameController gameController;
+    protected boolean isDropdown = false;
 
     public Controller(GameController gameController, String[] menuActions) {
         this.menuActions = menuActions;
@@ -21,5 +22,12 @@ abstract public class Controller {
         this.menuActions = menuActions;
     }
 
+    protected boolean isDropdown() {
+        return isDropdown;
+    }
+
+    protected void setDropdown(boolean dropdown) {
+        isDropdown = dropdown;
+    }
 }
 

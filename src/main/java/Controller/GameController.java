@@ -66,7 +66,12 @@ public class GameController {
             while (!turnOver) {
                 currentGameMenu = currentController.getMenuActions();
                 System.out.println(currentController.getClass().getSimpleName());
-                String action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
+                String action;
+                if (currentController.isDropdown()){
+                    action = view.getRoundChoiceDropDownWithText("Vælg venligst fra listen", currentGameMenu);
+                }else{
+                    action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
+                }
                 String result = currentController.handleActions(action);
                 currentController = endTurnController;
 
@@ -121,6 +126,7 @@ public class GameController {
 
     private void resetControllers() {
         this.propertyController.setMenuActions(PropertyController.PropertyActions);
+        this.propertyController.setChosenField(null);
     }
 
     public void playerInfoUpdate(Player player){

@@ -12,6 +12,8 @@ public abstract class GameView {
     public abstract String getPlayerName(String text);
     public abstract String getRoundChoice(String ... choice);
     public abstract String getRoundChoiceWithText(String text, String ... choice);
+    public abstract String getRoundChoiceDropDownWithText(String text, String ... choice);
+
     public abstract void resetBoard();
     public abstract void setPlayerField(Player player, int field);
     public abstract void setPlayerField(Player player, int field, int previousField);

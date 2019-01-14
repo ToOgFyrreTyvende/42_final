@@ -65,7 +65,6 @@ public class NormalGameLogic{
             }
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
             landedField.fieldAction(game.getActivePlayer());
-            //chancekort skal tilføjes...
 
             if (game.getActivePlayer().isChanceField()){
                 chanceFieldAction(game.getActivePlayer());

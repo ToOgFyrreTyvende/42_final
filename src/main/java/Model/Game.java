@@ -69,11 +69,29 @@ public class Game {
     }
 
     public void buyFieldPlayerIsOn(Player player){
-        Field playerField = gameBoard.getFieldModel(player.getField());
-        if (playerField instanceof PropertyField){
-            ((PropertyField) playerField).buyField(player);
+        Field fieldPlayerIsOn = gameBoard.getFieldModel(player.getField());
+        if (fieldPlayerIsOn instanceof PropertyField){
+            ((PropertyField) fieldPlayerIsOn).buyField(player);
+
         }
+
     }
+
+    public void buyHouseOnPropertyField(PropertyField field){
+        field.buyHouse();
+    }
+
+    public void buyHotelOnPropertyField(PropertyField field){
+        field.buyHouse();
+    }
+
+    /*for (PropertyField playerOwnedField: gameBoard.getPlayerProperties(player)) {
+        if (playerOwnedField.getColor() == ((PropertyField) fieldPlayerIsOn).getColor() &&
+            playerOwnedField != fieldPlayerIsOn){
+            // Vi ændrer prisen det koster at lande på feltet hvis det er af samme type
+            playerOwnedField.increaseRentIndex();
+        }
+    }*/
 
     public String getPlayerFieldType(Player player){
         Field playerField = gameBoard.getFieldModel(player.getField());

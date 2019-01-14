@@ -13,34 +13,19 @@ public class PropertyController extends Controller {
     };
 
     public static final String[] PropertyManagementActions = new String[]{
-            "Køb bygninger",
-            "Sælg bygninger",
+            "Køb/Sælg bygninger",
             "Afslut Tur"
     };
 
-    public static final String[] BuyBuildingActions = new String[]{
+    public static final String[] BuySellBuildingActions = new String[]{
         "Køb hus",
         "Køb hotel",
-        "Tilbage"
-    };
-
-    public static final String[] SellBuildingActions = new String[]{
         "Sælg hus",
         "Sælg hotel",
         "Tilbage"
     };
 
-    // A menu is a list of strings that will be parsed in the switch/cases beneath
-    public String[] getMenu(Player player, Field field){
-
-        // Is this a property field, and does the player own it?
-        if(field instanceof PropertyField && ((PropertyField) field).getOwner() == player){
-            return PropertyManagementActions;
-        }
-
-        return new String[]{};
-
-    }
+    Field chosenField = null;
 
     public PropertyController(GameController gameController) {
         super(gameController, PropertyActions);
@@ -61,17 +46,18 @@ public class PropertyController extends Controller {
                 gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
                 break;
 
-            case "Køb bygninger":
-                newMenu = buyBuildingMenu();
-                break;
-            case "Sælg bygninger":
-                newMenu = sellBuildingMenu();
+            case "Køb/Sælg bygninger":
+                newMenu = buildingMenu();
+                setDropdown(true);
                 break;
             case "Tilbage":
                 newMenu = PropertyManagementActions;
                 break;
             default:
-            // Indsæt auktion funktionalitet?
+            //Vi antager, at andre menu elementer svarer til, at man har valgt en ejendom fra drop-down menuen
+                setChosenField(gameController.getGame().getGameBoard().getFieldByName(action));
+                newMenu = BuySellBuildingActions;
+                setDropdown(false);
                 break;
         }
 
@@ -94,7 +80,6 @@ public class PropertyController extends Controller {
                 sellBuilding(1, field);
                 break;
             case "Tilbage":
-                menuBack();
                 break;
 
             default:
@@ -104,20 +89,10 @@ public class PropertyController extends Controller {
     }
 
 
-    private void menuBack() {
 
-    }
-
-    public void buyProperty() {
-
-    }
-
-    public String[] buyBuildingMenu(){
-        return BuyBuildingActions;
-    }
-
-    public String[]  sellBuildingMenu(){
-        return SellBuildingActions;
+    public String[] buildingMenu(){
+        return gameController.getGame().getGameBoard().getPlayerPropertyNames(gameController.getGame().getActivePlayer());
+        // return BuyBuildingActions;
     }
 
     //type: 0 -> house, 1 -> hotel
@@ -130,6 +105,13 @@ public class PropertyController extends Controller {
     public void sellBuilding(int type, Field field){
 
     }
-    
+
+    public Field getChosenField() {
+        return chosenField;
+    }
+
+    public void setChosenField(Field chosenField) {
+        this.chosenField = chosenField;
+    }
 }
 

@@ -49,6 +49,11 @@ public class GameGUIView extends GameView {
     }
 
     @Override
+    public String getRoundChoiceDropDownWithText(String text, String... choice) {
+        return ui.getUserSelection(text, choice);
+    }
+
+    @Override
     public String getRoundChoiceWithText(String text, String... choice) {
         return ui.getUserButtonPressed(text, choice);
     }
