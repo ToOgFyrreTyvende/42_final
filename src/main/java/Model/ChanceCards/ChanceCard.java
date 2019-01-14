@@ -15,4 +15,8 @@ abstract public class ChanceCard {
     public void cardAction(Player player, Game game){
         player.setChanceCard(this);
     }
+
+    public String getName() {
+        return name;
+    }
 }
