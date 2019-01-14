@@ -40,7 +40,7 @@ public class Player {
         return field;
     }
 
-    boolean isInJail() {
+    public boolean isInJail() {
         return inJail;
     }
 

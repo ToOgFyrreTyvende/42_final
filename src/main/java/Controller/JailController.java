@@ -1,10 +1,7 @@
 package Controller;
 
-import Model.Dice;
 import Model.Global;
 import Model.Player;
-
-import javax.xml.bind.annotation.XmlElementDecl;
 
 public class JailController {
     public final String[] JailActions = new String[]{
@@ -69,7 +66,7 @@ public class JailController {
             player.setInJail(false);
         } else {
             System.out.println("[INFO] " + player.getName() + " Har ikke et 'frikort' saa du kan ikke goere dette.");
-            handleActions(action, player);
+            // JailController();
         }
     }
 }
