@@ -96,9 +96,9 @@ public class GameController {
                         break;
 
                     default:
-                        turnOver = true;
+                        /*turnOver = true;
                         activePlayer = game.getActivePlayer();
-                        currentController = endTurnController;
+                        currentController = endTurnController;*/
                         break;
                 }
 
