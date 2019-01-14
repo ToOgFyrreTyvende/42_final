@@ -12,7 +12,7 @@ public class FieldFactory {
 
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
-                new PropertyField("Hvidovrevej", "Pris: kr. 1200", "Hvidovrevej", 1, Color.cyan),
+                new PropertyField("Hvidovrevej", "Pris: kr. 1200", "Hvidovrevej", 1200, Color.cyan),
 
                 new TaxField("Betal indkomstskat", "10%/4000 kr.", "Betal enten 10% eller 4000 kr.",4000,true),
 
