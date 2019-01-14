@@ -13,6 +13,9 @@ public class GameController {
     private Game game;
     private GameView view;
     private GameBoard gameBoard;
+    private JailController jailController;
+    private PropertyController propertyController;
+    private UserChoiceController userChoiceController;
 
     
     // #----------Constructor----------#
@@ -20,6 +23,10 @@ public class GameController {
         this.gameBoard = board;
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
+
+        this.jailController = new JailController();
+        this.propertyController = new PropertyController();
+        this.userChoiceController = new UserChoiceController();
 
         initalizeGame();
         playerTurn(game.getActivePlayer());
@@ -53,14 +60,14 @@ public class GameController {
 
             int previousField = activePlayer.getField();
 
-            Player nextPlayer = game.playTurn();
+            activePlayer = game.playTurn();
 
-            if (nextPlayer != null && !this.game.isEnded()){
-                updateUIPlayer(nextPlayer, previousField);
-                view.setDice(nextPlayer.getLastDicePair());
-                view.setCenterText(nextPlayer.toString());
-                nextPlayer.setChanceCard(null);
-                nextPlayer.setLastAction("");
+            if (activePlayer != null && !this.game.isEnded()){
+                updateUIPlayer(activePlayer, previousField);
+                view.setDice(activePlayer.getLastDicePair());
+                view.setCenterText(activePlayer.toString());
+                activePlayer.setChanceCard(null);
+                activePlayer.setLastAction("");
 
                 activePlayer = game.getActivePlayer();
             }else {

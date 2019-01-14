@@ -3,11 +3,11 @@ package Model;
 import java.awt.*;
 
 public class Global {
-    static final int START_MONEY = 30000;
+    public static final int START_MONEY = 30000;
 
     public static final int FIELD_5 = 30000;
 
-    static final int ROUND_MONEY = 4000;
+    public static final int ROUND_MONEY = 4000;
     public static final int JAIL_PRICE = 1000;
 
     public static final int DICE_SIDES = 6;

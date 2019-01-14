@@ -86,16 +86,10 @@ public class Game {
 
             Player _activePlayer = activePlayer;
             int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
-            activePlayer.setField(fieldId);
 
             fieldId = gameRules(fieldId);
 
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
-
-            activeRound.addTurn(tempTurn);
-            activePlayer = players[newIndex];
-
-            checkRound();
 
             return _activePlayer;
         }else{
@@ -147,28 +141,6 @@ public class Game {
 
         activePlayer.getChanceCard().cardAction(activePlayer);
 
-        if (card instanceof GetPaidCard){
-            if (((GetPaidCard) card).isToOthers()){
-                paidByOthers(((GetPaidCard) card).getMoney());
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra hver af de andre players.");
-            }else{
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra banken.");
-                activePlayer.addMoney(((GetPaidCard) card).getMoney());
-            }
-        }else if(card instanceof FreePropertyCard){
-            int fieldIndex = this.getGameBoard().closestColor(
-                    activePlayer.getField(),
-                    ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFields()[fieldIndex];
-
-            if (tempField instanceof PropertyField){
-                ((PropertyField) tempField).fieldAction(activePlayer, 0);
-                activePlayer.setField(fieldIndex);
-            }
-
-        }
     }
 
     private void paidByOthers(int money) {
@@ -199,39 +171,13 @@ public class Game {
         }
     }
 
-    //godt og grundigt Yoinked direkte fra vores 42_del1 af CDIO
-    private void checkRound(){
-        // Vi tjekker om den nuværende spiller er den sidste psiller i spiller listen. Dette gør, at
-        // alle players har mulighed for at vinde i slutningen af en runde
-
-        for (Player player : players) {
-            if (player.getMoney() <= 0) {
-                ended = true;
-                this.setWinner(this.findWinner());
-            }
-        }
+    public int setAndGetDiceResult() {
+        return dice.setAndGetResult();
     }
 
-    private Player findWinner() {
-
-        Player highest = null;
-
-        if (ended) {
-            int max = 0;
-
-
-            for (Player player : players) {
-                if (player.getMoney() > max) {
-                    max = player.getMoney();
-                    highest = player;
-                }
-            }
-        }
-        return (highest);
+    public int[] getDicePair() {
+        return dice.getPair();
     }
-
-    // Getters & setters
-
 
     public Player[] getPlayers() {
         return players;
@@ -245,8 +191,12 @@ public class Game {
         return winner;
     }
 
-    private void setWinner(Player winner) {
+    public void setWinner(Player winner) {
         this.winner = winner;
+    }
+
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
     }
 
     public Player getActivePlayer() {
@@ -258,7 +208,7 @@ public class Game {
     }
 
 
-    void setEnded(boolean ended) {
+    public void setEnded(boolean ended) {
         this.ended = ended;
     }
 
