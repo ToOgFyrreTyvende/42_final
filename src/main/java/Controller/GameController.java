@@ -27,19 +27,19 @@ public class GameController {
 
     private void initalizeGame(){
         // pga. abstrakt klasse, har vi polymorfi, og kan kalde "getantalspillere" for ethvert view
-        int spillerAntal = this.view.getPlayerCount();
-        String[] spillerNavne = new String[spillerAntal];
+        int playerAmount = this.view.getPlayerCount();
+        String[] playerNames = new String[playerAmount];
 
-        for (int i = 0; i < spillerAntal; i++) {
+        for (int i = 0; i < playerAmount; i++) {
             if (i==0){
-                spillerNavne[i] = (this.view.getPlayerName("Indtast venligst første, yngste spillers name."));
+                playerNames[i] = (this.view.getPlayerName("Indtast venligst første, yngste spillers name."));
 
             }else{
-                spillerNavne[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers name."));
+                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers name."));
             }
         }
 
-        game = new Game(this.gameBoard, spillerNavne);
+        game = new Game(this.gameBoard, playerNames);
         this.view.setPlayers(game.getPlayers());
         this.view.resetBoard();
     }
@@ -51,20 +51,20 @@ public class GameController {
         while(!this.game.isEnded()){
             view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
 
-            int forrigeFelt = activePlayer.getField();
+            int previousField = activePlayer.getField();
 
             Player nextPlayer = game.playTurn();
 
             if (nextPlayer != null && !this.game.isEnded()){
-                updateUIPlayer(nextPlayer, forrigeFelt);
-                view.setDice(nextPlayer.getLastDiceResult());
+                updateUIPlayer(nextPlayer, previousField);
+                view.setDice(nextPlayer.getLastDicePair());
                 view.setCenterText(nextPlayer.toString());
                 nextPlayer.setChanceCard(null);
                 nextPlayer.setLastAction("");
 
                 activePlayer = game.getActivePlayer();
             }else {
-                view.renderPlayerData(activePlayer, forrigeFelt);
+                view.renderPlayerData(activePlayer, previousField);
                 view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
                         this.game.getWinner().getName());
                 view.endText("spillet er slut!");
@@ -72,8 +72,8 @@ public class GameController {
         }
     }
 
-    private void updateUIPlayer(Player player, int forrigeFelt){
-        view.renderPlayerData(player, forrigeFelt);
+    private void updateUIPlayer(Player player, int previousField){
+        view.renderPlayerData(player, previousField);
     }
 
     Game getGame() {

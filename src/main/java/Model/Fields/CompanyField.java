@@ -1,47 +1,28 @@
 package Model.Fields;
 
 import Model.Player;
+import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Field;
-import gui_fields.GUI_Street;
+import gui_fields.GUI_Shipping;
+import gui_resources.Attrs;
 
 import java.awt.*;
 
-/**
- * @author Xephyz
- * Denne klasse holder styr på alle felter der handler om Ejendomme som kan købes af spillere
- */
+public class CompanyField extends Field {
 
-public class PropertyField extends Field {
-    // Variables
+    private Color color;
+    private boolean isShipping;
     private int price;
     private int rent;
     private Player owner;
-    private Color color;
 
-    // #----------Constructor----------#
-    public PropertyField(String name, String subText, String description, int price, Color color) {
+    public CompanyField(String name, String subText, String description, int price, Color color, boolean isShipping) {
         super(name, subText, description);
         this.price = price;
+        this.rent = price/2; // SKAL ÆNDRET SENERE !!!
         this.color = color;
-        this.rent = price;
+        this.isShipping = isShipping;
     }
-
-    // #--------------Get--------------#
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public String getSubText() {
-        return super.getSubText();
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
 
     @Override
     public void fieldAction(Player player) {
@@ -57,19 +38,6 @@ public class PropertyField extends Field {
                     this.getPrice()+ " kr.");
 
             buyField(player);
-        }
-    }
-
-    public void fieldAction(Player player, int price) {
-        if (this.isOwned()){
-            payToPlayerLogic(player);
-        }else{
-            player.setLastAction(player.getLastAction() + "\n - Har fået " +
-                    this.getName() + " GRATIS!");
-            System.out.println("[INFO] " + player.getName() + " Har gratis fået " +
-                    this.getName());
-            if (price == 0)
-                this.setOwner(player);
         }
     }
 
@@ -97,17 +65,19 @@ public class PropertyField extends Field {
         this.setOwner(player);
     }
 
-
-    public int getPrice() {
-        return price;
+    @Override
+    public String getName() {
+        return super.getName();
     }
 
-    public int getRent() {
-        return rent;
+    @Override
+    public String getSubText() {
+        return super.getSubText();
     }
 
-    public Player getOwner() {
-        return owner;
+    @Override
+    public String getDescription() {
+        return super.getDescription();
     }
 
     public boolean isOwned(){
@@ -119,20 +89,39 @@ public class PropertyField extends Field {
         return color;
     }
 
-    // #--------------Get--------------#
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public boolean isShipping() {
+        return isShipping;
+    }
+
+    public void setShipping(boolean shipping) {
+        isShipping = shipping;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public void setRent(int rent) {
-        this.rent = rent;
+    public Player getOwner() {
+        return owner;
     }
 
-    private void setOwner(Player owner) {
+    public void setOwner(Player owner) {
         this.owner = owner;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public int getRent() {
+        return rent;
+    }
+
+    public void setRent(int rent) {
+        this.rent = rent;
     }
 }

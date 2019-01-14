@@ -29,12 +29,6 @@ public class JailField extends Field {
     }
 
     @Override
-    public GUI_Field makeGUIFields() {
-        return new GUI_Jail("default", this.getName(), this.getSubText(),
-                this.getDescription(), Color.white, Color.BLACK);
-    }
-
-    @Override
     public void fieldAction(Player player) {
     }
 }

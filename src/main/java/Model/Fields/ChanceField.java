@@ -29,11 +29,6 @@ public class ChanceField extends Field {
     }
 
     @Override
-    public GUI_Field makeGUIFields() {
-        return new GUI_Chance("?", this.getSubText(), this.getDescription(), Color.white, Color.black);
-    }
-
-    @Override
     public void fieldAction(Player player) {
         player.setLastAction(player.getLastAction() + "\n - Er landet på et chancekort.");
         player.setChanceField(true);

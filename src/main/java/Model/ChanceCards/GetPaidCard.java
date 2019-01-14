@@ -6,8 +6,8 @@ public class GetPaidCard extends ChanceCard {
     private int money;
     private boolean toOthers;
 
-    GetPaidCard(String tekst, String navn, int money, boolean toOthers) {
-        super(tekst, navn);
+    GetPaidCard(String text, String name, int money, boolean toOthers) {
+        super(text, name);
         this.money = money;
         this.toOthers = toOthers;
     }

@@ -8,22 +8,16 @@ import java.awt.*;
 
 public class GameBoard {
 
-    private Field[] fieldsModel;
-    private gui_fields.GUI_Field[] fieldsGUI;
+    private Field[] fields;
 
     private ChanceCard[] chanceCard;
 
     public GameBoard() {
-        this.fieldsModel = new Field[Global.FIELD_COUNT];
-        this.fieldsGUI = new gui_fields.GUI_Field[Global.FIELD_COUNT];
+        this.fields = new Field[Global.FIELD_COUNT];
 
         this.chanceCard = makeCards();
-        this.fieldsModel = makeFields();
+        this.fields = makeFields();
 
-        for (int i = 0; i < fieldsGUI.length; i++) {
-            gui_fields.GUI_Field temp = fieldsModel[i].makeGUIFields();
-            fieldsGUI[i] = temp;
-        }
     }
 
     private Field[] makeFields() {
@@ -35,24 +29,20 @@ public class GameBoard {
     }
 
 
-    Field[] getFieldsModel(){
-        return fieldsModel;
+    public Field[] getFields(){
+        return fields;
     }
 
-    Field getFeltModel(int index){
+    public Field getFieldModel(int index){
         //System.out.println(index);
-        return fieldsModel[index % Global.FIELD_COUNT];
-    }
-
-    public gui_fields.GUI_Field[] getFieldsGUI() {
-        return fieldsGUI;
+        return fields[index % Global.FIELD_COUNT];
     }
 
     public boolean isOwned(int index){
-        Field field = this.getFieldsModel()[index % Global.FIELD_COUNT];
+        Field field = this.getFields()[index % Global.FIELD_COUNT];
         if (field instanceof PropertyField){
-            Player ejer = ((PropertyField) field).getOwner();
-            return ejer != null;
+            Player owner = ((PropertyField) field).getOwner();
+            return owner != null;
         }
         return false;
     }
@@ -78,11 +68,12 @@ public class GameBoard {
     }
 
     int closestColor(int index, Color color){
-        Field[] fields = this.getFieldsModel();
+        Field[] fields = this.getFields();
 
         for (int i = 0; i < fields.length; i++) {
             int correctIndex = i + index;
             Field tempField = fields[correctIndex % Global.FIELD_COUNT];
+
             if (tempField instanceof PropertyField &&
                 ((PropertyField) tempField).getColor() == color){
                 return correctIndex % Global.FIELD_COUNT;
@@ -100,9 +91,9 @@ public class GameBoard {
 
         // Tjekker om et felt er et "property-felt" og om det ejes af den aktuelle spiller og indsætter i "tempProp..".
         // Counteren tæller en op hver gang et ejet felt er registreret.
-        for (int i = 0; i < fieldsModel.length; i++) {
-            if (fieldsModel[i] instanceof PropertyField && ((PropertyField) fieldsModel[i]).getOwner() == player) {
-                tempProperties[counter] = fieldsModel[i];
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i] instanceof PropertyField && ((PropertyField) fields[i]).getOwner() == player) {
+                tempProperties[counter] = fields[i];
                 counter++;
             }
         }

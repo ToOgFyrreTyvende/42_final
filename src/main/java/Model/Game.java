@@ -20,7 +20,7 @@ public class Game {
     private final int ROUND_MONEY;
     private final int JAIL_PRICE;
 
-    //private int[] muligeStartPenge = {20, 18, 16};
+    //private int[] possibleStartMoney = {20, 18, 16};
     private int startMoney;
 
     private Player[] players;
@@ -37,7 +37,7 @@ public class Game {
     // #----------Constructor----------#
 
     public Game(GameBoard gameboard, String[] playerNames){
-        this.startMoney = Global.START_PENGE;
+        this.startMoney = Global.START_MONEY;
         this.JAIL_PRICE = Global.JAIL_PRICE;
         this.ROUND_MONEY = Global.ROUND_MONEY;
 
@@ -56,10 +56,10 @@ public class Game {
         ended = false;
     }
 
-    private void createPlayers(String[] spillerNavne){
-        Player[] players = new Player[spillerNavne.length];
-        for (int i = 0; i < spillerNavne.length; i++) {
-            players[i] = new Player(spillerNavne[i]);
+    private void createPlayers(String[] playerNames){
+        Player[] players = new Player[playerNames.length];
+        for (int i = 0; i < playerNames.length; i++) {
+            players[i] = new Player(playerNames[i]);
             players[i].setMoney(startMoney);
         }
 
@@ -76,6 +76,7 @@ public class Game {
 
             Player _activePlayer = activePlayer;
             int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
+            activePlayer.setField(fieldId);
 
             fieldId = gameRules(fieldId);
 
@@ -110,12 +111,12 @@ public class Game {
 
         if (!ended){
             if (fieldId < activePlayer.getField()){
-                System.out.println("[INFO] " + activePlayer.getName() + " har passeret start. +2M");
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået 2M for at passere start.");
+                System.out.println("[INFO] " + activePlayer.getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
+                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
                 addStartMoney(activePlayer);
             }
-            Field landetField = this.getGameBoard().getFeltModel(fieldId);
-            landetField.fieldAction(activePlayer);
+            Field landedField = this.getGameBoard().getFieldModel(fieldId);
+            landedField.fieldAction(activePlayer);
             //chancekort skal tilføjes...
 
             if (activePlayer.isChanceField()){
@@ -140,21 +141,21 @@ public class Game {
             if (((GetPaidCard) card).isToOthers()){
                 paidByOthers(((GetPaidCard) card).getMoney());
                 activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + "M fra hver af de andre players.");
+                        + " kr. fra hver af de andre players.");
             }else{
                 activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + "M fra banken.");
+                        + " kr. fra banken.");
                 activePlayer.addMoney(((GetPaidCard) card).getMoney());
             }
         }else if(card instanceof FreePropertyCard){
-            int feltIndex = this.getGameBoard().closestColor(
+            int fieldIndex = this.getGameBoard().closestColor(
                     activePlayer.getField(),
                     ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFieldsModel()[feltIndex];
+            Field tempField = this.getGameBoard().getFields()[fieldIndex];
 
             if (tempField instanceof PropertyField){
                 ((PropertyField) tempField).fieldAction(activePlayer, 0);
-                activePlayer.setFelt(feltIndex);
+                activePlayer.setField(fieldIndex);
             }
 
         }
@@ -176,13 +177,15 @@ public class Game {
         player.addMoney(ROUND_MONEY);
     }
 
-    private void UpdateActivePlayerWithThrow(int feltId, int slag) {
+    private void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
         if (activePlayer.isInJail()){
-            activePlayer.setFelt(this.getGameBoard().getJail());
-            activePlayer.setLastDiceResult(slag);
+            activePlayer.setField(this.getGameBoard().getJail());
+            activePlayer.setLastDiceResult(diceThrow);
+            activePlayer.setLastDicePair(this.dice.getPair());
         }else{
-            activePlayer.setFelt(feltId);
-            activePlayer.setLastDiceResult(slag);
+            activePlayer.setField(fieldId);
+            activePlayer.setLastDiceResult(diceThrow);
+            activePlayer.setLastDicePair(this.dice.getPair());
         }
     }
 
