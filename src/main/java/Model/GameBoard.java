@@ -67,7 +67,7 @@ public class GameBoard {
         return this.getChanceCard()[nr];
     }
 
-    int closestColor(int index, Color color){
+    public int closestColor(int index, Color color){
         Field[] fields = this.getFields();
 
         for (int i = 0; i < fields.length; i++) {
@@ -80,6 +80,36 @@ public class GameBoard {
             }
         }
 
+        return -1;
+    }
+
+    int closestName(int index, String name){
+        Field[] fields = this.getFields();
+
+        for (int i = 0; i < fields.length; i++) {
+            int correctIndex = i + index;
+            Field tempField = fields[correctIndex % Global.FIELD_COUNT];
+
+            if (tempField instanceof PropertyField &&
+                    ((PropertyField) tempField).getName() == name){
+                return correctIndex % Global.FIELD_COUNT;
+            }
+        }
+        return -1;
+    }
+
+    int getClosestShipping(int index){
+        Field[] fields = this.getFields();
+
+        for (int i = 0; i < fields.length; i++) {
+            int correctIndex = i + index;
+            Field tempField = fields[correctIndex % Global.FIELD_COUNT];
+
+            if (tempField instanceof CompanyField &&
+                    ((CompanyField) tempField).isShipping()){
+                return correctIndex % Global.FIELD_COUNT;
+            }
+        }
         return -1;
     }
 

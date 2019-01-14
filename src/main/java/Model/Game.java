@@ -20,7 +20,6 @@ public class Game {
     private final int ROUND_MONEY;
     private final int JAIL_PRICE;
 
-    //private int[] possibleStartMoney = {20, 18, 16};
     private int startMoney;
 
     private Player[] players;
@@ -135,19 +134,9 @@ public class Game {
         ChanceCard card = this.getGameBoard().randomChanceCard();
         activePlayer.setChanceCard(card);
 
-        activePlayer.getChanceCard().cardAction(activePlayer);
+        activePlayer.getChanceCard().cardAction(activePlayer, this);
 
-        if (card instanceof GetPaidCard){
-            if (((GetPaidCard) card).isToOthers()){
-                paidByOthers(((GetPaidCard) card).getMoney());
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra hver af de andre players.");
-            }else{
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra banken.");
-                activePlayer.addMoney(((GetPaidCard) card).getMoney());
-            }
-        }else if(card instanceof FreePropertyCard){
+        if(card instanceof FreePropertyCard){
             int fieldIndex = this.getGameBoard().closestColor(
                     activePlayer.getField(),
                     ((FreePropertyCard) card).getColor());
@@ -252,7 +241,7 @@ public class Game {
         this.ended = ended;
     }
 
-    private GameBoard getGameBoard() {
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
 

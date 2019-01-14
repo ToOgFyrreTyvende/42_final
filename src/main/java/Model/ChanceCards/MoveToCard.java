@@ -1,5 +1,6 @@
 package Model.ChanceCards;
 
+import Model.Game;
 import Model.Player;
 
 public class MoveToCard extends ChanceCard {
@@ -12,8 +13,8 @@ public class MoveToCard extends ChanceCard {
 
 
     @Override
-    public void cardAction(Player player) {
-        super.cardAction(player);
+    public void cardAction(Player player, Game game) {
+        super.cardAction(player, game);
         player.setField(fieldIndex);
         player.setLastAction(player.getLastAction() + "\n - Er rykket til feltet " + fieldIndex + 1);
     }
