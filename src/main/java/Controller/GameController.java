@@ -81,7 +81,7 @@ public class GameController {
                     continue;
                 }
 
-
+                renderBuilding();
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
@@ -224,5 +224,9 @@ public class GameController {
 
     public void setCurrentGameMenu(String[] currentGameMenu) {
         this.currentGameMenu = currentGameMenu;
+    }
+
+    public void renderBuilding() {
+        view.renderBuildings();
     }
 }

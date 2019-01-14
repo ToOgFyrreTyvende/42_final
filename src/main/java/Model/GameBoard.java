@@ -179,11 +179,11 @@ public class GameBoard {
         }
     }
 
-    public Field getFieldByName(String action) {
+    public PropertyField getPropertyFieldByName(String action) {
         for (Field property : getFields()) {
             if (property instanceof PropertyField){
                 if (property.getName() == action){
-                    return property;
+                    return (PropertyField) property;
                 }
             }
         }

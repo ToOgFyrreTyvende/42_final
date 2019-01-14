@@ -25,7 +25,7 @@ public class PropertyController extends Controller {
         "Tilbage"
     };
 
-    Field chosenField = null;
+    PropertyField chosenField = null;
 
     public PropertyController(GameController gameController) {
         super(gameController, PropertyActions);
@@ -45,7 +45,6 @@ public class PropertyController extends Controller {
                 newMenu = PropertyManagementActions;
                 gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
                 break;
-
             case "Køb/Sælg bygninger":
                 newMenu = buildingMenu();
                 setDropdown(true);
@@ -53,9 +52,26 @@ public class PropertyController extends Controller {
             case "Tilbage":
                 newMenu = PropertyManagementActions;
                 break;
+            case "Køb hus":
+                buyBuilding(0);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Køb hotel":
+                buyBuilding(1);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Sælg hus":
+                sellBuilding(0);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Sælg hotel":
+                sellBuilding(1);
+                newMenu = BuySellBuildingActions;
+                break;
+
             default:
             //Vi antager, at andre menu elementer svarer til, at man har valgt en ejendom fra drop-down menuen
-                setChosenField(gameController.getGame().getGameBoard().getFieldByName(action));
+                setChosenField(gameController.getGame().getGameBoard().getPropertyFieldByName(action));
                 newMenu = BuySellBuildingActions;
                 setDropdown(false);
                 break;
@@ -63,29 +79,6 @@ public class PropertyController extends Controller {
 
         super.setMenuActions(newMenu);
         return action;
-    }
-
-    public void handlePropertyAction(String action, Field field){
-        switch(action){
-            case "Køb hus":
-                buyBuilding(0, field);
-                break;
-            case "Køb hotel":
-                buyBuilding(1, field);
-                break;
-            case "Sælg hus":
-                sellBuilding(0, field);
-                break;
-            case "Sælg hotel":
-                sellBuilding(1, field);
-                break;
-            case "Tilbage":
-                break;
-
-            default:
-            // Indsæt (eller evt yoink) auktion funktionalitet?
-                break;
-        }
     }
 
 
@@ -98,19 +91,27 @@ public class PropertyController extends Controller {
     //type: 0 -> house, 1 -> hotel
 
     // If player owns prop -> player pays >:3
-    public void buyBuilding(int type, Field field){
-
+    public void buyBuilding(int type){
+        if (type == 0){
+            chosenField.buyHouse();
+        }else{
+            chosenField.buyHotel();
+        }
     }
 
-    public void sellBuilding(int type, Field field){
+    public void sellBuilding(int type){
+        if (type == 0){
 
+        }else{
+
+        }
     }
 
     public Field getChosenField() {
         return chosenField;
     }
 
-    public void setChosenField(Field chosenField) {
+    public void setChosenField(PropertyField chosenField) {
         this.chosenField = chosenField;
     }
 }

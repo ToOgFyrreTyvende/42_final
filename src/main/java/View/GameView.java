@@ -1,5 +1,6 @@
 package View;
 
+import Model.Fields.PropertyField;
 import Model.GameBoard;
 import Model.Player;
 
@@ -17,6 +18,7 @@ public abstract class GameView {
     public abstract void resetBoard();
     public abstract void setPlayerField(Player player, int field);
     public abstract void setPlayerField(Player player, int field, int previousField);
+    public abstract void renderBuildings();
 
     public abstract void setPlayerMoney(Player player, int money);
     public abstract void renderPlayerData(Player player, int previousField);

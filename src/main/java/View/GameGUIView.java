@@ -59,6 +59,23 @@ public class GameGUIView extends GameView {
     }
 
     @Override
+    public void renderBuildings() {
+        Model.Fields.Field[] modelFields = getGameBoard().getFields();
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i] instanceof GUI_Street) {
+                if (modelFields[i] instanceof PropertyField){
+                    PropertyField tempField = (PropertyField) modelFields[i];
+                    System.out.println(tempField.getHouses());
+                    ((GUI_Street) fields[i]).setHouses(tempField.getHouses());
+                    ((GUI_Street) fields[i]).setHotel(tempField.isHotel());
+                }
+
+            }
+
+        }
+    }
+
+    @Override
     public void setPlayers(Player... players) {
         Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
 
