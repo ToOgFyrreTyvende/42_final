@@ -6,9 +6,9 @@ abstract public class Controller {
     private String[] menuActions;
     protected GameController gameController;
 
-    public Controller(GameController game, String[] menuActions) {
+    public Controller(GameController gameController, String[] menuActions) {
         this.menuActions = menuActions;
-        this.gameController = game;
+        this.gameController = gameController;
     }
 
     abstract String handleActions(String action);
@@ -20,5 +20,6 @@ abstract public class Controller {
     public void setMenuActions(String[] menuActions) {
         this.menuActions = menuActions;
     }
+
 }
 

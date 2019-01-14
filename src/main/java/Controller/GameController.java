@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Fields.PropertyField;
 import Model.Game;
 import Model.GameBoard;
 import Model.Player;
@@ -57,38 +58,69 @@ public class GameController {
 
     private void testPlayTurn(Player player){
         Player activePlayer = player;
-        game.setupNextPlayer();
-        boolean turnOver = false;
-        while (!turnOver){
-            currentGameMenu = currentController.getMenuActions();
-            String action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
-            currentController.handleActions(action);
+        while(!this.game.isEnded()){
+            resetControllers();
+            currentController = diceController;
+            game.setupNextPlayer();
+            boolean turnOver = false;
+            while (!turnOver) {
+                currentGameMenu = currentController.getMenuActions();
+                System.out.println(currentController.getClass().getSimpleName());
+                String action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
+                String result = currentController.handleActions(action);
+                currentController = endTurnController;
 
-            String fieldTypeString = game.getPlayerFieldType(activePlayer);
-            System.out.println(fieldTypeString);
-            switch (fieldTypeString){
-                case "PropertyField":
-                    currentController = propertyController;
-                    currentGameMenu = propertyController.PropertyActions;
-                    break;
-                case "PropertyFieldOwned":
-                    currentController = endTurnController;
-                    currentGameMenu = endTurnController.EndActions;
-                    break;
-                case "PropertyFieldMe":
-                    currentController = propertyController;
-                    currentGameMenu = propertyController.PropertyManagementActions;
-                    break;
+                if (result.equals("Afslut Tur")) {
+                    turnOver = true;
+                    activePlayer = game.getActivePlayer();
+                    continue;
+                }
+
+
+
+                String fieldTypeString = game.getPlayerFieldType(activePlayer);
+                switch (fieldTypeString) {
+                    case "PropertyField":
+                        System.out.println("In propfield case");
+
+                        currentController = propertyController;
+                        currentGameMenu = PropertyController.PropertyActions;
+                        break;
+                    case "PropertyFieldOwned":
+                        currentController = endTurnController;
+                        currentGameMenu = EndTurnController.EndActions;
+                        break;
+                    case "PropertyFieldMe":
+                        currentController = propertyController;
+                        currentGameMenu = PropertyController.PropertyManagementActions;
+                        break;
+
+                    default:
+                        turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        currentController = endTurnController;
+                        break;
+                }
+
+                if (this.game.isEnded()){
+                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                            this.game.getWinner().getName());
+                    view.endText("spillet er slut!");
+                }
             }
 
-            /*if (!activePlayer.isInJail()){
-                game.throwDice();
-                playerInfoUpdate(activePlayer);
+                /*if (!activePlayer.isInJail()){
+                    game.throwDice();
+                    playerInfoUpdate(activePlayer);
 
-            }else{
-                currentGameMenu = jailController.JailActions;
-            }*/
-       }
+                }else{
+                    currentGameMenu = jailController.JailActions;
+                }*/
+           }
+    }
+
+    private void resetControllers() {
+        this.propertyController.setMenuActions(PropertyController.PropertyActions);
     }
 
     public void playerInfoUpdate(Player player){
@@ -170,5 +202,21 @@ public class GameController {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
+    }
+
+    public Controller getCurrentController() {
+        return currentController;
+    }
+
+    public void setCurrentController(Controller currentController) {
+        this.currentController = currentController;
+    }
+
+    public String[] getCurrentGameMenu() {
+        return currentGameMenu;
+    }
+
+    public void setCurrentGameMenu(String[] currentGameMenu) {
+        this.currentGameMenu = currentGameMenu;
     }
 }

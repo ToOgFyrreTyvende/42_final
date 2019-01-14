@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.PropertyController;
+import Model.Fields.CompanyField;
 import Model.Fields.Field;
 import Model.ChanceCards.ChanceCard;
 import Model.Fields.PropertyField;
@@ -76,6 +77,7 @@ public class Game {
 
     public String getPlayerFieldType(Player player){
         Field playerField = gameBoard.getFieldModel(player.getField());
+
         if (playerField instanceof PropertyField){
             if (((PropertyField) playerField).getOwner() == null){
                 return "PropertyField";
@@ -86,6 +88,18 @@ public class Game {
                 return "PropertyFieldOwned";
             }
         }
+
+        if (playerField instanceof CompanyField){
+            if (((CompanyField) playerField).getOwner() == null){
+                return "CompanyField";
+            }else{
+                if (((CompanyField) playerField).getOwner() == player){
+                    return "CompanyFieldMe";
+                }
+                return "CompanyFieldOwned";
+            }
+        }
+
         return playerField.getClass().getSimpleName();
     }
 

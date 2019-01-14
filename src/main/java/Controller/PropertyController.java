@@ -9,11 +9,13 @@ public class PropertyController extends Controller {
     public static final String[] PropertyActions = new String[]{
             "Køb ejendom",
             "Sæt til auktion"
+            //"Afslut Tur"
     };
 
     public static final String[] PropertyManagementActions = new String[]{
-        "Køb bygninger",
-        "Sælg bygninger"
+            "Køb bygninger",
+            "Sælg bygninger",
+            "Afslut Tur"
     };
 
     public static final String[] BuyBuildingActions = new String[]{
@@ -49,13 +51,16 @@ public class PropertyController extends Controller {
         String[] newMenu = new String[]{"FEJL", action};
 
         switch(action){
+            case "Afslut Tur":
+            case "Sæt til auktion":
+                gameController.getGame().endPlayerTurn();
+                break;
+
             case "Køb ejendom":
                 newMenu = PropertyManagementActions;
                 gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
                 break;
 
-            case "Sæt til auktion":
-                break;
             case "Køb bygninger":
                 newMenu = buyBuildingMenu();
                 break;
