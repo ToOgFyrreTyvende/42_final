@@ -4,9 +4,10 @@ import Model.*;
 
 public abstract class GameLogic {
 
-    private String memes;
+    private Game game;
 
-    GameLogic(){
+    GameLogic(Game game){
+        this.game = game;
     }
 
     
@@ -14,10 +15,4 @@ public abstract class GameLogic {
     abstract public Player PlayTurn();
     abstract public int AfterTurn();
 
-    
-    
-    
-
-    
-    }
 }
