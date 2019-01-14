@@ -47,7 +47,7 @@ public class GameBoard {
         return false;
     }
 
-    int getJail(){
+    public int getJail(){
         return Global.JAIL_INDEX;
     }
 
@@ -59,7 +59,7 @@ public class GameBoard {
         this.chanceCard = chanceCard;
     }
 
-    ChanceCard randomChanceCard(){
+    public ChanceCard randomChanceCard(){
         float _random1 = (float) Math.random();
         int _random2 = (int) (_random1 * (this.getChanceCard().length - 1));
         int nr = _random2 + 1;

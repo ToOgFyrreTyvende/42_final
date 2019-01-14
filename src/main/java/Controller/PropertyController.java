@@ -5,19 +5,24 @@ import Model.Fields.PropertyField;
 import Model.Player;
 
 
-public class PropertyController {
-    public final String[] PropertyActions = new String[]{
+public class PropertyController extends Controller {
+    public static final String[] PropertyActions = new String[]{
+            "Køb ejendom",
+            "Sæt til auktion"
+    };
+
+    public static final String[] PropertyManagementActions = new String[]{
         "Køb bygninger",
         "Sælg bygninger"
     };
 
-    public final String[] BuyBuildingActions = new String[]{
+    public static final String[] BuyBuildingActions = new String[]{
         "Køb hus",
         "Køb hotel",
         "Tilbage"
     };
 
-    public final String[] SellBuildingActions = new String[]{
+    public static final String[] SellBuildingActions = new String[]{
         "Sælg hus",
         "Sælg hotel",
         "Tilbage"
@@ -28,32 +33,45 @@ public class PropertyController {
 
         // Is this a property field, and does the player own it?
         if(field instanceof PropertyField && ((PropertyField) field).getOwner() == player){
-            return PropertyActions;
+            return PropertyManagementActions;
         }
 
         return new String[]{};
 
     }
 
+    public PropertyController(GameController gameController) {
+        super(gameController, PropertyActions);
+    }
 
-    public String[] handleActions(String action){
+    @Override
+    public String handleActions(String action){
         String[] newMenu = new String[]{"FEJL", action};
 
         switch(action){
-            // case "Køb ejendom":
-            //     newMenu = buyProperty();
-            //     break;
+            case "Køb ejendom":
+                newMenu = PropertyManagementActions;
+                gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
+                break;
+
+            case "Sæt til auktion":
+                break;
             case "Køb bygninger":
                 newMenu = buyBuildingMenu();
                 break;
             case "Sælg bygninger":
                 newMenu = sellBuildingMenu();
                 break;
+            case "Tilbage":
+                newMenu = PropertyManagementActions;
+                break;
             default:
             // Indsæt auktion funktionalitet?
                 break;
-            }
-        return newMenu;
+        }
+
+        super.setMenuActions(newMenu);
+        return action;
     }
 
     public void handlePropertyAction(String action, Field field){

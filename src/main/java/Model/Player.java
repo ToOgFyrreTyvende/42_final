@@ -10,6 +10,9 @@ import Model.ChanceCards.ChanceCard;
  * ------------------------------------------------------------/
  */
 public class Player {
+    // We need previous field to remove user from it in the GUI
+
+    private int previousField = 0;
     private int field = 0;
     private String name;
     private int currentMoney = 1;
@@ -56,7 +59,7 @@ public class Player {
         this.currentMoney = money;
     }
 
-    void setLastDiceResult(int lastDiceResult) {
+    public void setLastDiceResult(int lastDiceResult) {
         this.lastDiceResult = lastDiceResult;
     }
 
@@ -94,15 +97,15 @@ public class Player {
         return null;
     }
 
-    ChanceCard getChanceCard() {
+    public ChanceCard getChanceCard() {
         return chanceCard;
     }
 
-    boolean isOutOfJailFree() {
+    public boolean isOutOfJailFree() {
         return outOfJailFree;
     }
 
-    boolean isChanceField() {
+    public boolean isChanceField() {
         return chanceField;
     }
 
@@ -126,5 +129,13 @@ public class Player {
         }else {
             return "Player: " + this.getName() + " " + this.getLastAction();
         }
+    }
+
+    public int getPreviousField() {
+        return previousField;
+    }
+
+    public void setPreviousField(int previousField) {
+        this.previousField = previousField;
     }
 }

@@ -1,10 +1,9 @@
 package Model;
 
+import Controller.PropertyController;
 import Model.Fields.Field;
-import Model.Fields.PropertyField;
-import Model.ChanceCards.GetPaidCard;
 import Model.ChanceCards.ChanceCard;
-import Model.ChanceCards.FreePropertyCard;
+import Model.Fields.PropertyField;
 import Model.GameLogic.*;
 
 import java.util.ArrayList;
@@ -33,16 +32,7 @@ public class Game {
     private boolean ended;
 
     private GameBoard gameBoard;
-    private GameLogic gameLogic;
-
-
-
-
-    public void play(){
-        gameLogic.BeforeTurn();
-        gameLogic.PlayTurn();
-        gameLogic.AfterTurn();
-    }
+    private NormalGameLogic gameLogic;
 
     // #----------Constructor----------#
 
@@ -62,8 +52,9 @@ public class Game {
         activeRound = round.get(round.size()-1);
 
         this.gameBoard = gameboard;
-
         ended = false;
+
+        gameLogic = new NormalGameLogic(this);
     }
 
     private void createPlayers(String[] playerNames){
@@ -76,111 +67,26 @@ public class Game {
         this.players = players;
     }
 
-
-    public Player playTurn(){
-        if (!ended) {
-            int nowIndex = java.util.Arrays.asList(players).indexOf(activePlayer);
-            int newIndex = (nowIndex + 1) % players.length;
-            int diceThrow = dice.setAndGetResult();
-            int[] tempTurn = {diceThrow, nowIndex};
-
-            Player _activePlayer = activePlayer;
-            int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
-
-            fieldId = gameRules(fieldId);
-
-            UpdateActivePlayerWithThrow(fieldId, diceThrow);
-
-            return _activePlayer;
-        }else{
-            return null;
+    public void buyFieldPlayerIsOn(Player player){
+        Field playerField = gameBoard.getFieldModel(player.getField());
+        if (playerField instanceof PropertyField){
+            ((PropertyField) playerField).buyField(player);
         }
     }
 
-    int gameRules(int fieldId) {
-        if (activePlayer.isInJail()){
-            if (!activePlayer.isOutOfJailFree()){
-                System.out.println("[INFO] " + activePlayer.getName() + " Har betalt " +
-                        JAIL_PRICE + " For at komme ud af fængslet");
-                activePlayer.setLastAction("\n - Har betalt for fængsel.");
-                activePlayer.addMoney(-JAIL_PRICE);
+    public String getPlayerFieldType(Player player){
+        Field playerField = gameBoard.getFieldModel(player.getField());
+        if (playerField instanceof PropertyField){
+            if (((PropertyField) playerField).getOwner() == null){
+                return "PropertyField";
             }else{
-                activePlayer.setLastAction("\n - Har brugt sit løsladelses chancekort.");
-                System.out.println("[INFO] " + activePlayer.getName() + " Kom ud af fængslet med deres 'frikort'");
+                if (((PropertyField) playerField).getOwner() == player){
+                    return "PropertyFieldMe";
+                }
+                return "PropertyFieldOwned";
             }
-
-            activePlayer.setInJail(false);
-            checkRound();
         }
-
-        if (!ended){
-            if (fieldId < activePlayer.getField()){
-                System.out.println("[INFO] " + activePlayer.getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
-                addStartMoney(activePlayer);
-            }
-            Field landedField = this.getGameBoard().getFieldModel(fieldId);
-            landedField.fieldAction(activePlayer);
-            //chancekort skal tilføjes...
-
-            if (activePlayer.isChanceField()){
-                chanceFieldAction(activePlayer);
-                return activePlayer.getField();
-            }
-
-        }
-
-        return fieldId;
-    }
-
-    private void chanceFieldAction(Player activePlayer) {
-        activePlayer.setChanceField(false);
-
-        ChanceCard card = this.getGameBoard().randomChanceCard();
-        activePlayer.setChanceCard(card);
-
-        activePlayer.getChanceCard().cardAction(activePlayer, this);
-
-        if(card instanceof FreePropertyCard){
-            int fieldIndex = this.getGameBoard().closestColor(
-                    activePlayer.getField(),
-                    ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFields()[fieldIndex];
-
-            if (tempField instanceof PropertyField){
-                ((PropertyField) tempField).fieldAction(activePlayer, 0);
-                activePlayer.setField(fieldIndex);
-            }
-
-        }
-    }
-
-    private void paidByOthers(int money) {
-        // Vi trækker penge fra alle players
-        for (Player player : players) {
-            player.addMoney(- money);
-        }
-
-        // SIden vi fjerner antallet af penge fra alle spilelre. skal det tilføjes mængden af penge
-        // ganget med alle players til stede for at spilleren får den rigtige mængde
-        int moneyToGet = money * players.length - 1;
-        activePlayer.addMoney(moneyToGet);
-    }
-
-    private void addStartMoney(Player player) {
-        player.addMoney(ROUND_MONEY);
-    }
-
-    private void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
-        if (activePlayer.isInJail()){
-            activePlayer.setField(this.getGameBoard().getJail());
-            activePlayer.setLastDiceResult(diceThrow);
-            activePlayer.setLastDicePair(this.dice.getPair());
-        }else{
-            activePlayer.setField(fieldId);
-            activePlayer.setLastDiceResult(diceThrow);
-            activePlayer.setLastDicePair(this.dice.getPair());
-        }
+        return playerField.getClass().getSimpleName();
     }
 
     public int setAndGetDiceResult() {
@@ -235,5 +141,44 @@ public class Game {
 
     public boolean isEnded() {
         return ended;
+    }
+
+    // ----- Delegators -----
+
+
+    public void setupNextPlayer() {
+        gameLogic.setupNextPlayer();
+    }
+
+    public void throwDice() {
+        gameLogic.throwDice();
+    }
+
+    public int gameRules(int fieldId) {
+        return gameLogic.gameRules(fieldId);
+    }
+
+    public void chanceFieldAction(Player activePlayer) {
+        gameLogic.chanceFieldAction(activePlayer);
+    }
+
+    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
+        gameLogic.UpdateActivePlayerWithThrow(fieldId, diceThrow);
+    }
+
+    public void addStartMoney(Player player) {
+        gameLogic.addStartMoney(player);
+    }
+
+    public void endPlayerTurn() {
+        gameLogic.endPlayerTurn();
+    }
+
+    public void checkRound() {
+        gameLogic.checkRound();
+    }
+
+    public Player findWinner() {
+        return gameLogic.findWinner();
     }
 }

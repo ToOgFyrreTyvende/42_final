@@ -1,5 +1,6 @@
 package Model.GameLogic;
 
+import Model.ChanceCards.ChanceCard;
 import Model.Fields.Field;
 import Model.Game;
 import Model.GameBoard;
@@ -30,13 +31,17 @@ public class NormalGameLogic{
         if (!game.isEnded()){
             int diceThrow = game.setAndGetDiceResult();
             int fieldId = (game.getActivePlayer().getField() + diceThrow) % Global.FIELD_COUNT;
+            game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
 
             fieldId = gameRules(fieldId);
+
+            UpdateActivePlayerWithThrow(fieldId, diceThrow);
+
 
         }
     }
 
-    int gameRules(int fieldId) {
+    public int gameRules(int fieldId) {
         if (game.getActivePlayer().isInJail()){
             if (!game.getActivePlayer().isOutOfJailFree()){
                 System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har betalt " +
@@ -72,7 +77,29 @@ public class NormalGameLogic{
         return fieldId;
     }
 
-    private void addStartMoney(Player player) {
+    public void chanceFieldAction(Player activePlayer) {
+        activePlayer.setChanceField(false);
+
+        ChanceCard card = game.getGameBoard().randomChanceCard();
+        activePlayer.setChanceCard(card);
+
+        activePlayer.getChanceCard().cardAction(activePlayer, game);
+
+    }
+
+    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
+        if (game.getActivePlayer().isInJail()){
+            game.getActivePlayer().setField(game.getGameBoard().getJail());
+            game.getActivePlayer().setLastDiceResult(diceThrow);
+            game.getActivePlayer().setLastDicePair(game.getDicePair());
+        }else{
+            game.getActivePlayer().setField(fieldId);
+            game.getActivePlayer().setLastDiceResult(diceThrow);
+            game.getActivePlayer().setLastDicePair(game.getDicePair());
+        }
+    }
+
+    public void addStartMoney(Player player) {
         player.addMoney(Global.ROUND_MONEY);
     }
 
@@ -83,7 +110,7 @@ public class NormalGameLogic{
         }
     }
 
-    private void checkRound(){
+    public void checkRound(){
         // Vi tjekker om den nuværende spiller er den sidste psiller i spiller listen. Dette gør, at
         // alle players har mulighed for at vinde i slutningen af en runde
 
@@ -95,7 +122,7 @@ public class NormalGameLogic{
         }
     }
 
-    private Player findWinner() {
+    public Player findWinner() {
         Player highest = null;
         if (game.isEnded()) {
             int max = 0;

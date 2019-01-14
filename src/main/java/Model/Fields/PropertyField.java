@@ -47,16 +47,6 @@ public class PropertyField extends Field {
     public void fieldAction(Player player) {
         if (this.isOwned()){
             payToPlayerLogic(player);
-        }else{
-            player.setLastAction(player.getLastAction() + "\n - Har købt " +
-                    this.getName() + " for " +
-                    this.getPrice() + " kr.");
-
-            System.out.println("[INFO] " + player.getName() + " Har købt " +
-                    this.getName() + " for " +
-                    this.getPrice()+ " kr.");
-
-            buyField(player);
         }
     }
 
@@ -91,11 +81,21 @@ public class PropertyField extends Field {
         owner.addMoney(payment);
     }
 
-    private void buyField(Player player) {
+    public void buyField(Player player) {
+        player.setLastAction(player.getLastAction() + "\n - Har købt " +
+                this.getName() + " for " +
+                this.getPrice() + " kr.");
+
+        System.out.println("[INFO] " + player.getName() + " Har købt " +
+                this.getName() + " for " +
+                this.getPrice()+ " kr.");
+
         int payment = this.getPrice();
         player.addMoney( - payment);
         this.setOwner(player);
     }
+
+
 
 
     public int getPrice() {
