@@ -34,8 +34,8 @@ public class JailController {
     public void payBail(Player player){
         player.addMoney( -Global.JAIL_PRICE);
 
-        player.setLastAction(player.getLastAction() + "\n - har betalt 1000 kr for at komme ud af faengsel.");
-        System.out.println("[INFO] " + player.getName() + " Har betalt 1000 kr for at komme ud af faengsel.");
+        player.setLastAction(player.getLastAction() + "\n - har betalt 1000 kr for at komme ud af fængsel.");
+        System.out.println("[INFO] " + player.getName() + " Har betalt 1000 kr for at komme ud af fængsel.");
         player.setInJail(false);
     }
 
@@ -48,13 +48,13 @@ public class JailController {
             diceThrow[i] = random5;
         }
         if(diceThrow[0] == diceThrow[1]){
-            player.setLastAction(player.getLastAction() + "\n - slog " + diceThrow[0] + " to gange og kom ud af faengsel");
-            System.out.println("[INFO] " + player.getName() + " Har slået " + diceThrow[0] + " to gange og kom ud af faengsel.");
+            player.setLastAction(player.getLastAction() + "\n - slog " + diceThrow[0] + " to gange og kom ud af fængsel");
+            System.out.println("[INFO] " + player.getName() + " Har slået " + diceThrow[0] + " to gange og kom ud af fængsel.");
             player.setInJail(false);
         }
         else if (diceThrow[0] != diceThrow[1]){
-            player.setLastAction(player.getLastAction() + "\n - slog ikke to ens og kom ud af faengsel");
-            System.out.println("[INFO] " + player.getName() + " Har slået "+ diceThrow[0]+ " og " + diceThrow[1] + " saa de kom ikke ud af faengsel.");
+            player.setLastAction(player.getLastAction() + "\n - slog ikke to ens og kom ud af fængsel");
+            System.out.println("[INFO] " + player.getName() + " Har slået "+ diceThrow[0]+ " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
         } else {
             System.out.println("Something went wrong");
             handleActions(action, player);
