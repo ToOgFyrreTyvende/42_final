@@ -3,7 +3,7 @@ package Model;
 import java.awt.*;
 
 public class Global {
-    static final int START_PENGE = 30000;
+    static final int START_MONEY = 30000;
 
     public static final int FIELD_5 = 30000;
 
@@ -13,8 +13,8 @@ public class Global {
     public static final int DICE_SIDES = 6;
     public static final int DICE_AMOUNT = 2;
 
-    public static final int MIN_SPILLERE = 3;
-    public static final int MAX_SPILLERE = 6;
+    public static final int MIN_PLAYERS = 3;
+    public static final int MAX_PLAYERS = 6;
 
     public static final int TOTAL_FIELDS = 40;
     public static final int COLORED_PROPERTIES = 22;

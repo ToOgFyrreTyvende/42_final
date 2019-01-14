@@ -13,7 +13,7 @@ public class PayBankCard extends ChanceCard {
 
     @Override
     public void cardAction(Player player) {
-        player.setLastAction(player.getLastAction() + "\n - Har ved chancekort betalt " + this.money + "M til banken");
+        player.setLastAction(player.getLastAction() + "\n - Har ved chancekort betalt " + this.money + " kr. til banken");
 
         super.cardAction(player);
         if (money < 20 && money > 0){

@@ -85,15 +85,15 @@ public class PropertyField extends Field {
     }
 
     private void payToPlayerField(Player player){
-        Player ejer = this.getOwner();
+        Player owner = this.getOwner();
         int payment = this.getRent();
         player.addMoney( - payment);
-        ejer.addMoney(payment);
+        owner.addMoney(payment);
     }
 
     private void buyField(Player player) {
-        int betaling = this.getPrice();
-        player.addMoney( - betaling);
+        int payment = this.getPrice();
+        player.addMoney( - payment);
         this.setOwner(player);
     }
 

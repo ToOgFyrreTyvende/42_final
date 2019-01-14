@@ -4,7 +4,7 @@
     "Burgerbaren": {"Type": "Street", "Navn": "Burgerbaren", "Pris": 1, "Farve": "Black"},
     "Pizzahuset": {"Type": "Street", "Navn": "Pizzariaet", "Pris": 1, "Farve": "Black"},
 
-    "Chance": {"Type": "Chance", "Navn": "Chance", "Teskt": "Træk et chancekort", "Farve": "White"},
+    "Chance": {"Type": "Chance", "Navn": "Chance", "Tekst": "Træk et chancekort", "Farve": "White"},
 
     "Slikbutikken": {"Type": "Street","Navn": "Slikbutikken", "Pris": 1, "Farve": "Blue"},
     "Iskiosken": {"Type": "Street","Navn": "Iskiosken", "Pris": 1, "Farve": "Blue"},
@@ -14,7 +14,7 @@
     "Museet": {"Type": "Street","Navn": "Museet", "Pris": 2, "Farve": "Purple"},
     "Biblioteket": {"Type": "Street","Navn": "Biblioteket", "Pris": 2, "Farve": "Purple"},
 
-    "Chance": {"Type": "Chance", "Navn": "Chance", "Teskt": "Træk et chancekort", "Farve": "White"},
+    "Chance": {"Type": "Chance", "Navn": "Chance", "Tekst": "Træk et chancekort", "Farve": "White"},
 
     "Skaterparken": {"Type": "Street","Navn": "Skaterparken", "Pris": 2, "Farve": "Yellow"},
     "Swimmingpoolen": {"Type": "Street","Navn": "Swimmingpoolen", "Pris": 2, "Farve": "Yellow"},
@@ -24,7 +24,7 @@
     "Spillehallen": {"Type": "Street","Navn": "Spillehallen", " Pris": 3, "Farve": "Red"},
     "Biograf": {"Type": "Street","Navn": "Biograf", "Pris": 3, "Farve": "Red"},    
 
-    "Chance": {"Type": "Chance", "Navn": "Chance", "Teskt": "Træk et chancekort", "Farve": "White"},
+    "Chance": {"Type": "Chance", "Navn": "Chance", "Tekst": "Træk et chancekort", "Farve": "White"},
 
     "Legetøjsbutik": {"Type": "Street","Navn": "Legetøjsbutik", "Pris": 3, "Farve": "Gold"},
     "Dyrehandel": {"Type": "Street","Navn": "Dyrehandel", "Pris": 3, "Farve": "Gold"},
@@ -34,7 +34,7 @@
     "Bowlinghallen": {"Type": "Street","Navn": "Bowlinghallen", "Pris": 4, "Farve": "Green"},
     "Zoo": {"Type": "Street","Navn": "Zoo", "Pris": 4, "Farve": "Green"},
 
-    "Chance": {"Type": "Chance", "Navn": "Chance", "Teskt": "Træk et chancekort", "Farve": "White"},
+    "Chance": {"Type": "Chance", "Navn": "Chance", "Tekst": "Træk et chancekort", "Farve": "White"},
 
     "Vandlandet": {"Type": "Street","Navn": "Vandlandet", "Pris": 5, "Farve": "Navy"},
     "Strandpromenaden": {"Type": "Street","Navn": "Strandpromenaden", "Pris": 5, "Farve": "Navy"}
