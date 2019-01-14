@@ -21,7 +21,6 @@ public class Game {
     private final int ROUND_MONEY;
     private final int JAIL_PRICE;
 
-    //private int[] possibleStartMoney = {20, 18, 16};
     private int startMoney;
 
     private Player[] players;
@@ -42,10 +41,11 @@ public class Game {
     public void play(){
         gameLogic.BeforeTurn();
         gameLogic.PlayTurn();
-        gameLogic.AfterTurn(); 
+        gameLogic.AfterTurn();
     }
 
-    // #----------Constructor----------#    
+    // #----------Constructor----------#
+
     public Game(GameBoard gameboard, String[] playerNames){
         this.startMoney = Global.START_MONEY;
         this.JAIL_PRICE = Global.JAIL_PRICE;
@@ -139,8 +139,20 @@ public class Game {
         ChanceCard card = this.getGameBoard().randomChanceCard();
         activePlayer.setChanceCard(card);
 
-        activePlayer.getChanceCard().cardAction(activePlayer);
+        activePlayer.getChanceCard().cardAction(activePlayer, this);
 
+        if(card instanceof FreePropertyCard){
+            int fieldIndex = this.getGameBoard().closestColor(
+                    activePlayer.getField(),
+                    ((FreePropertyCard) card).getColor());
+            Field tempField = this.getGameBoard().getFields()[fieldIndex];
+
+            if (tempField instanceof PropertyField){
+                ((PropertyField) tempField).fieldAction(activePlayer, 0);
+                activePlayer.setField(fieldIndex);
+            }
+
+        }
     }
 
     private void paidByOthers(int money) {
@@ -212,7 +224,7 @@ public class Game {
         this.ended = ended;
     }
 
-    private GameBoard getGameBoard() {
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
 

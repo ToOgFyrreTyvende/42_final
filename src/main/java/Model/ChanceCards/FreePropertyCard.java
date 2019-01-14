@@ -1,5 +1,9 @@
 package Model.ChanceCards;
 
+import Model.Fields.Field;
+import Model.Fields.PropertyField;
+import Model.Game;
+import Model.GameBoard;
 import Model.Player;
 
 import java.awt.*;
@@ -18,7 +22,10 @@ public class FreePropertyCard extends ChanceCard {
     }
 
     @Override
-    public void cardAction(Player player) {
-        super.cardAction(player);
+    public void cardAction(Player activePlayer, Game game) {
+        super.cardAction(activePlayer, game);
+
     }
+
+
 }

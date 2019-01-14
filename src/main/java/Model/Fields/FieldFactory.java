@@ -41,7 +41,7 @@ public class FieldFactory {
                 new ChanceField("Chance", "Chance", "Tag et chancekort"),
 
                 new PropertyField("Hellerupvej", "Pris: kr. 3600", "Hellerupvej", 3600, Color.lightGray),
-                new PropertyField("Strandvej", "Pris: kr. 4000", "Strandvej", 4000, Color.lightGray),
+                new PropertyField("Strandvejen", "Pris: kr. 4000", "Strandvej", 4000, Color.lightGray),
 
                 new FreeParkingField("Fri", "Gratis Parkering", "Hold en fridag"),
 
