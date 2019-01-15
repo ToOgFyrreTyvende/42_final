@@ -13,6 +13,7 @@ public class NormalGameLogic{
     private Player[] players;
     private int nowIndex;
     private int newIndex;
+    private int bankruptcies = 0;
 
 
     public NormalGameLogic(Game game) {
@@ -24,11 +25,19 @@ public class NormalGameLogic{
         if (!game.isEnded()){
             this.nowIndex = java.util.Arrays.asList(players).indexOf(game.getActivePlayer());
             this.newIndex = (nowIndex + 1) % players.length;
+            /*boolean newPlayerFound = false;
+            while(!newPlayerFound){
+                if(players[newIndex].isBankrupt()){
+                    newIndex = (newIndex+1) % players.length;
+                }else{
+                    newPlayerFound = true;
+                }
+            }*/
         }
     }
 
     public void throwDice(){
-        if (!game.isEnded()){
+        if (!game.isEnded() && !game.getActivePlayer().isBankrupt()){
             int diceThrow = game.setAndGetDiceResult();
             int fieldId = (game.getActivePlayer().getField() + diceThrow) % Global.FIELD_COUNT;
             game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
@@ -38,6 +47,9 @@ public class NormalGameLogic{
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
 
 
+        }
+        else{
+            endPlayerTurn();
         }
     }
 
@@ -111,15 +123,22 @@ public class NormalGameLogic{
     }
 
     public void checkRound(){
-        // Vi tjekker om den nuværende spiller er den sidste psiller i spiller listen. Dette gør, at
-        // alle players har mulighed for at vinde i slutningen af en runde
 
         for (Player player : players) {
-            if (player.getMoney() <= 0) {
-                game.setEnded(true);
-                game.setWinner(findWinner());
+            if (!player.isBankrupt()) {
+                if (player.getMoney() <= 0) {
+
+                    player.setBankrupt(true);
+                    this.bankruptcies++;
+
+                    if (bankruptcies == players.length - 1) {
+                        game.setEnded(true);
+                        game.setWinner(findWinner());
+                    }
+                }
             }
         }
+        System.out.println("falitter " + bankruptcies);
     }
 
     public Player findWinner() {

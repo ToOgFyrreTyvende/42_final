@@ -42,14 +42,16 @@ public class CompanyField extends Field {
     }
 
     private void payToPlayerLogic(Player player) {
-        player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                this.getRent() + " kr. til " +
-                this.getOwner().getName());
+        if (!owner.isBankrupt()) {
+            player.setLastAction(player.getLastAction() + "\n - Har betalt " +
+                    this.getRent() + " kr. til " +
+                    this.getOwner().getName());
 
-        System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                this.getRent() + " kr. til " +
-                this.getOwner().getName());
-        payToPlayerField(player);
+            System.out.println("[INFO] " + player.getName() + " Har betalt " +
+                    this.getRent() + " kr. til " +
+                    this.getOwner().getName());
+            payToPlayerField(player);
+        }
     }
 
     private void payToPlayerField(Player player){

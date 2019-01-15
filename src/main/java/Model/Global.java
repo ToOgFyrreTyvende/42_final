@@ -3,7 +3,7 @@ package Model;
 import java.awt.*;
 
 public class Global {
-    public static final int START_MONEY = 30000;
+    public static final int START_MONEY = 10000;
 
     public static final int FIELD_5 = 30000;
 
