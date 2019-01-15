@@ -43,12 +43,7 @@ public class GameController {
         String[] playerNames = new String[playerAmount];
 
         for (int i = 0; i < playerAmount; i++) {
-            if (i==0){
-                playerNames[i] = (this.view.getPlayerName("Indtast venligst første, yngste spillers name."));
-
-            }else{
-                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers name."));
-            }
+                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers navn."));
         }
 
         game = new Game(this.gameBoard, playerNames);
@@ -77,7 +72,7 @@ public class GameController {
                 }
                 String result = currentController.handleActions(action);
 
-                if (result.equals("Afslut Tur") || result.equals("Sæt til auktion")) {
+                if (result.equals("Afslut tur") || result.equals("Spring over")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;

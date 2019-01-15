@@ -30,7 +30,7 @@ public class ChanceField extends Field {
 
     @Override
     public void fieldAction(Player player) {
-        player.setLastAction(player.getLastAction() + "\n - Er landet på et chancekort.");
+        player.setLastAction(player.getLastAction() + "\n - Er landet på et chancefelt.");
         player.setChanceField(true);
     }
 }

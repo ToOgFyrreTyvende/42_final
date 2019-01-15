@@ -8,13 +8,13 @@ import Model.Player;
 public class PropertyController extends Controller {
     public static final String[] PropertyActions = new String[]{
             "Køb ejendom",
-            "Sæt til auktion"
+            "Spring over"
             //"Afslut Tur"
     };
 
     public static final String[] PropertyManagementActions = new String[]{
             "Køb/Sælg bygninger",
-            "Afslut Tur"
+            "Afslut tur"
     };
 
     public static final String[] BuySellBuildingActions = new String[]{
@@ -36,8 +36,8 @@ public class PropertyController extends Controller {
         String[] newMenu = new String[]{"FEJL", action};
 
         switch(action){
-            case "Afslut Tur":
-            case "Sæt til auktion":
+            case "Afslut tur":
+            case "Spring over":
                 gameController.getGame().endPlayerTurn();
                 break;
 

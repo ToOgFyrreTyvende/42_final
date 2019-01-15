@@ -54,9 +54,9 @@ public class CardFactory {
                 new MoveToCard("Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer START, indkasserer De ikke kr. 4.000.", "Fængsel", 10),
 
                 new OutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. \n" +
-                        "Dette kort kan opbevares, undtil De får brug for det, eller De kan sælge det.", "Fængsel"),
+                        "Dette kort kan opbevares, indtil De får brug for det, eller De kan sælge det.", "Fængsel"),
                 new OutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. \n" +
-                        "Dette kort kan opbevares, undtil De får brug for det, eller De kan sælge det.", "Fængsel"),
+                        "Dette kort kan opbevares, indtil De får brug for det, eller De kan sælge det.", "Fængsel"),
 
         };
     }

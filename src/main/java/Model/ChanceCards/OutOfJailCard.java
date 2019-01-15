@@ -13,7 +13,7 @@ public class OutOfJailCard extends ChanceCard {
     @Override
     public void cardAction(Player player, Game game) {
         super.cardAction(player, game);
-        player.setLastAction(player.getLastAction() + "\n - Har et kort til gratis løsladelse.");
+        player.setLastAction(player.getLastAction() + "\n - Har et løsladelseskort.");
         player.setOutOfJailFree(true);
     }
 }

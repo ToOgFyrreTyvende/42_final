@@ -30,6 +30,6 @@ public class FreeParkingField extends Field {
 
     @Override
     public void fieldAction(Player player) {
-        player.setLastAction(" - Har fået gratis parkering. Intet sker.");
+        player.setLastAction(" - Er landet på gratis parkering.");
     }
 }

@@ -33,7 +33,7 @@ public class CompanyField extends Field {
                     this.getName() + " for " +
                     this.getPrice() + " kr.");
 
-            System.out.println("[INFO] " + player.getName() + " Har købt " +
+            System.out.println("[INFO] " + player.getName() + " har købt " +
                     this.getName() + " for " +
                     this.getPrice()+ " kr.");
 
@@ -45,11 +45,11 @@ public class CompanyField extends Field {
         if (!owner.isBankrupt()) {
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
 
-            System.out.println("[INFO] " + player.getName() + " Har betalt " +
+            System.out.println("[INFO] " + player.getName() + " har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
             payToPlayerField(player);
         }
     }

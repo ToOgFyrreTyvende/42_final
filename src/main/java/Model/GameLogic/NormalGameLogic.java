@@ -66,12 +66,12 @@ public class NormalGameLogic{
         if (game.getActivePlayer().isInJail()){
             if (!game.getActivePlayer().isOutOfJailFree()){
                 System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har betalt " +
-                        Global.JAIL_PRICE + " For at komme ud af fængslet");
-                game.getActivePlayer().setLastAction("\n - Har betalt for fængsel.");
+                        Global.JAIL_PRICE + " for at komme ud af fængslet.");
+                game.getActivePlayer().setLastAction("\n - Har betalt" + Global.JAIL_PRICE + " kr. for at blive løsladt.");
                 game.getActivePlayer().addMoney(-Global.JAIL_PRICE);
             }else{
-                game.getActivePlayer().setLastAction("\n - Har brugt sit løsladelses chancekort.");
-                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Kom ud af fængslet med deres 'frikort'");
+                game.getActivePlayer().setLastAction("\n - Har brugt sit løsladelseskort.");
+                System.out.println("[INFO] " + game.getActivePlayer().getName() + " er blevet løsladt via løsladelseskort.");
             }
 
             game.getActivePlayer().setInJail(false);
@@ -80,8 +80,8 @@ public class NormalGameLogic{
 
         if (!game.isEnded()){
             if (fieldId < game.getActivePlayer().getField()){
-                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
-                game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
+                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har passeret start og modtaget " + Global.ROUND_MONEY + " kr.");
+                game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og modtaget " + Global.ROUND_MONEY + " kr.");
                 addStartMoney(game.getActivePlayer());
             }
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
