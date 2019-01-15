@@ -26,7 +26,7 @@ public class GameController {
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
 
-       // this.jailController = new JailController(game);
+        this.jailController = new JailController(this);
         this.propertyController = new PropertyController(this);
        // this.userChoiceController = new UserChoiceController(game);
         this.diceController = new DiceController(this);
@@ -64,6 +64,9 @@ public class GameController {
             game.setupNextPlayer();
             boolean turnOver = false;
             while (!turnOver) {
+                if (activePlayer.isInJail()){
+                    currentController = jailController;
+                }
                 currentGameMenu = currentController.getMenuActions();
                 System.out.println(currentController.getClass().getSimpleName());
                 String action;
@@ -75,7 +78,7 @@ public class GameController {
                 String result = currentController.handleActions(action);
                 currentController = endTurnController;
 
-                if (result.equals("Afslut Tur")) {
+                if (result.equals("Afslut Tur") || result.equals("Sæt til auktion")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;

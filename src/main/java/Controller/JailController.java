@@ -3,28 +3,35 @@ package Controller;
 import Model.Global;
 import Model.Player;
 
-public class JailController {
-    public final String[] JailActions = new String[]{
+public class JailController extends Controller{
+    public static final String[] JailActions = new String[]{
             "Betal 1000",
             "Rul terning",
             "Brug frikort"
     };
 
-    public void handleActions(String action, Player player){
+    public JailController(GameController gameController) {
+        super(gameController, JailActions);
+    }
+
+    @Override
+    public String handleActions(String action){
         switch(action){
             case "Betal 1000":
-                payBail(player);
+                payBail(gameController.getGame().getActivePlayer());
                 break;
             case "Rul terning":
-                feelingLucky(action,player);
+                feelingLucky(action, gameController.getGame().getActivePlayer());
                 break;
             case "Brug frikort":
-                bailCard(action,player);
+                bailCard(action, gameController.getGame().getActivePlayer());
                 break;
             default:
             // Indsæt auktion funktionalitet?
                 break;
             }
+
+            return action;
     }
 
 
@@ -54,14 +61,14 @@ public class JailController {
             System.out.println("[INFO] " + player.getName() + " Har slået "+ diceThrow[0]+ " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
         } else {
             System.out.println("Something went wrong");
-            handleActions(action, player);
+            handleActions(action);
         }
 
     }
 
     public void bailCard(String action,Player player){
         if(!player.isOutOfJailFree()){
-            player.setLastAction("\n - Har brugt sit løsladelses chancekort.");
+            player.setLastAction(player.getLastAction() + "\n - Har brugt sit løsladelses chancekort.");
             System.out.println("[INFO] " + player.getName() + " Kom ud af fængslet med deres 'frikort'");
             player.setInJail(false);
         } else {
