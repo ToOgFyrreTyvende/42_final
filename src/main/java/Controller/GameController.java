@@ -71,9 +71,9 @@ public class GameController {
                 System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
-                    action = view.getRoundChoiceDropDownWithText("Vælg venligst fra listen", currentGameMenu);
+                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
                 }else{
-                    action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
+                    action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
                 }
                 String result = currentController.handleActions(action);
                 currentController = endTurnController;

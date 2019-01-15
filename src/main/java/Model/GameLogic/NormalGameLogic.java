@@ -24,15 +24,17 @@ public class NormalGameLogic{
     public void setupNextPlayer(){
         if (!game.isEnded()){
             this.nowIndex = java.util.Arrays.asList(players).indexOf(game.getActivePlayer());
-            this.newIndex = (nowIndex + 1) % players.length;
-            /*boolean newPlayerFound = false;
-            while(!newPlayerFound){
-                if(players[newIndex].isBankrupt()){
-                    newIndex = (newIndex+1) % players.length;
-                }else{
-                    newPlayerFound = true;
+            int tempindex = nowIndex;
+            //this.newIndex = (nowIndex + 1) % players.length;
+            for (int i = 0; i < players.length; i++) {
+                if (!players[(tempindex + 1) % players.length].isBankrupt()){
+                    newIndex = (tempindex + 1) % players.length;
+                    break;
+                }else {
+                    tempindex++;
                 }
-            }*/
+            }
+
         }
     }
 
