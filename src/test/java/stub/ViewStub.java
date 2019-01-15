@@ -13,6 +13,16 @@ public class ViewStub extends GameView {
     }
 
     @Override
+    public void renderBuildings() {
+
+    }
+
+    @Override
+    public String getRoundChoiceDropDownWithText(String text, String... choice) {
+        return "testString";
+    }
+
+    @Override
     public void setPlayers(Player[] players) {
         this.players = players;
     }
@@ -38,7 +48,7 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public String getRoundChoiceWithText(String tekst, String... choice) {
+    public String getRoundChoiceWithText(String text, String... choice) {
         return "Rul terning";
     }
 

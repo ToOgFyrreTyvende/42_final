@@ -18,7 +18,7 @@ class FieldTest {
         player1.setMoney(10);
         player2.setMoney(10);
 
-        PropertyField field = new PropertyField("Skaterparken", "","",2, Color.green);
+        PropertyField field = new PropertyField("Skaterparken", "","",new int[]{1,2,3,4,5,6,7,8}, Color.green);
 
         field.fieldAction(player1);
         field.fieldAction(player2);
