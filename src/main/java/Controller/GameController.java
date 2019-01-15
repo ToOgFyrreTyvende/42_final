@@ -92,9 +92,11 @@ public class GameController {
                 renderBuilding();
                 playerInfoUpdate(activePlayer);
 
-                /*if(currentController != diceController){
+                if(currentController == userChoiceController ||
+                        currentController == propertyController ){
+                    currentController = propertyController;
                     continue;
-                }*/
+                }
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
@@ -102,10 +104,15 @@ public class GameController {
                         currentController = propertyController;
                         propertyController.setMenuActions(PropertyController.PropertyActions);
                         break;
-                    case "PropertyFieldOwned":
+
+                    /*case "CompanyField":
+                        currentController = propertyController;
+                        propertyController.setMenuActions(PropertyController.PropertyActions);
+                        break;
+                    /*case "PropertyFieldOwned":
                         currentController = endTurnController;
                         currentGameMenu = EndTurnController.EndActions;
-                        break;
+                        break;*/
 
                     case "TaxFieldChoice":
                         currentController = userChoiceController;
@@ -114,7 +121,6 @@ public class GameController {
 
                     default:
                         currentController = propertyController;
-                        propertyController.setMenuActions(PropertyController.PropertyManagementActions);
                         break;
                 }
 
@@ -136,8 +142,19 @@ public class GameController {
     }
 
     private void resetControllers() {
-        this.propertyController.setMenuActions(PropertyController.PropertyActions);
+        this.propertyController.setMenuActions(buildPropertyMenu());
         this.propertyController.setChosenField(null);
+        this.propertyController.setDropdown(false);
+    }
+
+    public String[] buildPropertyMenu(){
+        if (getGame().getActivePlayer() != null &&
+                getGameBoard().getPlayerProperties(
+                        getGame().getActivePlayer()).length > 0){
+            return PropertyController.PropertyManagementActions;
+        }else{
+            return new String[]{PropertyController.PropertyManagementActions[1]};
+        }
     }
 
     public void playerInfoUpdate(Player player){

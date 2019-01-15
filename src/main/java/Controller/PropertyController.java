@@ -2,7 +2,6 @@ package Controller;
 
 import Model.Fields.Field;
 import Model.Fields.PropertyField;
-import Model.Player;
 
 
 public class PropertyController extends Controller {
@@ -11,6 +10,7 @@ public class PropertyController extends Controller {
             "Sæt til auktion"
             //"Afslut Tur"
     };
+
 
     public static final String[] PropertyManagementActions = new String[]{
             "Køb/Sælg bygninger",
@@ -28,12 +28,12 @@ public class PropertyController extends Controller {
     PropertyField chosenField = null;
 
     public PropertyController(GameController gameController) {
-        super(gameController, PropertyActions);
+        super(gameController, PropertyManagementActions);
     }
 
     @Override
     public String handleActions(String action){
-        String[] newMenu = new String[]{"FEJL", action};
+        String[] newMenu = new String[]{"Afslut Tur"};
 
         switch(action){
             case "Afslut Tur":
@@ -46,7 +46,7 @@ public class PropertyController extends Controller {
                 gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
                 break;
             case "Køb/Sælg bygninger":
-                newMenu = buildingMenu();
+                newMenu = buildingNameMenu();
                 setDropdown(true);
                 break;
             case "Tilbage":
@@ -82,8 +82,7 @@ public class PropertyController extends Controller {
     }
 
 
-
-    public String[] buildingMenu(){
+    public String[] buildingNameMenu(){
         return gameController.getGame().getGameBoard().getPlayerPropertyNames(gameController.getGame().getActivePlayer());
         // return BuyBuildingActions;
     }
