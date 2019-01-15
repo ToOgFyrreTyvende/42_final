@@ -1,7 +1,7 @@
 package Model.ChanceCards;
 import Model.Game;
 import Model.Player;
-
+// Chancekort
 abstract public class ChanceCard {
 
     private String text;
