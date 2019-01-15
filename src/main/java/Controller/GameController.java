@@ -13,7 +13,7 @@ public class GameController {
     private JailController jailController;
     private PropertyController propertyController;
     private UserChoiceController userChoiceController;
-    private DiceController diceController;
+    public DiceController diceController;
     private EndTurnController endTurnController;
 
     private Controller currentController;
@@ -68,7 +68,7 @@ public class GameController {
                     currentController = jailController;
                 }
                 currentGameMenu = currentController.getMenuActions();
-                System.out.println(currentController.getClass().getSimpleName());
+                //System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
                     action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
@@ -76,12 +76,18 @@ public class GameController {
                     action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
                 }
                 String result = currentController.handleActions(action);
-                currentController = endTurnController;
 
                 if (result.equals("Afslut Tur") || result.equals("Sæt til auktion")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
+                }else if (result.equals("Jail Rul terning")){
+                    getGame().endPlayerTurn();
+                    turnOver = true;
+                    activePlayer = game.getActivePlayer();
+                    continue;
+                }else if(currentController != diceController){
+                    currentController = endTurnController;
                 }
 
                 renderBuilding();
@@ -90,8 +96,6 @@ public class GameController {
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
                     case "PropertyField":
-                        System.out.println("In propfield case");
-
                         currentController = propertyController;
                         currentGameMenu = PropertyController.PropertyActions;
                         break;

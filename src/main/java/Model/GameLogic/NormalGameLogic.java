@@ -3,7 +3,6 @@ package Model.GameLogic;
 import Model.ChanceCards.ChanceCard;
 import Model.Fields.Field;
 import Model.Game;
-import Model.GameBoard;
 import Model.Global;
 import Model.Player;
 
@@ -38,15 +37,23 @@ public class NormalGameLogic{
         }
     }
 
-    public void throwDice(){
+    public void throwDice(boolean alreadyThrown){
         if (!game.isEnded() && !game.getActivePlayer().isBankrupt()){
-            int diceThrow = game.setAndGetDiceResult();
+            int diceThrow;
+            if (!alreadyThrown){
+                diceThrow = game.setAndGetDiceResult();
+
+            }else{
+                diceThrow = game.getDiceResult();
+            }
+
             int fieldId = (game.getActivePlayer().getField() + diceThrow) % Global.FIELD_COUNT;
             game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
 
             fieldId = gameRules(fieldId);
 
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
+
 
 
         }
@@ -140,7 +147,6 @@ public class NormalGameLogic{
                 }
             }
         }
-        System.out.println("falitter " + bankruptcies);
     }
 
     public Player findWinner() {

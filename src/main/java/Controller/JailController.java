@@ -22,7 +22,8 @@ public class JailController extends Controller{
                 break;
             case "Rul terning":
                 feelingLucky(action, gameController.getGame().getActivePlayer());
-                break;
+                return "Jail Rul terning";
+                //break;
             case "Brug frikort":
                 bailCard(action, gameController.getGame().getActivePlayer());
                 break;
@@ -41,6 +42,7 @@ public class JailController extends Controller{
         player.setLastAction(player.getLastAction() + "\n - har betalt 1000 kr for at komme ud af fængsel.");
         System.out.println("[INFO] " + player.getName() + " Har betalt 1000 kr for at komme ud af fængsel.");
         player.setInJail(false);
+        gameController.setCurrentController(gameController.diceController);
     }
 
     public void feelingLucky(String action,Player player){
@@ -51,10 +53,16 @@ public class JailController extends Controller{
             int random5 = _random4 + 1;                 // 1-6 integer
             diceThrow[i] = random5;
         }
+
         if(diceThrow[0] == diceThrow[1]){
             player.setLastAction(player.getLastAction() + "\n - slog " + diceThrow[0] + " to gange og kom ud af fængsel");
             System.out.println("[INFO] " + player.getName() + " Har slået " + diceThrow[0] + " to gange og kom ud af fængsel.");
             player.setInJail(false);
+
+            gameController.getGame().setDice(diceThrow,diceThrow[0] + diceThrow[1] );
+            gameController.getGame().throwDice(true);
+            gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
+
         }
         else if (diceThrow[0] != diceThrow[1]){
             player.setLastAction(player.getLastAction() + "\n - slog ikke to ens og kom ud af fængsel");
@@ -67,10 +75,11 @@ public class JailController extends Controller{
     }
 
     public void bailCard(String action,Player player){
-        if(!player.isOutOfJailFree()){
+        if(player.isOutOfJailFree()){
             player.setLastAction(player.getLastAction() + "\n - Har brugt sit løsladelses chancekort.");
             System.out.println("[INFO] " + player.getName() + " Kom ud af fængslet med deres 'frikort'");
             player.setInJail(false);
+            player.setOutOfJailFree(false);
         } else {
             System.out.println("[INFO] " + player.getName() + " Har ikke et 'frikort' saa du kan ikke goere dette.");
             // JailController();

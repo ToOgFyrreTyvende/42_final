@@ -49,4 +49,12 @@ public class Dice {
     public void setPair(int[] pair) {
         this.pair = pair;
     }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public int getResult() {
+        return result;
+    }
 }
