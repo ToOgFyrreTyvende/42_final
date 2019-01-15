@@ -222,4 +222,8 @@ public class Game {
     public Player findWinner() {
         return gameLogic.findWinner();
     }
+
+    public NormalGameLogic getGameLogic() {
+        return gameLogic;
+    }
 }

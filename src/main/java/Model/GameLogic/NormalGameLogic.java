@@ -79,9 +79,9 @@ public class NormalGameLogic{
         }
 
         if (!game.isEnded()){
-            if (fieldId < game.getActivePlayer().getField()){
-                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har passeret start og modtaget " + Global.ROUND_MONEY + " kr.");
-                game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og modtaget " + Global.ROUND_MONEY + " kr.");
+            if (fieldId < game.getActivePlayer().getPreviousField()){
+                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
+                game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
                 addStartMoney(game.getActivePlayer());
             }
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
