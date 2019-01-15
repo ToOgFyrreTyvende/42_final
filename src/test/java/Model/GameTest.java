@@ -25,6 +25,8 @@ class GameTest {
         testDice = new DiceStub(1);
 
         testGame = new Game(testBoard, testNames);
+
+        testGame.setActivePlayer(testGame.getPlayers()[0]);
     }
 
     @Test
@@ -64,14 +66,14 @@ class GameTest {
     void gameRulesStartTest() {
         // Sætter spillet til at bruge vores DiceStub som kun ruller værdien 1
         testGame.setDice(testDice);
+        // Sætter player 1's pengeværdi til 2000
         int testVal = 2000;
-        // Sætter player 1's pengeværdi til 42
         testGame.getPlayers()[0].setMoney(testVal);
-        // Sætter player 1 på brættets sidste felt
-        testGame.getPlayers()[0].setField(Global.FIELD_COUNT-1);
-        // Kører player 1's tur færdig
-        //testGame.playTurn();
-        // Tjækker player 1's pengeværdi er steget med 2
+        // Sætter player 1's forrige position til brættets sidste felt
+        testGame.getPlayers()[0].setPreviousField(Global.FIELD_COUNT-1);
+        // Kører gamerules() med 0 som fieldId
+        testGame.getGameLogic().gameRules(0);
+        // Tjækker player 1's pengeværdi er steget med 4000
         assertEquals(testGame.getPlayers()[0].getMoney(), testVal + testGame.getROUND_MONEY());
     }
 }
