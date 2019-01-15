@@ -1,10 +1,11 @@
 package Model.Fields;
 
+import Model.Global;
 import Model.Player;
 
 public class ToJailField extends Field {
 
-    private final int JAIL_ID = 6;
+    private final int JAIL_ID = Global.JAIL_INDEX;
 
     ToJailField(String name, String subText, String description) {
         super(name, subText, description);

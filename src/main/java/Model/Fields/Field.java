@@ -24,8 +24,6 @@ public abstract class Field {
         this.description = description;
     }
 
-    //abstract public GUI_Field makeGUIFields();
-
     abstract public void fieldAction(Player player);
 
     // #--------------Get--------------#

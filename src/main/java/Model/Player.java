@@ -10,6 +10,9 @@ import Model.ChanceCards.ChanceCard;
  * ------------------------------------------------------------/
  */
 public class Player {
+    // We need previous field to remove user from it in the GUI
+
+    private int previousField = 0;
     private int field = 0;
     private String name;
     private int currentMoney = 1;
@@ -22,6 +25,8 @@ public class Player {
     private boolean outOfJailFree = false;
 
     private String lastAction = "";
+
+    private boolean bankrupt = false;
 
     // #----------Constructor----------#
     public Player(String name){
@@ -40,7 +45,7 @@ public class Player {
         return field;
     }
 
-    boolean isInJail() {
+    public boolean isInJail() {
         return inJail;
     }
 
@@ -52,11 +57,11 @@ public class Player {
         return this.currentMoney;
     }
 
-    void setMoney(int penge){
-        this.currentMoney = penge;
+    void setMoney(int money){
+        this.currentMoney = money;
     }
 
-    void setLastDiceResult(int lastDiceResult) {
+    public void setLastDiceResult(int lastDiceResult) {
         this.lastDiceResult = lastDiceResult;
     }
 
@@ -76,6 +81,10 @@ public class Player {
         this.chanceField = chanceField;
     }
 
+    public boolean isBankrupt() {return this.bankrupt;}
+
+    public void setBankrupt(boolean bankrupt) {this.bankrupt = bankrupt;}
+
     // #--------------Get--------------#
     public String getName(){
         // Returnerer spiller navn
@@ -94,15 +103,15 @@ public class Player {
         return null;
     }
 
-    ChanceCard getChanceCard() {
+    public ChanceCard getChanceCard() {
         return chanceCard;
     }
 
-    boolean isOutOfJailFree() {
+    public boolean isOutOfJailFree() {
         return outOfJailFree;
     }
 
-    boolean isChanceField() {
+    public boolean isChanceField() {
         return chanceField;
     }
 
@@ -126,5 +135,13 @@ public class Player {
         }else {
             return "Player: " + this.getName() + " " + this.getLastAction();
         }
+    }
+
+    public int getPreviousField() {
+        return previousField;
+    }
+
+    public void setPreviousField(int previousField) {
+        this.previousField = previousField;
     }
 }

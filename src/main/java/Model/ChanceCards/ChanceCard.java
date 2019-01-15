@@ -1,6 +1,7 @@
 package Model.ChanceCards;
+import Model.Game;
 import Model.Player;
-
+// Chancekort
 abstract public class ChanceCard {
 
     private String text;
@@ -11,7 +12,11 @@ abstract public class ChanceCard {
         this.name = name;
     }
 
-    public void cardAction(Player player){
+    public void cardAction(Player player, Game game){
         player.setChanceCard(this);
+    }
+
+    public String getName() {
+        return name;
     }
 }

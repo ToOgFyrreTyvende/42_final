@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PropertyControllerTest {
 
-    PropertyController pc = new PropertyController();
+    //PropertyController pc = new PropertyController();
 
-    @Test
+    //@Test
     void InitalMenuTest(){
         // Test the initial menu
     }

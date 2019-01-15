@@ -5,108 +5,114 @@ import Model.Fields.PropertyField;
 import Model.Player;
 
 
-public class PropertyController {
-    public final String[] PropertyActions = new String[]{
-        "Køb bygninger",
-        "Sælg bygninger"
+public class PropertyController extends Controller {
+    public static final String[] PropertyActions = new String[]{
+            "Køb ejendom",
+            "Sæt til auktion"
+            //"Afslut Tur"
     };
 
-    public final String[] BuyBuildingActions = new String[]{
+    public static final String[] PropertyManagementActions = new String[]{
+            "Køb/Sælg bygninger",
+            "Afslut Tur"
+    };
+
+    public static final String[] BuySellBuildingActions = new String[]{
         "Køb hus",
         "Køb hotel",
-        "Tilbage"
-    };
-
-    public final String[] SellBuildingActions = new String[]{
         "Sælg hus",
         "Sælg hotel",
         "Tilbage"
     };
 
-    // A menu is a list of strings that will be parsed in the switch/cases beneath
-    public String[] getMenu(Player player, Field field){
+    PropertyField chosenField = null;
 
-        // Is this a property field, and does the player own it?
-        if(field instanceof PropertyField && ((PropertyField) field).getOwner() == player){
-            return PropertyActions;
-        }
-
-        return new String[]{};
-
+    public PropertyController(GameController gameController) {
+        super(gameController, PropertyActions);
     }
 
-
-    public String[] handleActions(String action){
+    @Override
+    public String handleActions(String action){
         String[] newMenu = new String[]{"FEJL", action};
 
         switch(action){
-            // case "Køb ejendom":
-            //     newMenu = buyProperty();
-            //     break;
-            case "Køb bygninger":
-                newMenu = buyBuildingMenu();
+            case "Afslut Tur":
+            case "Sæt til auktion":
+                gameController.getGame().endPlayerTurn();
                 break;
-            case "Sælg bygninger":
-                newMenu = sellBuildingMenu();
-                break;
-            default:
-            // Indsæt auktion funktionalitet?
-                break;
-            }
-        return newMenu;
-    }
 
-    public void handlePropertyAction(String action, Field field){
-        switch(action){
-            case "Køb hus":
-                buyBuilding(0, field);
+            case "Køb ejendom":
+                newMenu = PropertyManagementActions;
+                gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
                 break;
-            case "Køb hotel":
-                buyBuilding(1, field);
-                break;
-            case "Sælg hus":
-                sellBuilding(0, field);
-                break;
-            case "Sælg hotel":
-                sellBuilding(1, field);
+            case "Køb/Sælg bygninger":
+                newMenu = buildingMenu();
+                setDropdown(true);
                 break;
             case "Tilbage":
-                menuBack();
+                newMenu = PropertyManagementActions;
+                break;
+            case "Køb hus":
+                buyBuilding(0);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Køb hotel":
+                buyBuilding(1);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Sælg hus":
+                sellBuilding(0);
+                newMenu = BuySellBuildingActions;
+                break;
+            case "Sælg hotel":
+                sellBuilding(1);
+                newMenu = BuySellBuildingActions;
                 break;
 
             default:
-            // Indsæt (eller evt yoink) auktion funktionalitet?
+            //Vi antager, at andre menu elementer svarer til, at man har valgt en ejendom fra drop-down menuen
+                setChosenField(gameController.getGame().getGameBoard().getPropertyFieldByName(action));
+                newMenu = BuySellBuildingActions;
+                setDropdown(false);
                 break;
         }
+
+        super.setMenuActions(newMenu);
+        return action;
     }
 
 
-    private void menuBack() {
 
-    }
-
-    public void buyProperty() {
-
-    }
-
-    public String[] buyBuildingMenu(){
-        return BuyBuildingActions;
-    }
-
-    public String[]  sellBuildingMenu(){
-        return SellBuildingActions;
+    public String[] buildingMenu(){
+        return gameController.getGame().getGameBoard().getPlayerPropertyNames(gameController.getGame().getActivePlayer());
+        // return BuyBuildingActions;
     }
 
     //type: 0 -> house, 1 -> hotel
 
     // If player owns prop -> player pays >:3
-    public void buyBuilding(int type, Field field){
-
+    public void buyBuilding(int type){
+        if (type == 0){
+            chosenField.buyHouse();
+        }else{
+            chosenField.buyHotel();
+        }
     }
 
-    public void sellBuilding(int type, Field field){
-
+    public void sellBuilding(int type){
+        if (type == 0){
+            chosenField.sellHouse();
+        }else{
+            chosenField.sellHotel();
+        }
     }
-    
+
+    public Field getChosenField() {
+        return chosenField;
+    }
+
+    public void setChosenField(PropertyField chosenField) {
+        this.chosenField = chosenField;
+    }
 }
 

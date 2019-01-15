@@ -1,18 +1,23 @@
 package Controller;
 
+import Model.Fields.PropertyField;
 import Model.Game;
 import Model.GameBoard;
 import Model.Player;
 import View.GameView;
 
-import java.util.Arrays;
-
 public class GameController {
-    public final String[] DefaultActions = new String[]{"Rul terning"};
-
     private Game game;
     private GameView view;
     private GameBoard gameBoard;
+    private JailController jailController;
+    private PropertyController propertyController;
+    private UserChoiceController userChoiceController;
+    public DiceController diceController;
+    private EndTurnController endTurnController;
+
+    private Controller currentController;
+    private String[] currentGameMenu;
 
     
     // #----------Constructor----------#
@@ -21,62 +26,215 @@ public class GameController {
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
 
+        this.jailController = new JailController(this);
+        this.propertyController = new PropertyController(this);
+       // this.userChoiceController = new UserChoiceController(game);
+        this.diceController = new DiceController(this);
+        this.endTurnController = new EndTurnController(this);
+
         initalizeGame();
-        playerTurn(game.getActivePlayer());
+        currentController = diceController;
+        testPlayTurn(game.getActivePlayer());
     }
 
     private void initalizeGame(){
         // pga. abstrakt klasse, har vi polymorfi, og kan kalde "getantalspillere" for ethvert view
-        int spillerAntal = this.view.getPlayerCount();
-        String[] spillerNavne = new String[spillerAntal];
+        int playerAmount = this.view.getPlayerCount();
+        String[] playerNames = new String[playerAmount];
 
-        for (int i = 0; i < spillerAntal; i++) {
+        for (int i = 0; i < playerAmount; i++) {
             if (i==0){
-                spillerNavne[i] = (this.view.getPlayerName("Indtast venligst første, yngste spillers name."));
+                playerNames[i] = (this.view.getPlayerName("Indtast venligst første, yngste spillers name."));
 
             }else{
-                spillerNavne[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers name."));
+                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers name."));
             }
         }
 
-        game = new Game(this.gameBoard, spillerNavne);
+        game = new Game(this.gameBoard, playerNames);
         this.view.setPlayers(game.getPlayers());
         this.view.resetBoard();
     }
 
+    private void testPlayTurn(Player player){
+        Player activePlayer = player;
+        while(!this.game.isEnded()){
+            resetControllers();
+            currentController = diceController;
+            boolean turnOver = false;
+            game.setupNextPlayer();
+            while (!turnOver) {
+                if (activePlayer.isInJail()){
+                    currentController = jailController;
+                }
+                currentGameMenu = currentController.getMenuActions();
+                //System.out.println(currentController.getClass().getSimpleName());
+                String action;
+                if (currentController.isDropdown()){
+                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
+                }else{
+                    action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
+                }
+                String result = currentController.handleActions(action);
 
-    private void playerTurn(Player player){
+                if (result.equals("Afslut Tur") || result.equals("Sæt til auktion")) {
+                    turnOver = true;
+                    activePlayer = game.getActivePlayer();
+                    continue;
+                }else if (result.equals("Jail Rul terning")){
+                    getGame().endPlayerTurn();
+                    turnOver = true;
+                    activePlayer = game.getActivePlayer();
+                    continue;
+                }else if(currentController != diceController){
+                    currentController = endTurnController;
+                }
+
+                renderBuilding();
+                playerInfoUpdate(activePlayer);
+
+                String fieldTypeString = game.getPlayerFieldType(activePlayer);
+                switch (fieldTypeString) {
+                    case "PropertyField":
+                        currentController = propertyController;
+                        currentGameMenu = PropertyController.PropertyActions;
+                        break;
+                    case "PropertyFieldOwned":
+                        currentController = endTurnController;
+                        currentGameMenu = EndTurnController.EndActions;
+                        break;
+                    case "PropertyFieldMe":
+                        currentController = propertyController;
+                        currentGameMenu = PropertyController.PropertyManagementActions;
+                        break;
+
+                    default:
+                        /*turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        currentController = endTurnController;*/
+                        break;
+                }
+
+            }
+            if (this.game.isEnded()){
+                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                        this.game.getWinner().getName());
+                view.endText("spillet er slut!");
+            }
+
+                /*if (!activePlayer.isInJail()){
+                    game.throwDice();
+                    playerInfoUpdate(activePlayer);
+
+                }else{
+                    currentGameMenu = jailController.JailActions;
+                }*/
+           }
+    }
+
+    private void resetControllers() {
+        this.propertyController.setMenuActions(PropertyController.PropertyActions);
+        this.propertyController.setChosenField(null);
+    }
+
+    public void playerInfoUpdate(Player player){
+        updateUIPlayer(player, player.getPreviousField());
+        view.setDice(player.getLastDicePair());
+        view.setCenterText(player.toString());
+        player.setChanceCard(null);
+        player.setLastAction("");
+    }
+
+    public void buyFieldPlayerIsOn(Player player){
+        game.buyFieldPlayerIsOn(player);
+    }
+
+    /*
+
+     game.endPlayerTurn();
+
+                if (this.game.isEnded()){
+                    view.renderPlayerData(activePlayer, activePlayer.getPreviousField());
+                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                            this.game.getWinner().getName());
+                    view.endText("spillet er slut!");
+                }
+
+     */
+
+   /* private void playerTurn(Player player){
 
         Player activePlayer = player;
         while(!this.game.isEnded()){
             view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
 
-            int forrigeFelt = activePlayer.getField();
+            int previousField = activePlayer.getField();
 
-            Player nextPlayer = game.playTurn();
+            activePlayer = game.playTurn();
 
-            if (nextPlayer != null && !this.game.isEnded()){
-                updateUIPlayer(nextPlayer, forrigeFelt);
-                view.setDice(nextPlayer.getLastDicePair());
-                view.setCenterText(nextPlayer.toString());
-                nextPlayer.setChanceCard(null);
-                nextPlayer.setLastAction("");
+            if (activePlayer != null && !this.game.isEnded()){
+                updateUIPlayer(activePlayer, previousField);
+                view.setDice(activePlayer.getLastDicePair());
+                view.setCenterText(activePlayer.toString());
+                activePlayer.setChanceCard(null);
+                activePlayer.setLastAction("");
 
                 activePlayer = game.getActivePlayer();
             }else {
-                view.renderPlayerData(activePlayer, forrigeFelt);
+                view.renderPlayerData(activePlayer, previousField);
                 view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
                         this.game.getWinner().getName());
                 view.endText("spillet er slut!");
             }
         }
     }
+   */
 
-    private void updateUIPlayer(Player player, int forrigeFelt){
-        view.renderPlayerData(player, forrigeFelt);
+    private void updateUIPlayer(Player player, int previousField){
+        view.renderPlayerData(player, previousField);
     }
 
     Game getGame() {
         return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public GameView getView() {
+        return view;
+    }
+
+    public void setView(GameView view) {
+        this.view = view;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public Controller getCurrentController() {
+        return currentController;
+    }
+
+    public void setCurrentController(Controller currentController) {
+        this.currentController = currentController;
+    }
+
+    public String[] getCurrentGameMenu() {
+        return currentGameMenu;
+    }
+
+    public void setCurrentGameMenu(String[] currentGameMenu) {
+        this.currentGameMenu = currentGameMenu;
+    }
+
+    public void renderBuilding() {
+        view.renderBuildings();
     }
 }

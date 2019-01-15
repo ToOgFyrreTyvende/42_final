@@ -1,10 +1,11 @@
 package Model;
 
+import Controller.PropertyController;
+import Model.Fields.CompanyField;
 import Model.Fields.Field;
-import Model.Fields.PropertyField;
-import Model.ChanceCards.GetPaidCard;
 import Model.ChanceCards.ChanceCard;
-import Model.ChanceCards.FreePropertyCard;
+import Model.Fields.PropertyField;
+import Model.GameLogic.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ public class Game {
     private final int ROUND_MONEY;
     private final int JAIL_PRICE;
 
-    //private int[] muligeStartPenge = {20, 18, 16};
     private int startMoney;
 
     private Player[] players;
@@ -33,11 +33,12 @@ public class Game {
     private boolean ended;
 
     private GameBoard gameBoard;
+    private NormalGameLogic gameLogic;
 
     // #----------Constructor----------#
 
     public Game(GameBoard gameboard, String[] playerNames){
-        this.startMoney = Global.START_PENGE;
+        this.startMoney = Global.START_MONEY;
         this.JAIL_PRICE = Global.JAIL_PRICE;
         this.ROUND_MONEY = Global.ROUND_MONEY;
 
@@ -52,175 +53,90 @@ public class Game {
         activeRound = round.get(round.size()-1);
 
         this.gameBoard = gameboard;
-
         ended = false;
+
+        gameLogic = new NormalGameLogic(this);
     }
 
-    private void createPlayers(String[] spillerNavne){
-        Player[] players = new Player[spillerNavne.length];
-        for (int i = 0; i < spillerNavne.length; i++) {
-            players[i] = new Player(spillerNavne[i]);
+    private void createPlayers(String[] playerNames){
+        Player[] players = new Player[playerNames.length];
+        for (int i = 0; i < playerNames.length; i++) {
+            players[i] = new Player(playerNames[i]);
             players[i].setMoney(startMoney);
         }
 
         this.players = players;
     }
 
+    public void buyFieldPlayerIsOn(Player player){
+        Field fieldPlayerIsOn = gameBoard.getFieldModel(player.getField());
+        if (fieldPlayerIsOn instanceof PropertyField){
+            ((PropertyField) fieldPlayerIsOn).buyField(player);
 
-    public Player playTurn(){
-        if (!ended) {
-            int nowIndex = java.util.Arrays.asList(players).indexOf(activePlayer);
-            int newIndex = (nowIndex + 1) % players.length;
-            int diceThrow = dice.setAndGetResult();
-            int[] tempTurn = {diceThrow, nowIndex};
-
-            Player _activePlayer = activePlayer;
-            int fieldId = (activePlayer.getField() + diceThrow) % Global.FIELD_COUNT;
-
-            fieldId = gameRules(fieldId);
-
-            UpdateActivePlayerWithThrow(fieldId, diceThrow);
-
-            activeRound.addTurn(tempTurn);
-            activePlayer = players[newIndex];
-
-            checkRound();
-
-            return _activePlayer;
-        }else{
-            return null;
         }
+
     }
 
-    int gameRules(int fieldId) {
-        if (activePlayer.isInJail()){
-            if (!activePlayer.isOutOfJailFree()){
-                System.out.println("[INFO] " + activePlayer.getName() + " Har betalt " +
-                        JAIL_PRICE + " For at komme ud af fængslet");
-                activePlayer.setLastAction("\n - Har betalt for fængsel.");
-                activePlayer.addMoney(-JAIL_PRICE);
+    public void buyHouseOnPropertyField(PropertyField field){
+        field.buyHouse();
+    }
+
+    public void buyHotelOnPropertyField(PropertyField field){
+        field.buyHouse();
+    }
+
+    /*for (PropertyField playerOwnedField: gameBoard.getPlayerProperties(player)) {
+        if (playerOwnedField.getColor() == ((PropertyField) fieldPlayerIsOn).getColor() &&
+            playerOwnedField != fieldPlayerIsOn){
+            // Vi ændrer prisen det koster at lande på feltet hvis det er af samme type
+            playerOwnedField.increaseRentIndex();
+        }
+    }*/
+
+    public String getPlayerFieldType(Player player){
+        Field playerField = gameBoard.getFieldModel(player.getField());
+
+        if (playerField instanceof PropertyField){
+            if (((PropertyField) playerField).getOwner() == null){
+                return "PropertyField";
             }else{
-                activePlayer.setLastAction("\n - Har brugt sit løsladelses chancekort.");
-                System.out.println("[INFO] " + activePlayer.getName() + " Kom ud af fængslet med deres 'frikort'");
-            }
-
-            activePlayer.setInJail(false);
-            checkRound();
-        }
-
-        if (!ended){
-            if (fieldId < activePlayer.getField()){
-                System.out.println("[INFO] " + activePlayer.getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
-                addStartMoney(activePlayer);
-            }
-            Field landetField = this.getGameBoard().getFeltModel(fieldId);
-            landetField.fieldAction(activePlayer);
-            //chancekort skal tilføjes...
-
-            if (activePlayer.isChanceField()){
-                chanceFieldAction(activePlayer);
-                return activePlayer.getField();
-            }
-
-        }
-
-        return fieldId;
-    }
-
-    private void chanceFieldAction(Player activePlayer) {
-        activePlayer.setChanceField(false);
-
-        ChanceCard card = this.getGameBoard().randomChanceCard();
-        activePlayer.setChanceCard(card);
-
-        activePlayer.getChanceCard().cardAction(activePlayer);
-
-        if (card instanceof GetPaidCard){
-            if (((GetPaidCard) card).isToOthers()){
-                paidByOthers(((GetPaidCard) card).getMoney());
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra hver af de andre players.");
-            }else{
-                activePlayer.setLastAction(activePlayer.getLastAction() + "\n - Har fået " + ((GetPaidCard) card).getMoney()
-                        + " kr. fra banken.");
-                activePlayer.addMoney(((GetPaidCard) card).getMoney());
-            }
-        }else if(card instanceof FreePropertyCard){
-            int feltIndex = this.getGameBoard().closestColor(
-                    activePlayer.getField(),
-                    ((FreePropertyCard) card).getColor());
-            Field tempField = this.getGameBoard().getFields()[feltIndex];
-
-            if (tempField instanceof PropertyField){
-                ((PropertyField) tempField).fieldAction(activePlayer, 0);
-                activePlayer.setField(feltIndex);
-            }
-
-        }
-    }
-
-    private void paidByOthers(int money) {
-        // Vi trækker penge fra alle players
-        for (Player player : players) {
-            player.addMoney(- money);
-        }
-
-        // SIden vi fjerner antallet af penge fra alle spilelre. skal det tilføjes mængden af penge
-        // ganget med alle players til stede for at spilleren får den rigtige mængde
-        int moneyToGet = money * players.length - 1;
-        activePlayer.addMoney(moneyToGet);
-    }
-
-    private void addStartMoney(Player player) {
-        player.addMoney(ROUND_MONEY);
-    }
-
-    private void UpdateActivePlayerWithThrow(int feltId, int slag) {
-        if (activePlayer.isInJail()){
-            activePlayer.setField(this.getGameBoard().getJail());
-            activePlayer.setLastDiceResult(slag);
-            activePlayer.setLastDicePair(this.dice.getPair());
-        }else{
-            activePlayer.setField(feltId);
-            activePlayer.setLastDiceResult(slag);
-            activePlayer.setLastDicePair(this.dice.getPair());
-        }
-    }
-
-    //godt og grundigt Yoinked direkte fra vores 42_del1 af CDIO
-    private void checkRound(){
-        // Vi tjekker om den nuværende spiller er den sidste psiller i spiller listen. Dette gør, at
-        // alle players har mulighed for at vinde i slutningen af en runde
-
-        for (Player player : players) {
-            if (player.getMoney() <= 0) {
-                ended = true;
-                this.setWinner(this.findWinner());
-            }
-        }
-    }
-
-    private Player findWinner() {
-
-        Player highest = null;
-
-        if (ended) {
-            int max = 0;
-
-
-            for (Player player : players) {
-                if (player.getMoney() > max) {
-                    max = player.getMoney();
-                    highest = player;
+                if (((PropertyField) playerField).getOwner() == player){
+                    return "PropertyFieldMe";
                 }
+                return "PropertyFieldOwned";
             }
         }
-        return (highest);
+
+        if (playerField instanceof CompanyField){
+            if (((CompanyField) playerField).getOwner() == null){
+                return "CompanyField";
+            }else{
+                if (((CompanyField) playerField).getOwner() == player){
+                    return "CompanyFieldMe";
+                }
+                return "CompanyFieldOwned";
+            }
+        }
+
+        return playerField.getClass().getSimpleName();
     }
 
-    // Getters & setters
+    public int setAndGetDiceResult() {
+        return dice.setAndGetResult();
+    }
 
+    public int getDiceResult() {
+        return dice.getResult();
+    }
+
+    public void setDice(int[] pair, int result) {
+        dice.setPair(pair);
+        dice.setResult(result);
+    }
+
+    public int[] getDicePair() {
+        return dice.getPair();
+    }
 
     public Player[] getPlayers() {
         return players;
@@ -234,8 +150,12 @@ public class Game {
         return winner;
     }
 
-    private void setWinner(Player winner) {
+    public void setWinner(Player winner) {
         this.winner = winner;
+    }
+
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
     }
 
     public Player getActivePlayer() {
@@ -247,11 +167,11 @@ public class Game {
     }
 
 
-    void setEnded(boolean ended) {
+    public void setEnded(boolean ended) {
         this.ended = ended;
     }
 
-    private GameBoard getGameBoard() {
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
 
@@ -262,5 +182,45 @@ public class Game {
 
     public boolean isEnded() {
         return ended;
+    }
+
+    // ----- Delegators -----
+
+
+    public void setupNextPlayer() {
+        gameLogic.setupNextPlayer();
+    }
+
+    public void throwDice(boolean alreadyThrown) {
+        gameLogic.throwDice(alreadyThrown);
+    }
+
+    public int gameRules(int fieldId) {
+        return gameLogic.gameRules(fieldId);
+    }
+
+    public void chanceFieldAction(Player activePlayer) {
+        gameLogic.chanceFieldAction(activePlayer);
+    }
+
+    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
+        gameLogic.UpdateActivePlayerWithThrow(fieldId, diceThrow);
+    }
+
+    public void addStartMoney(Player player) {
+        gameLogic.addStartMoney(player);
+    }
+
+    public void endPlayerTurn() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        gameLogic.endPlayerTurn();
+    }
+
+    public void checkRound() {
+        gameLogic.checkRound();
+    }
+
+    public Player findWinner() {
+        return gameLogic.findWinner();
     }
 }
