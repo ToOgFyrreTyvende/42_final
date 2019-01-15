@@ -101,9 +101,9 @@ public class PropertyController extends Controller {
 
     public void sellBuilding(int type){
         if (type == 0){
-
+            chosenField.sellHouse();
         }else{
-
+            chosenField.sellHotel();
         }
     }
 
