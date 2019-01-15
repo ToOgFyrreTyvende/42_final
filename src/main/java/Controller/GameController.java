@@ -13,7 +13,7 @@ public class GameController {
     private JailController jailController;
     private PropertyController propertyController;
     private UserChoiceController userChoiceController;
-    private DiceController diceController;
+    public DiceController diceController;
     private EndTurnController endTurnController;
 
     private Controller currentController;
@@ -26,7 +26,7 @@ public class GameController {
         this.view = view;
         this.view.setGameBoard(this.gameBoard);
 
-       // this.jailController = new JailController(game);
+        this.jailController = new JailController(this);
         this.propertyController = new PropertyController(this);
        // this.userChoiceController = new UserChoiceController(game);
         this.diceController = new DiceController(this);
@@ -61,33 +61,41 @@ public class GameController {
         while(!this.game.isEnded()){
             resetControllers();
             currentController = diceController;
-            game.setupNextPlayer();
             boolean turnOver = false;
+            game.setupNextPlayer();
             while (!turnOver) {
+                if (activePlayer.isInJail()){
+                    currentController = jailController;
+                }
                 currentGameMenu = currentController.getMenuActions();
-                System.out.println(currentController.getClass().getSimpleName());
+                //System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
-                    action = view.getRoundChoiceDropDownWithText("Vælg venligst fra listen", currentGameMenu);
+                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
                 }else{
-                    action = view.getRoundChoiceWithText("Vælg venligst en handling", currentGameMenu);
+                    action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
                 }
                 String result = currentController.handleActions(action);
-                currentController = endTurnController;
 
-                if (result.equals("Afslut Tur")) {
+                if (result.equals("Afslut Tur") || result.equals("Sæt til auktion")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
+                }else if (result.equals("Jail Rul terning")){
+                    getGame().endPlayerTurn();
+                    turnOver = true;
+                    activePlayer = game.getActivePlayer();
+                    continue;
+                }else if(currentController != diceController){
+                    currentController = endTurnController;
                 }
 
                 renderBuilding();
+                playerInfoUpdate(activePlayer);
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
                     case "PropertyField":
-                        System.out.println("In propfield case");
-
                         currentController = propertyController;
                         currentGameMenu = PropertyController.PropertyActions;
                         break;
@@ -107,11 +115,11 @@ public class GameController {
                         break;
                 }
 
-                if (this.game.isEnded()){
-                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                            this.game.getWinner().getName());
-                    view.endText("spillet er slut!");
-                }
+            }
+            if (this.game.isEnded()){
+                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                        this.game.getWinner().getName());
+                view.endText("spillet er slut!");
             }
 
                 /*if (!activePlayer.isInJail()){

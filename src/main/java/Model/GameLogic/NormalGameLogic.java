@@ -3,7 +3,6 @@ package Model.GameLogic;
 import Model.ChanceCards.ChanceCard;
 import Model.Fields.Field;
 import Model.Game;
-import Model.GameBoard;
 import Model.Global;
 import Model.Player;
 
@@ -13,6 +12,7 @@ public class NormalGameLogic{
     private Player[] players;
     private int nowIndex;
     private int newIndex;
+    private int bankruptcies = 0;
 
 
     public NormalGameLogic(Game game) {
@@ -23,13 +23,30 @@ public class NormalGameLogic{
     public void setupNextPlayer(){
         if (!game.isEnded()){
             this.nowIndex = java.util.Arrays.asList(players).indexOf(game.getActivePlayer());
-            this.newIndex = (nowIndex + 1) % players.length;
+            int tempindex = nowIndex;
+            //this.newIndex = (nowIndex + 1) % players.length;
+            for (int i = 0; i < players.length; i++) {
+                if (!players[(tempindex + 1) % players.length].isBankrupt()){
+                    newIndex = (tempindex + 1) % players.length;
+                    break;
+                }else {
+                    tempindex++;
+                }
+            }
+
         }
     }
 
-    public void throwDice(){
-        if (!game.isEnded()){
-            int diceThrow = game.setAndGetDiceResult();
+    public void throwDice(boolean alreadyThrown){
+        if (!game.isEnded() && !game.getActivePlayer().isBankrupt()){
+            int diceThrow;
+            if (!alreadyThrown){
+                diceThrow = game.setAndGetDiceResult();
+
+            }else{
+                diceThrow = game.getDiceResult();
+            }
+
             int fieldId = (game.getActivePlayer().getField() + diceThrow) % Global.FIELD_COUNT;
             game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
 
@@ -38,6 +55,10 @@ public class NormalGameLogic{
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
 
 
+
+        }
+        else{
+            endPlayerTurn();
         }
     }
 
@@ -111,13 +132,19 @@ public class NormalGameLogic{
     }
 
     public void checkRound(){
-        // Vi tjekker om den nuværende spiller er den sidste psiller i spiller listen. Dette gør, at
-        // alle players har mulighed for at vinde i slutningen af en runde
 
         for (Player player : players) {
-            if (player.getMoney() <= 0) {
-                game.setEnded(true);
-                game.setWinner(findWinner());
+            if (!player.isBankrupt()) {
+                if (player.getMoney() <= 0) {
+
+                    player.setBankrupt(true);
+                    this.bankruptcies++;
+
+                    if (bankruptcies == players.length - 1) {
+                        game.setEnded(true);
+                        game.setWinner(findWinner());
+                    }
+                }
             }
         }
     }

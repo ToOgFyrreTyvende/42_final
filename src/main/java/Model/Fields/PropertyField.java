@@ -17,6 +17,7 @@ public class PropertyField extends Field {
     private int currentRentIndex;
     private int houses = 0;
     private boolean hotel = false;
+    private boolean soldHotel = false;
 
     // #----------Constructor----------#
     public PropertyField(String name, String subText, String description, int[] prices, Color color) {
@@ -64,14 +65,16 @@ public class PropertyField extends Field {
     }
 
     private void payToPlayerLogic(Player player) {
-        player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                this.getRent() + " kr. til " +
-                this.getOwner().getName());
+        if (!owner.isBankrupt()) {
+            player.setLastAction(player.getLastAction() + "\n - Har betalt " +
+                    this.getRent() + " kr. til " +
+                    this.getOwner().getName());
 
-        System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                this.getRent() + " kr. til " +
-                this.getOwner().getName());
-        payToPlayerField(player);
+            System.out.println("[INFO] " + player.getName() + " Har betalt " +
+                    this.getRent() + " kr. til " +
+                    this.getOwner().getName());
+            payToPlayerField(player);
+        }
     }
 
     private void payToPlayerField(Player player){
@@ -97,16 +100,64 @@ public class PropertyField extends Field {
     }
 
     public void buyHouse(){
-        if (houses < 4){
+        if ( houses >= 0 && houses < 4 && owner.getMoney() >= getHousePrice()){
             houses++;
             owner.addMoney(-getHousePrice());
+
+            calcRentIndex();
+
+            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hus ved " + this.getName()
+                    + "til " + this.getHousePrice() + " kr.");
+
+            System.out.println("[INFO] " + owner.getName() + " Har købt et hus ved " + this.getName() +
+                    " til " + this.getHousePrice() + " kr.");
         }
     }
 
     public void buyHotel(){
-        if (!hotel && houses == 4){
+        if (!hotel && houses == 4 && owner.getMoney() >= getHotelPrice()){
             hotel = true;
             owner.addMoney(-getHotelPrice());
+
+            calcRentIndex();
+
+            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hotel ved " + this.getName()
+                    + "til " + this.getHotelPrice() + " kr.");
+
+            System.out.println("[INFO] " + owner.getName() + " Har købt et hotel ved " + this.getName() +
+                    " til " + this.getHotelPrice() + " kr.");
+        }
+    }
+
+    public void sellHouse(){
+        if ( houses > 0 && houses <= 4){
+            houses--;
+            owner.addMoney((getHousePrice()/2));
+
+            calcRentIndex();
+
+            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hus ved " + this.getName()
+                    + "til " + (this.getHousePrice()/2) + " kr.");
+
+            System.out.println("[INFO] " + owner.getName() + " Har solgt et hus ved " + this.getName() +
+                    " til " + (this.getHousePrice()/2) + " kr.");
+        }
+    }
+
+    public void sellHotel(){
+        if (hotel && houses == 4){
+            hotel = false;
+            soldHotel = true;
+            owner.addMoney((getHotelPrice()/2));
+
+            calcRentIndex();
+
+
+            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hotel ved " + this.getName()
+                    + "til " + (this.getHotelPrice()/2) + " kr.");
+
+            System.out.println("[INFO] " + owner.getName() + " Har solgt et hotel ved " + this.getName() +
+                    " til " + (this.getHotelPrice()/2) + " kr.");
         }
     }
 
@@ -143,9 +194,15 @@ public class PropertyField extends Field {
     public void setRentIndex(int index) {
         this.currentRentIndex = (index % 6) + 1;
     }
-    public void increaseRentIndex() {
-        currentRentIndex = ((currentRentIndex + 1) % 6) + 1;
+    public void calcRentIndex() {
+        if (hotel){
+            currentRentIndex = 6;
+
+        }else if (houses > 0 && houses <= 4){
+            currentRentIndex = houses + 1;
+        }
     }
+
 
     private void setOwner(Player owner) {
         this.owner = owner;
@@ -185,5 +242,13 @@ public class PropertyField extends Field {
 
     public void setHotel(boolean hotel) {
         this.hotel = hotel;
+    }
+
+    public boolean isSoldHotel() {
+        return soldHotel;
+    }
+
+    public void setSoldHotel(boolean soldHotel) {
+        this.soldHotel = soldHotel;
     }
 }

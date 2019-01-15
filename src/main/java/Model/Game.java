@@ -125,6 +125,15 @@ public class Game {
         return dice.setAndGetResult();
     }
 
+    public int getDiceResult() {
+        return dice.getResult();
+    }
+
+    public void setDice(int[] pair, int result) {
+        dice.setPair(pair);
+        dice.setResult(result);
+    }
+
     public int[] getDicePair() {
         return dice.getPair();
     }
@@ -182,8 +191,8 @@ public class Game {
         gameLogic.setupNextPlayer();
     }
 
-    public void throwDice() {
-        gameLogic.throwDice();
+    public void throwDice(boolean alreadyThrown) {
+        gameLogic.throwDice(alreadyThrown);
     }
 
     public int gameRules(int fieldId) {
@@ -203,6 +212,7 @@ public class Game {
     }
 
     public void endPlayerTurn() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         gameLogic.endPlayerTurn();
     }
 

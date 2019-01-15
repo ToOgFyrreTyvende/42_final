@@ -11,7 +11,7 @@ public class DiceController extends Controller{
 
     @Override
     String handleActions(String action) {
-        gameController.getGame().throwDice();
+        gameController.getGame().throwDice(false);
         gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
         return DefaultActions[0];
     }
