@@ -25,19 +25,19 @@ public class NormalGameLogic{
         if (!game.isEnded()){
             this.nowIndex = java.util.Arrays.asList(players).indexOf(game.getActivePlayer());
             this.newIndex = (nowIndex + 1) % players.length;
-            boolean newPlayerFound = false;
+            /*boolean newPlayerFound = false;
             while(!newPlayerFound){
                 if(players[newIndex].isBankrupt()){
                     newIndex = (newIndex+1) % players.length;
                 }else{
                     newPlayerFound = true;
                 }
-            }
+            }*/
         }
     }
 
     public void throwDice(){
-        if (!game.isEnded()){
+        if (!game.isEnded() && !game.getActivePlayer().isBankrupt()){
             int diceThrow = game.setAndGetDiceResult();
             int fieldId = (game.getActivePlayer().getField() + diceThrow) % Global.FIELD_COUNT;
             game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
@@ -47,6 +47,9 @@ public class NormalGameLogic{
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
 
 
+        }
+        else{
+            endPlayerTurn();
         }
     }
 

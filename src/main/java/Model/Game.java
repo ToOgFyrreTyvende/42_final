@@ -203,6 +203,7 @@ public class Game {
     }
 
     public void endPlayerTurn() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         gameLogic.endPlayerTurn();
     }
 

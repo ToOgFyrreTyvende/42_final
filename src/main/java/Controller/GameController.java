@@ -61,8 +61,8 @@ public class GameController {
         while(!this.game.isEnded()){
             resetControllers();
             currentController = diceController;
-            game.setupNextPlayer();
             boolean turnOver = false;
+            game.setupNextPlayer();
             while (!turnOver) {
                 currentGameMenu = currentController.getMenuActions();
                 System.out.println(currentController.getClass().getSimpleName());
@@ -108,11 +108,11 @@ public class GameController {
                         break;
                 }
 
-                if (this.game.isEnded()){
-                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                            this.game.getWinner().getName());
-                    view.endText("spillet er slut!");
-                }
+            }
+            if (this.game.isEnded()){
+                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
+                        this.game.getWinner().getName());
+                view.endText("spillet er slut!");
             }
 
                 /*if (!activePlayer.isInJail()){
