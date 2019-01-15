@@ -26,6 +26,8 @@ public class Player {
 
     private String lastAction = "";
 
+    private boolean bankrupt = false;
+
     // #----------Constructor----------#
     public Player(String name){
         // Vælg spiller name selv
@@ -78,6 +80,10 @@ public class Player {
     public void setChanceField(boolean chanceField) {
         this.chanceField = chanceField;
     }
+
+    public boolean isBankrupt() {return this.bankrupt;}
+
+    public void setBankrupt(boolean bankrupt) {this.bankrupt = bankrupt;}
 
     // #--------------Get--------------#
     public String getName(){

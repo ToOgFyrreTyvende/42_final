@@ -82,7 +82,7 @@ public class GameController {
                 }
 
                 renderBuilding();
-
+                playerInfoUpdate(activePlayer);
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
                     case "PropertyField":
