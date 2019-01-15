@@ -63,11 +63,14 @@ public class GameGUIView extends GameView {
         Model.Fields.Field[] modelFields = getGameBoard().getFields();
         for (int i = 0; i < fields.length; i++) {
             if (fields[i] instanceof GUI_Street) {
+
                 if (modelFields[i] instanceof PropertyField){
                     PropertyField tempField = (PropertyField) modelFields[i];
-                    System.out.println(tempField.getHouses());
                     ((GUI_Street) fields[i]).setHouses(tempField.getHouses());
-                    ((GUI_Street) fields[i]).setHotel(tempField.isHotel());
+                    if (tempField.isHotel() || tempField.isSoldHotel()){
+                        ((GUI_Street) fields[i]).setHotel(tempField.isHotel());
+                        tempField.setSoldHotel(false);
+                    }
                 }
 
             }
