@@ -48,10 +48,10 @@ public class GetPaidCard extends ChanceCard {
         if (this.isToOthers()){
             paidByOthers(player, this.getMoney(), game.getPlayers());
             player.setLastAction(player.getLastAction() + "\n - Har fået " + this.getMoney()
-                    + " kr. fra hver af de andre players.");
+                    + " kr. fra hver spiller.");
         }
         else{
-            player.setLastAction(player.getLastAction() + "\n - Har fået " + this.getMoney()
+            player.setLastAction(player.getLastAction() + "\n - har fået " + this.getMoney()
                     + " kr. fra banken.");
             player.addMoney(this.getMoney());
         }

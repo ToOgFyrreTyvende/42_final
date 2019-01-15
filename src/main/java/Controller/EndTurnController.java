@@ -1,7 +1,7 @@
 package Controller;
 
 public class EndTurnController extends Controller{
-    public static final String[] EndActions = new String[]{"Afslut Tur"};
+    public static final String[] EndActions = new String[]{"Afslut tur"};
 
     public EndTurnController(GameController game) {
         super(game, EndActions);
@@ -11,13 +11,13 @@ public class EndTurnController extends Controller{
     String handleActions(String action) {
 
         switch (action){
-            case "Afslut Tur":
+            case "Afslut tur":
                 gameController.getGame().endPlayerTurn();
                 break;
             default:
                 break;
         }
-        return "Afslut Tur";
+        return "Afslut tur";
     }
 
 }

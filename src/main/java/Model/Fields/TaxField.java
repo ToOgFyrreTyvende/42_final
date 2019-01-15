@@ -21,7 +21,7 @@ public class TaxField extends Field {
 
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getTax() + " kr. i ekstraordinær statsskat.");
-            System.out.println("[INFO] " + player.getName() + " Har betalt " +
+            System.out.println("[INFO] " + player.getName() + " har betalt " +
                     this.getTax() + " kr. i ekstraordinær statsskat.");
         }
     }

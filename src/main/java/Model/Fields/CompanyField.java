@@ -35,11 +35,11 @@ public class CompanyField extends Field {
         if (!owner.isBankrupt()) {
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
 
-            System.out.println("[INFO] " + player.getName() + " Har betalt " +
+            System.out.println("[INFO] " + player.getName() + " har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
             payToPlayerField(player);
         }
     }

@@ -51,28 +51,15 @@ public class PropertyField extends Field {
         }
     }
 
-    public void fieldAction(Player player, int price) {
-        if (this.isOwned()){
-            payToPlayerLogic(player);
-        }else{
-            player.setLastAction(player.getLastAction() + "\n - Har fået " +
-                    this.getName() + " GRATIS!");
-            System.out.println("[INFO] " + player.getName() + " Har gratis fået " +
-                    this.getName());
-            if (price == 0)
-                this.setOwner(player);
-        }
-    }
-
     private void payToPlayerLogic(Player player) {
         if (!owner.isBankrupt()) {
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
 
             System.out.println("[INFO] " + player.getName() + " Har betalt " +
                     this.getRent() + " kr. til " +
-                    this.getOwner().getName());
+                    this.getOwner().getName() + ".");
             payToPlayerField(player);
         }
     }
@@ -106,10 +93,10 @@ public class PropertyField extends Field {
 
             calcRentIndex();
 
-            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hus ved " + this.getName()
+            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hus på " + this.getName()
                     + "til " + this.getHousePrice() + " kr.");
 
-            System.out.println("[INFO] " + owner.getName() + " Har købt et hus ved " + this.getName() +
+            System.out.println("[INFO] " + owner.getName() + " Har købt et hus på " + this.getName() +
                     " til " + this.getHousePrice() + " kr.");
         }
     }
@@ -121,10 +108,10 @@ public class PropertyField extends Field {
 
             calcRentIndex();
 
-            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hotel ved " + this.getName()
+            owner.setLastAction(owner.getLastAction() + "\n - Har købt et hotel på " + this.getName()
                     + "til " + this.getHotelPrice() + " kr.");
 
-            System.out.println("[INFO] " + owner.getName() + " Har købt et hotel ved " + this.getName() +
+            System.out.println("[INFO] " + owner.getName() + " Har købt et hotel på " + this.getName() +
                     " til " + this.getHotelPrice() + " kr.");
         }
     }
@@ -136,10 +123,10 @@ public class PropertyField extends Field {
 
             calcRentIndex();
 
-            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hus ved " + this.getName()
+            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hus på " + this.getName()
                     + "til " + (this.getHousePrice()/2) + " kr.");
 
-            System.out.println("[INFO] " + owner.getName() + " Har solgt et hus ved " + this.getName() +
+            System.out.println("[INFO] " + owner.getName() + " Har solgt et hus på " + this.getName() +
                     " til " + (this.getHousePrice()/2) + " kr.");
         }
     }
@@ -153,10 +140,10 @@ public class PropertyField extends Field {
             calcRentIndex();
 
 
-            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hotel ved " + this.getName()
+            owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hotel på " + this.getName()
                     + "til " + (this.getHotelPrice()/2) + " kr.");
 
-            System.out.println("[INFO] " + owner.getName() + " Har solgt et hotel ved " + this.getName() +
+            System.out.println("[INFO] " + owner.getName() + " Har solgt et hotel på " + this.getName() +
                     " til " + (this.getHotelPrice()/2) + " kr.");
         }
     }

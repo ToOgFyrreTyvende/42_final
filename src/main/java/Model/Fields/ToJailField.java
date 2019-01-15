@@ -34,7 +34,7 @@ public class ToJailField extends Field {
     }
 
     private void throwInJail(Player player){
-        player.setLastAction(player.getLastAction() + "\n - Er sat i fængsel");
+        player.setLastAction(player.getLastAction() + "\n - Er sat i fængsel.");
         player.setField(JAIL_ID);
         player.setInJail(true);
     }

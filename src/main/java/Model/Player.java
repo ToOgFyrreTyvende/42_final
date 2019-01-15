@@ -131,9 +131,9 @@ public class Player {
     @Override
     public String toString() {
         if (this.lastAction.equals("")) {
-            return "Player: " + this.getName() + " er landet på felt nr. " + (this.getField() + 1);
+            return this.getName() + " er landet på felt nr. " + (this.getField() + 1) + ".";
         }else {
-            return "Player: " + this.getName() + " " + this.getLastAction();
+            return this.getName() + " " + this.getLastAction();
         }
     }
 

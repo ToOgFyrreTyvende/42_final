@@ -50,6 +50,6 @@ public class MoveToCard extends ChanceCard {
             }
         }
         player.setField(fieldIndex);
-        player.setLastAction(player.getLastAction() + "\n - Er rykket til feltet " + fieldIndex + 1);
+        player.setLastAction(player.getLastAction() + "\n - Er rykket til feltet " + fieldIndex + 1 + ".");
     }
 }
