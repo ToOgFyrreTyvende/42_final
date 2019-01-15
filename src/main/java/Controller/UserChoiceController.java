@@ -32,8 +32,12 @@ public class UserChoiceController extends Controller{
         Player player = gameController.getGame().getActivePlayer();
         player.payTenPercent();
 
+
+
+
+
         player.setLastAction(player.getLastAction() + "\n - Har betalt 10% af deres formue i indkomstskat.");
-        System.out.println("[INFO] " + player.getName() + " Har betalt 10% af deres formue i indkomstskat.");
+        System.out.println("[INFO] " + player.getName() + " har betalt 10% af deres formue i indkomstskat.");
 
     }
 
@@ -42,7 +46,7 @@ public class UserChoiceController extends Controller{
 
         Player player = gameController.getGame().getActivePlayer();
         player.setLastAction(player.getLastAction() + "\n - Har betalt 4000 kr. i indkomstskat.");
-        System.out.println("[INFO] " + player.getName() + " Har betalt 4000 kr. i indkomstskat.");
+        System.out.println("[INFO] " + player.getName() + " har betalt 4000 kr. i indkomstskat.");
 
     }
 

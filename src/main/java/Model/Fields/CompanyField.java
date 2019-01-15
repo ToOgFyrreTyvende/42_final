@@ -52,13 +52,15 @@ public class CompanyField extends Field {
     }
 
     private void buyField(Player player) {
+
         player.setLastAction(player.getLastAction() + "\n - Har købt " +
                 this.getName() + " for " +
                 this.getPrice() + " kr.");
 
-        System.out.println("[INFO] " + player.getName() + " Har købt " +
+        System.out.println("[INFO] " + player.getName() + " har købt " +
                 this.getName() + " for " +
                 this.getPrice()+ " kr.");
+
         int payment = this.getPrice();
         player.addMoney( - payment);
         this.setOwner(player);
