@@ -9,7 +9,6 @@ import Model.GameBoard;
 import Model.Player;
 
 import java.awt.*;
-import java.util.HashMap;
 
 // Vi ved godt, at mange elementer i denne klasse er gentagende fra vores model
 // Men vi har været nødt til at "tvinge" noget data ind i UIets format igennem denne klasse.
@@ -18,7 +17,8 @@ public class GameGUIView extends GameView {
     private GUI ui;
     private GUI_Field[] fields;
 
-    private HashMap<Player, GUI_Player> players = new HashMap<>();
+    private Player[] modelPlayers;
+    private GUI_Player[] guiPlayers;
 
     @Override
     public void setGameBoard(GameBoard gameBoard) {
@@ -85,9 +85,12 @@ public class GameGUIView extends GameView {
         }
     }
 
+    // parameter Player is Model.Player, not GUI
     @Override
     public void setPlayers(Player... players) {
         Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green, Color.black, Color.magenta};
+        modelPlayers = players;
+        guiPlayers = new GUI_Player[modelPlayers.length];
 
         for (int i = 0; i < players.length; i++){
 
@@ -96,22 +99,27 @@ public class GameGUIView extends GameView {
 
             GUI_Player tempPlayerGUI = new GUI_Player(players[i].getName(),
                                         players[i].getMoney(), tempCar);
-            
-            this.players.put(players[i], tempPlayerGUI);
-            ui.addPlayer(this.players.get(players[i]));
+
+            modelPlayers[i] = players[i];
+            guiPlayers[i] = tempPlayerGUI;
+
+            ui.addPlayer(guiPlayers[i]);
         }
     }
 
     @Override
     public void resetBoard() {
-        this.players.forEach((playerModel, playerPiece) -> this.fields[0].setCar(playerPiece, true));
+        for (GUI_Player player : guiPlayers) {
+            this.fields[0].setCar(player, true);
+        }
     }
 
     @Override
     public void setPlayerField(Player player, int field) {
         int fieldIndex = (field % Global.FIELD_COUNT) -1;
+        int playerIndex = getPlayerIndex(player);
 
-        GUI_Player playerGUI = this.players.get(player);
+        GUI_Player playerGUI = guiPlayers[playerIndex];
 
         this.fields[fieldIndex].setCar(playerGUI, true);
     }
@@ -119,7 +127,9 @@ public class GameGUIView extends GameView {
     @Override
     public void setPlayerField(Player player, int field, int previousField) {
 
-        GUI_Player playerGUI = this.players.get(player);
+        int playerIndex = getPlayerIndex(player);
+
+        GUI_Player playerGUI = guiPlayers[playerIndex];
         GUI_Field _field = this.fields[previousField];
 
         if(_field.hasCar(playerGUI)){
@@ -132,15 +142,17 @@ public class GameGUIView extends GameView {
 
     @Override
     public void setPlayerMoney(Player player, int money) {
-        this.players.get(player).setBalance(money);
+        int playerIndex = getPlayerIndex(player);
+        guiPlayers[playerIndex].setBalance(money);
     }
 
     @Override
     public void renderPlayerData(Player player, int previousField) {
         setPlayerField(player, player.getField(), previousField);
 
-        this.players.forEach((playerModel, playerPiece) ->
-                                playerPiece.setBalance(playerModel.getMoney()));
+        for (int i = 0; i < guiPlayers.length; i++) {
+            guiPlayers[i].setBalance(modelPlayers[i].getMoney());
+        }
 
     }
 
@@ -224,5 +236,15 @@ public class GameGUIView extends GameView {
 
         return null;
 
+    }
+
+    private int getPlayerIndex(Player player) {
+        int playerIndex = 0;
+        for (int i = 0; i < modelPlayers.length; i++) {
+            if (player == modelPlayers[i]){
+                playerIndex = i;
+            }
+        }
+        return playerIndex;
     }
 }

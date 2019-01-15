@@ -15,15 +15,7 @@ public class TaxField extends Field {
 
     @Override
     public void fieldAction(Player player) {
-        if (this.isChoice()){
-
-            payTax(player);
-
-            player.setLastAction(player.getLastAction() + "\n - Har betalt " +
-                    this.getTax() + " kr. i indkomstskat.");
-            System.out.println("[INFO] " + player.getName() + " Har betalt " +
-                    this.getTax() + " kr. i indkomstskat.");
-        }else{
+        if (!this.isChoice()){
 
             payTax(player);
 

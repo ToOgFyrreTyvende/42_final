@@ -28,7 +28,7 @@ public class GameController {
 
         this.jailController = new JailController(this);
         this.propertyController = new PropertyController(this);
-       // this.userChoiceController = new UserChoiceController(game);
+        this.userChoiceController = new UserChoiceController(this);
         this.diceController = new DiceController(this);
         this.endTurnController = new EndTurnController(this);
 
@@ -86,32 +86,35 @@ public class GameController {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
-                }else if(currentController != diceController){
-                    currentController = endTurnController;
                 }
+
 
                 renderBuilding();
                 playerInfoUpdate(activePlayer);
+
+                /*if(currentController != diceController){
+                    continue;
+                }*/
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
                 switch (fieldTypeString) {
                     case "PropertyField":
                         currentController = propertyController;
-                        currentGameMenu = PropertyController.PropertyActions;
+                        propertyController.setMenuActions(PropertyController.PropertyActions);
                         break;
                     case "PropertyFieldOwned":
                         currentController = endTurnController;
                         currentGameMenu = EndTurnController.EndActions;
                         break;
-                    case "PropertyFieldMe":
-                        currentController = propertyController;
-                        currentGameMenu = PropertyController.PropertyManagementActions;
+
+                    case "TaxFieldChoice":
+                        currentController = userChoiceController;
+                        currentGameMenu = UserChoiceController.UserChoiceActions;
                         break;
 
                     default:
-                        /*turnOver = true;
-                        activePlayer = game.getActivePlayer();
-                        currentController = endTurnController;*/
+                        currentController = propertyController;
+                        propertyController.setMenuActions(PropertyController.PropertyManagementActions);
                         break;
                 }
 

@@ -144,4 +144,9 @@ public class Player {
     public void setPreviousField(int previousField) {
         this.previousField = previousField;
     }
+
+    public void payTenPercent(){
+        int payment = currentMoney/10;
+        addMoney(-payment);
+    }
 }

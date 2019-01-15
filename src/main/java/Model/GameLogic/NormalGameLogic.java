@@ -125,7 +125,7 @@ public class NormalGameLogic{
 
     public void endPlayerTurn(){
         if (!game.isEnded()){
-            System.out.println("Sat new player to index " + this.newIndex);
+            System.out.println("[TURN INFO] Sat new player to index " + this.newIndex);
             game.setActivePlayer(players[this.newIndex]);
             checkRound();
         }

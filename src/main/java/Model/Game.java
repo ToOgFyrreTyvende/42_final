@@ -5,10 +5,8 @@ import Model.Fields.CompanyField;
 import Model.Fields.Field;
 import Model.ChanceCards.ChanceCard;
 import Model.Fields.PropertyField;
+import Model.Fields.TaxField;
 import Model.GameLogic.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ------------------------------------------------------------/
@@ -28,8 +26,6 @@ public class Game {
     private Player activePlayer;
 
     private Dice dice;
-    private List<Round> round;
-    private Round activeRound;
     private boolean ended;
 
     private GameBoard gameBoard;
@@ -44,13 +40,9 @@ public class Game {
 
         createPlayers(playerNames);
 
-        //Kodedelen med round er taget fra vores forrige opgave: 42_del1
-        round = new ArrayList<>();
-        round.add(new Round());
         dice = new Dice();
 
         activePlayer = players[0];
-        activeRound = round.get(round.size()-1);
 
         this.gameBoard = gameboard;
         ended = false;
@@ -115,6 +107,14 @@ public class Game {
                     return "CompanyFieldMe";
                 }
                 return "CompanyFieldOwned";
+            }
+        }
+
+        if (playerField instanceof TaxField){
+            if (((TaxField) playerField).isChoice()){
+                return "TaxFieldChoice";
+            }else{
+                return "TaxField";
             }
         }
 
@@ -212,7 +212,6 @@ public class Game {
     }
 
     public void endPlayerTurn() {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         gameLogic.endPlayerTurn();
     }
 
