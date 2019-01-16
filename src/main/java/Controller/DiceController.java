@@ -11,10 +11,19 @@ public class DiceController extends Controller{
 
     @Override
     String handleActions(String action) {
+        if(gameController.getGame().getActivePlayer().isLucky()){
+            gameController.getGame().getActivePlayer().setLucky(false);
+            gameController.getGame().setDice(gameController.getGame().getActivePlayer().getLastDicePair(),gameController.getGame().getActivePlayer().getLastDiceResult() );
+            gameController.getGame().throwDice(true);
+            gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
+            return DefaultActions[0];
+        }
+        //gameController.getGame().setDice(new int[]{3, 3}, 6);
         gameController.getGame().throwDice(false);
         gameController.updateDice(gameController.getGame().getActivePlayer());
         return DefaultActions[0];
     }
+
 
     @Override
     public String[] getMenuActions() {

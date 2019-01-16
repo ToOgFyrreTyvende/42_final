@@ -21,7 +21,7 @@ public class JailController extends Controller{
                 payBail(gameController.getGame().getActivePlayer());
                 break;
             case "Rul terning":
-                feelingLucky(action, gameController.getGame().getActivePlayer());
+                feelingLucky(gameController.getGame().getActivePlayer());
                 return "Jail Rul terning";
                 //break;
             case "Brug løsladelseskort":
@@ -42,10 +42,10 @@ public class JailController extends Controller{
         player.setLastAction(player.getLastAction() + "\n - Har betalt 1000 kr for at komme ud af fængsel.");
         System.out.println("[INFO] " + player.getName() + " har betalt 1000 kr for at komme ud af fængsel.");
         player.setInJail(false);
-        gameController.setCurrentController(gameController.diceController);
     }
 
-    public void feelingLucky(String action,Player player){
+    public void feelingLucky(Player player){
+
         int[] diceThrow = new int[Global.DICE_AMOUNT +1];
         for (int i = 0 ; i < Global.DICE_AMOUNT ; i++){
             float _random3 = (float) Math.random();    // 0-1 float
@@ -54,23 +54,24 @@ public class JailController extends Controller{
             diceThrow[i] = random5;
         }
 
-        if(diceThrow[0] == diceThrow[1]){
-            player.setLastAction(player.getLastAction() + "\n - Slog " + diceThrow[0] + " to gange og kom ud af fængsel.");
-            System.out.println("[INFO] " + player.getName() + " har slået " + diceThrow[0] + " to gange og kom ud af fængsel.");
-            player.setInJail(false);
+        int diceThrowResult = diceThrow[0]=diceThrow[1];
 
-            gameController.getGame().setDice(diceThrow,diceThrow[0] + diceThrow[1] );
-            gameController.getGame().throwDice(true);
-            gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
+            if(diceThrow[0]!=diceThrow[1]){
+                player.setLastAction(player.getLastAction() + "\n - Slog "+ diceThrow[0]+ " og " + diceThrow[1] + " og kom ikke ud af fængsel.");
+                System.out.println("[INFO] " + player.getName() + " har slået "+ diceThrow[0]+ " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
+                player.setLucky(false);
+            }else if(diceThrow[0]==diceThrow[1]){
+                player.setLastAction(player.getLastAction() + "\n - Slog " + diceThrow[0] + " to gange og kom ud af fængsel.");
+                System.out.println("[INFO] " + player.getName() + " har slået " + diceThrow[0] + " to gange og kom ud af fængsel, hvor de så bevægede sig med "+ diceThrowResult +" felter.");
+                player.setInJail(false);
+                player.setLucky(true);
 
-        }
-        else if (diceThrow[0] != diceThrow[1]){
-            player.setLastAction(player.getLastAction() + "\n - Slog ikke to ens og kom ud af fængsel.");
-            System.out.println("[INFO] " + player.getName() + " har slået "+ diceThrow[0]+ " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
-        } else {
-            System.out.println("Something went wrong");
-            handleActions(action);
-        }
+                player.setLastDiceResult(diceThrowResult);
+                player.setLastDicePair(diceThrow);
+
+            }else{
+                System.out.println("Something went wrong");
+            }
 
     }
 
@@ -81,8 +82,8 @@ public class JailController extends Controller{
             player.setInJail(false);
             player.setOutOfJailFree(false);
         } else {
-            System.out.println("[INFO] " + player.getName() + " har ikke et 'frikort' saa du kan ikke goere dette.");
-            // JailController();
+            player.setLastAction(player.getLastAction() + "\n - Har ikke et 'frikort' saa du kan ikke goere dette.");
+            System.out.println("[INFO] " + player.getName() + " Har ikke et 'frikort' saa du kan ikke goere dette.");
         }
     }
 }

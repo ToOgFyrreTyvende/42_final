@@ -24,6 +24,7 @@ public class Player {
     private ChanceCard chanceCard;
     private boolean chanceField = false;
     private boolean outOfJailFree = false;
+    private boolean Lucky = false;
 
     private String lastAction = "";
 
@@ -149,5 +150,13 @@ public class Player {
     public void payTenPercent(){
         int payment = currentMoney/10;
         addMoney(-payment);
+    }
+
+    public boolean isLucky() {
+        return Lucky;
+    }
+
+    public void setLucky(boolean lucky) {
+        Lucky = lucky;
     }
 }

@@ -83,15 +83,23 @@ public class GameController {
                     propertyController.setMenuActions(buildPropertyMenu());
 
                 } else if (result.equals("Jail Rul terning")){
-                    getGame().endPlayerTurn();
-                    turnOver = true;
-                    activePlayer = game.getActivePlayer();
-                    continue;
+                    if (activePlayer.isLucky()){
+                        currentController = diceController;
+                        continue;
+                    } else {
+                        getGame().endPlayerTurn();
+                        turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        continue;
+                    }
                 }
 
 
 
-                if(currentController == userChoiceController ||
+                if (result.equals("Betal 1000 kr.") || result.equals("Brug løsladelseskort")){
+                    currentController = diceController;
+                    continue;
+                }else if (currentController == userChoiceController ||
                         currentController == propertyController ){
                     currentController = propertyController;
                     continue;
