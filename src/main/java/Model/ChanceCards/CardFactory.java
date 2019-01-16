@@ -6,8 +6,8 @@ import Model.Game;
 public class CardFactory {
     public static ChanceCard[] makeCards(){
         return new ChanceCard[]{
-                new MoveToCard("Ryk frem til start", "Start", 0),
-                new MoveToCard("Ryk frem til start", "Start", 0),
+                new MoveToCard("Ryk frem til start", "Start", 0, true),
+                new MoveToCard("Ryk frem til start", "Start", 0, true),
 
                 new GetPaidCard("Modtag udbytte af Deres aktier - kr. 1.000", "Aktier", 1000, false),
                 new GetPaidCard("De modtager Deres aktieudbytte. Modtag kr. 1.000 af banken", "Aktier", 1000, false),
@@ -40,8 +40,8 @@ public class CardFactory {
                 // Kender ikke index for nærmeste færge.
                 new MoveToCard("Ryk frem til Rådhuspladsen", "Rådhuspladsen", 39,true),
                 new MoveToCard("Ryk frem til Grønningen. Hvis De passerer START, indkassér da kr. 4.000", "Grønningen", 24, true),
-                new MoveToCard("Tag med SFL-færgen. Flyt brikken frem, og, hvis De passerer START, indkassér da kr. 4.000", "SFL", 5, true),
-                new MoveToCard("Tag med den nærmeste færge. Flyt brikken frem, og hvis De passerer START indkassér da kr. 4.000.", "Færge", 0, false),
+                new MoveToCard("Tag med SFL-færgen. Flyt brikken frem, og hvis De passerer START, indkassér da kr. 4.000", "SFL", 5, true),
+                new MoveToCard("Tag med SFL-færgen. Flyt brikken frem, og hvis De passerer START, indkassér da kr. 4.000.", "Færge", 5, true),
                 new MoveToCard("Ryk frem til Vimmelskaftet. Hvis De passerer START, indkassér da kr. 4.000", "Vimmelskaftet", 32, true),
                 new MoveToCard("Ryk frem til Strandvejen. Hvis De passerer START, indkassér da kr. 4.000", "Strandvejen", 19, true),
                 new MoveToCard("Ryk frem til Frederiksberg Allé. Hvis De passerer START, indkassér da kr. 4.000", "Frederiksberg Allé", 11, true),
