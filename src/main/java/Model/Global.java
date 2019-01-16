@@ -2,6 +2,11 @@ package Model;
 
 import java.awt.*;
 
+/**
+ * Global variables for the Monopoly game.
+ * These values are constant, but this class provides and easy way to change them.
+ * These values could be read from a property file.
+ */
 public class Global {
     public static final int START_MONEY = 30000;
 

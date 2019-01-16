@@ -202,7 +202,7 @@ public class GameController {
                 updateUIPlayer(activePlayer, previousField);
                 view.setDice(activePlayer.getLastDicePair());
                 view.setCenterText(activePlayer.toString());
-                activePlayer.setChanceCard(null);
+                activePlayer.setChanceCards(null);
                 activePlayer.setLastAction("");
 
                 activePlayer = game.getActivePlayer();

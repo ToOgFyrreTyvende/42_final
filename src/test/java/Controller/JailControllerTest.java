@@ -42,7 +42,7 @@ class JailControllerTest {
 
     @Test
     void bailCard() {
-        /*gb.setChanceCard();
+        /*gb.setChanceCards();
         Player dummy3 = new Player("threemmy");
         dummy3.setInJail(true);
         jc.handleActions(jc.JailActions[2],dummy3);

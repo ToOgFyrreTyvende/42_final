@@ -28,6 +28,12 @@ public class CompanyField extends Field {
     public void fieldAction(Player player) {
         if (this.isOwned()){
             payToPlayerLogic(player);
+        }else{
+            player.setLastAction(player.getLastAction() + "\n - Er landet på " +
+                    this.getName());
+
+            System.out.println("[INFO] " + player.getName() + " er landet på " +
+                    this.getName());
         }
     }
 

@@ -4,15 +4,12 @@ import Model.ChanceCards.ChanceCard;
 import Model.Fields.Field;
 
 /**
- * ------------------------------------------------------------/
- * Denne klasse kaldes for at oprette en ny spiller
- * Model.Player kan have et brugervalgt name som bruges under
- * kørsel af spillet
- * ------------------------------------------------------------/
+ * This class models a "player" in the Monopoly game.
+ * A player has available money, and lot sof attributes that corrospond with
+ * a player in a real monopoly game.
  */
 public class Player {
-    // We need previous field to remove user from it in the GUI
-
+    // Previous field is used to track chance card actions mostly.
     private int previousField = 0;
     private int field = 0;
     private String name;
@@ -26,21 +23,27 @@ public class Player {
     private boolean outOfJailFree = false;
     private boolean Lucky = false;
 
+    /**
+     * lastAction is a log of actions. This should be added to and not overwritten!
+     */
     private String lastAction = "";
 
     private boolean bankrupt = false;
 
-    // #----------Constructor----------#
+    /**
+     * A player is constructed with a name. Everything else are defaults.
+     * @param name the name of the player
+     */
     public Player(String name){
         // Vælg spiller name selv
         this.name = name;
     }
 
-    // #------------Get/Set------------#
+
     public int getField(){
-        // Returnerer nuværende field af spiller
         return field;
     }
+
     public int setField(int newField){
         // Returnerer nye field af spiller
         field = newField;
@@ -87,7 +90,6 @@ public class Player {
 
     public void setBankrupt(boolean bankrupt) {this.bankrupt = bankrupt;}
 
-    // #--------------Get--------------#
     public String getName(){
         // Returnerer spiller navn
         return name;
@@ -121,21 +123,34 @@ public class Player {
         return lastAction;
     }
 
-    // #-------------Other-------------#
+    /**
+     * Add a set amount of money to a player.
+     * @param money amount to add to player. Can be negative to subtract!
+     */
     public void addMoney(int money){
         this.currentMoney = currentMoney + money;
     }
 
+    /**
+     * Sets the text that pops up as a chance card for the player as a log of actions.
+     * Should be used to add log items. Therefore the previous action are supplied in addition to
+     * new actions.
+     * @param lastAction text to log user actions
+     */
     public void setLastAction(String lastAction) {
         this.lastAction = lastAction;
     }
 
+    /**
+     * This returns all actions as a log of the players action.
+     * @return log of all player actions as a long string
+     */
     @Override
     public String toString() {
         if (this.lastAction.equals("")) {
-            return this.getName() + " er landet på " + (this.getField() + 1) + ".";
+            return "Spiller: " +  this.getName() + " er landet på " + (this.getField() + 1) + ".";
         }else {
-            return this.getName() + " " + this.getLastAction();
+            return "Spiller: " +  this.getName() + " " + this.getLastAction();
         }
     }
 
@@ -147,11 +162,18 @@ public class Player {
         this.previousField = previousField;
     }
 
+    /**
+     * A player can be put in a situation where they need to play 10% of their current currency amount.
+     */
     public void payTenPercent(){
         int payment = currentMoney/10;
         addMoney(-payment);
     }
 
+    /**
+     * Used to determine if a player was able to luck themselves out of jail by throwing 2 identical dice
+     * @return boolean whether or not they were able to throw identical dice
+     */
     public boolean isLucky() {
         return Lucky;
     }

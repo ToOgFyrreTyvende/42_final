@@ -9,12 +9,8 @@ import Model.Fields.TaxField;
 import Model.GameLogic.*;
 
 /**
- * ------------------------------------------------------------/
- * Denne klasse er hoveddelen der kører hele spillet og diverse
- * klasser efter en bruger har åbnet programmet
- * ------------------------------------------------------------/
+ * The main class for controlling and interacting with the Monopoly game
  */
-
 public class Game {
     private final int ROUND_MONEY;
     private final int JAIL_PRICE;
@@ -31,8 +27,14 @@ public class Game {
     private GameBoard gameBoard;
     private NormalGameLogic gameLogic;
 
-    // #----------Constructor----------#
 
+    /**
+     * Set up a new Game. This should by itself create a game good enough for play.
+     * Though it is important to mention, that the order of execution for different actions
+     * are not trivial without a controller.
+     * @param gameboard that contains all fields and chancecards (as well as actions to query them)
+     * @param playerNames which is an array of strings equivalent to player names
+     */
     public Game(GameBoard gameboard, String[] playerNames){
         this.startMoney = Global.START_MONEY;
         this.JAIL_PRICE = Global.JAIL_PRICE;
@@ -50,6 +52,10 @@ public class Game {
         gameLogic = new NormalGameLogic(this);
     }
 
+    /**
+     * Initialize players from an array of strings.
+     * @param playerNames string[] of player names to be created in the game
+     */
     private void createPlayers(String[] playerNames){
         Player[] players = new Player[playerNames.length];
         for (int i = 0; i < playerNames.length; i++) {
@@ -60,31 +66,26 @@ public class Game {
         this.players = players;
     }
 
+    /**
+     * Method to buy the field a player is positioned at.
+     * Only if the current field is of type PropertyField.
+     * @param player
+     */
     public void buyFieldPlayerIsOn(Player player){
         Field fieldPlayerIsOn = gameBoard.getFieldModel(player.getField());
         if (fieldPlayerIsOn instanceof PropertyField){
             ((PropertyField) fieldPlayerIsOn).buyField(player);
-
         }
-
     }
 
-    public void buyHouseOnPropertyField(PropertyField field){
-        field.buyHouse();
-    }
-
-    public void buyHotelOnPropertyField(PropertyField field){
-        field.buyHouse();
-    }
-
-    /*for (PropertyField playerOwnedField: gameBoard.getPlayerProperties(player)) {
-        if (playerOwnedField.getColor() == ((PropertyField) fieldPlayerIsOn).getColor() &&
-            playerOwnedField != fieldPlayerIsOn){
-            // Vi ændrer prisen det koster at lande på feltet hvis det er af samme type
-            playerOwnedField.increaseRentIndex();
-        }
-    }*/
-
+    /**
+     * Return the class name, as a string, of the current field a player is positioned at
+     * These strings are used for a switch/case expression in GameController.
+     * The main reason for this method, is to make the GameController more lean
+     * and to customize the state of the field, such as adding "Me" or "Owned" at the end.
+     * @param player
+     * @return String that represents the type of the field. e.g. "CompanyField"
+     */
     public String getPlayerFieldType(Player player){
         Field playerField = gameBoard.getFieldModel(player.getField());
 
@@ -92,13 +93,16 @@ public class Game {
             if (((PropertyField) playerField).getOwner() == null){
                 return "PropertyField";
             }else{
+                // If player is on PropertyField and it is owned
+
+                // If owner is player that is examined
                 if (((PropertyField) playerField).getOwner() == player){
                     return "PropertyFieldMe";
                 }
                 return "PropertyFieldOwned";
             }
         }
-
+        // Same as above, but for CompanyField
         if (playerField instanceof CompanyField){
             if (((CompanyField) playerField).getOwner() == null){
                 return "CompanyField";
@@ -121,14 +125,27 @@ public class Game {
         return playerField.getClass().getSimpleName();
     }
 
+    /**
+     * Throw the dice and return the result (this still sets attributes in the Dice class).
+     * @return int result (sum) of dice
+     */
     public int setAndGetDiceResult() {
         return dice.setAndGetResult();
     }
 
+    /**
+     * Return dice result of latest dice throw
+     * @return int result (sum) of dice
+     */
     public int getDiceResult() {
         return dice.getResult();
     }
 
+    /**
+     * If its needed (which it is), the result of the dice can be set here.
+     * @param pair int[] representing the dice results
+     * @param result sum of the dice
+     */
     public void setDice(int[] pair, int result) {
         dice.setPair(pair);
         dice.setResult(result);
@@ -184,8 +201,6 @@ public class Game {
         return ended;
     }
 
-    // ----- Delegators -----
-
 
     public void setupNextPlayer() {
         gameLogic.setupNextPlayer();
@@ -199,28 +214,8 @@ public class Game {
         return gameLogic.gameRules(fieldId);
     }
 
-    public void chanceFieldAction(Player activePlayer) {
-        gameLogic.chanceFieldAction(activePlayer);
-    }
-
-    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
-        gameLogic.UpdateActivePlayerWithThrow(fieldId, diceThrow);
-    }
-
-    public void addStartMoney(Player player) {
-        gameLogic.addStartMoney(player);
-    }
-
     public void endPlayerTurn() {
         gameLogic.endPlayerTurn();
-    }
-
-    public void checkRound() {
-        gameLogic.checkRound();
-    }
-
-    public Player findWinner() {
-        return gameLogic.findWinner();
     }
 
     public NormalGameLogic getGameLogic() {

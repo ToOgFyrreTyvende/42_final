@@ -48,8 +48,7 @@ public class PropertyField extends Field {
     public void fieldAction(Player player) {
         if (this.isOwned()){
             payToPlayerLogic(player);
-        }
-        else{
+        }else{
             player.setLastAction(player.getLastAction() + "\n - Er landet på " +
                     this.getName());
 
