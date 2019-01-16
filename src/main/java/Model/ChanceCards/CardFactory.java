@@ -50,8 +50,8 @@ public class CardFactory {
                 new MoveToCard("Ryk 3 felter frem", "3 felter tilbage",-3),
 
                 // IKKE modtage 4000kr
-                new MoveToCard("Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer START, indkasserer De ikke kr. 4.000.", "Fængsel", 10),
-                new MoveToCard("Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer START, indkasserer De ikke kr. 4.000.", "Fængsel", 10),
+                new MoveToCard("Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer START, indkasserer De ikke kr. 4.000.", "Fængsel", true),
+                new MoveToCard("Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer START, indkasserer De ikke kr. 4.000.", "Fængsel", true),
 
                 new OutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. \n" +
                         "Dette kort kan opbevares, indtil De får brug for det, eller De kan sælge det.", "Fængsel"),
