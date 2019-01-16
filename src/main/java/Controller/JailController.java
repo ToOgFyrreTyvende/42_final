@@ -76,7 +76,7 @@ public class JailController extends Controller{
 
     public void bailCard(String action,Player player){
         if(player.isOutOfJailFree()){
-            player.setLastAction(player.getLastAction() + "\n - Har brugt sit løsladelses chancekort.");
+            player.setLastAction(player.getLastAction() + "\n - Har brugt sit løsladelseskort.");
             System.out.println("[INFO] " + player.getName() + " kom ud af fængslet med deres 'frikort'");
             player.setInJail(false);
             player.setOutOfJailFree(false);
