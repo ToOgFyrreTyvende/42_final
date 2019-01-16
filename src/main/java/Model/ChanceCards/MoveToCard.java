@@ -64,7 +64,7 @@ public class MoveToCard extends ChanceCard {
         }
 
 
-        player.setField(fieldIndex);
+        player.setField(fieldIndex % Global.FIELD_COUNT);
         player.setLastAction(player.getLastAction() + "\n - Er rykket til " + this.getName() + ".");
     }
 }

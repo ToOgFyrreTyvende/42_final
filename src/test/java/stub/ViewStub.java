@@ -12,6 +12,8 @@ public class ViewStub extends GameView {
     public ViewStub() {
     }
 
+
+
     @Override
     public void renderBuildings() {
 
@@ -57,11 +59,7 @@ public class ViewStub extends GameView {
     }
 
     @Override
-    public void setPlayerField(Player player, int field) {
-    }
-
-    @Override
-    public void setPlayerField(Player player, int field, int previousField) {
+    public void setPlayerField(Player player) {
     }
 
     @Override

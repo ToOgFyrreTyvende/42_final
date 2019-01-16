@@ -26,13 +26,9 @@ public class DemoDice extends Dice{
                 // Spiller 2s 2 terninger
                 // Spiller 3s 2 terninger
                 // forfra...
+                new int[]{6,6},
                 new int[]{1,1},
                 new int[]{1,1},
-                new int[]{1,1},
-
-                new int[]{4,4},
-                new int[]{5,5},
-                new int[]{5,5},
 
                 new int[]{6,6},
                 new int[]{5,5},
@@ -41,6 +37,7 @@ public class DemoDice extends Dice{
                 new int[]{3,3},
                 new int[]{5,5},
                 new int[]{5,5},
+
         };
     }
 

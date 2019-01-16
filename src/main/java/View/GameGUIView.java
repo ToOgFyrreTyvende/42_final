@@ -114,30 +114,23 @@ public class GameGUIView extends GameView {
         }
     }
 
-    @Override
-    public void setPlayerField(Player player, int field) {
-        int fieldIndex = (field % Global.FIELD_COUNT) -1;
-        int playerIndex = getPlayerIndex(player);
-
-        GUI_Player playerGUI = guiPlayers[playerIndex];
-
-        this.fields[fieldIndex].setCar(playerGUI, true);
-    }
 
     @Override
-    public void setPlayerField(Player player, int field, int previousField) {
+    public void setPlayerField(Player player) {
 
         int playerIndex = getPlayerIndex(player);
 
         GUI_Player playerGUI = guiPlayers[playerIndex];
-        GUI_Field _field = this.fields[previousField];
+        //GUI_Field _field = this.fields[player.getPreviousField()];
+        System.out.println(player.getField());
 
-        if(_field.hasCar(playerGUI)){
-            _field.setCar(playerGUI, false);
+        for (int i = 0; i < fields.length; i++) {
+            if(fields[i].hasCar(playerGUI)){
+                fields[i].setCar(playerGUI, false);
+            }
         }
 
-
-        this.fields[field].setCar(playerGUI, true);
+        this.fields[player.getField()].setCar(playerGUI, true);
     }
 
     @Override
@@ -148,7 +141,7 @@ public class GameGUIView extends GameView {
 
     @Override
     public void renderPlayerData(Player player, int previousField) {
-        setPlayerField(player, player.getField(), previousField);
+        setPlayerField(player);
 
         for (int i = 0; i < guiPlayers.length; i++) {
             guiPlayers[i].setBalance(modelPlayers[i].getMoney());

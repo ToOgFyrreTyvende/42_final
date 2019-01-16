@@ -16,8 +16,7 @@ public abstract class GameView {
     public abstract String getRoundChoiceDropDownWithText(String text, String ... choice);
 
     public abstract void resetBoard();
-    public abstract void setPlayerField(Player player, int field);
-    public abstract void setPlayerField(Player player, int field, int previousField);
+    public abstract void setPlayerField(Player player);
     public abstract void renderBuildings();
 
     public abstract void setPlayerMoney(Player player, int money);

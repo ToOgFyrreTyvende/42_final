@@ -85,9 +85,11 @@ public class NormalGameLogic{
                 addStartMoney(game.getActivePlayer());
             }
             game.getActivePlayer().setPreviousField(fieldId);
+            game.getActivePlayer().setField(fieldId);
 
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
             landedField.fieldAction(game.getActivePlayer());
+
 
             if (game.getActivePlayer().isChanceField()){
                 chanceFieldAction(game.getActivePlayer());
