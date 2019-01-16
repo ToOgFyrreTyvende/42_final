@@ -38,8 +38,10 @@ public class PropertyController extends Controller {
 
         switch(action){
             case "Afslut tur":
-            case "Spring over":
                 gameController.getGame().endPlayerTurn();
+                break;
+            case "Spring over":
+                newMenu = PropertyManagementActions;
                 break;
 
             case "Køb ejendom":

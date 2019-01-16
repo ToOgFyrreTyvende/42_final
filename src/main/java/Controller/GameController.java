@@ -75,11 +75,14 @@ public class GameController {
                 renderBuilding();
                 playerInfoUpdate(activePlayer);
 
-                if (result.equals("Afslut tur") || result.equals("Spring over")) {
+                if (result.equals("Afslut tur")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
-                }else if (result.equals("Jail Rul terning")){
+                }else if(result.equals("Spring over")){
+                    propertyController.setMenuActions(buildPropertyMenu());
+
+                } else if (result.equals("Jail Rul terning")){
                     getGame().endPlayerTurn();
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
