@@ -118,11 +118,11 @@ public class GameController {
                         propertyController.setMenuActions(PropertyController.PropertyActions);
                         break;
 
-                    /*case "CompanyField":
+                    case "CompanyField":
                         currentController = propertyController;
                         propertyController.setMenuActions(PropertyController.PropertyActions);
                         break;
-                    */
+
 
                     case "TaxFieldChoice":
                         currentController = userChoiceController;

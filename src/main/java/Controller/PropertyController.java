@@ -1,12 +1,20 @@
 package Controller;
 
+import Model.Fields.CompanyField;
 import Model.Fields.Field;
 import Model.Fields.PropertyField;
+import Model.Player;
 
 
 public class PropertyController extends Controller {
     public static final String[] PropertyActions = new String[]{
             "Køb ejendom",
+            "Spring over"
+            //"Afslut Tur"
+    };
+
+    public static final String[] CompanyActions = new String[]{
+            "Køb firma",
             "Spring over"
             //"Afslut Tur"
     };
@@ -44,6 +52,10 @@ public class PropertyController extends Controller {
                 newMenu = PropertyManagementActions;
                 break;
 
+            case "Køb firma":
+                newMenu = PropertyManagementActions;
+                buyCompanyField();
+                break;
             case "Køb ejendom":
                 newMenu = PropertyManagementActions;
                 gameController.buyFieldPlayerIsOn(gameController.getGame().getActivePlayer());
@@ -84,6 +96,16 @@ public class PropertyController extends Controller {
 
         super.setMenuActions(newMenu);
         return action;
+    }
+
+    private void buyCompanyField() {
+        Player activePlayer = gameController.getGame().getActivePlayer();
+        String companyFieldName = gameController.getGameBoard().getFieldModel(
+                activePlayer.getField()
+        ).getName();
+        CompanyField companyField = gameController.getGame().getGameBoard().getCompanyFieldByName(companyFieldName);
+
+        companyField.buyField(activePlayer);
     }
 
 

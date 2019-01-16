@@ -190,4 +190,16 @@ public class GameBoard {
 
         return null;
     }
+
+    public CompanyField getCompanyFieldByName(String action) {
+        for (Field property : getFields()) {
+            if (property instanceof CompanyField){
+                if (property.getName() == action){
+                    return (CompanyField) property;
+                }
+            }
+        }
+
+        return null;
+    }
 }

@@ -84,9 +84,10 @@ public class NormalGameLogic{
                 game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
                 addStartMoney(game.getActivePlayer());
             }
+            game.getActivePlayer().setPreviousField(fieldId);
+
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
             landedField.fieldAction(game.getActivePlayer());
-            game.getActivePlayer().setPreviousField(fieldId);
 
             if (game.getActivePlayer().isChanceField()){
                 chanceFieldAction(game.getActivePlayer());

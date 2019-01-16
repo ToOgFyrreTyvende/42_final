@@ -51,19 +51,20 @@ public class CompanyField extends Field {
         owner.addMoney(payment);
     }
 
-    private void buyField(Player player) {
+    public void buyField(Player player) {
+        if (!isOwned()){
+            player.setLastAction(player.getLastAction() + "\n - Har købt " +
+                    this.getName() + " for " +
+                    this.getPrice() + " kr.");
 
-        player.setLastAction(player.getLastAction() + "\n - Har købt " +
-                this.getName() + " for " +
-                this.getPrice() + " kr.");
+            System.out.println("[INFO] " + player.getName() + " har købt " +
+                    this.getName() + " for " +
+                    this.getPrice()+ " kr.");
 
-        System.out.println("[INFO] " + player.getName() + " har købt " +
-                this.getName() + " for " +
-                this.getPrice()+ " kr.");
-
-        int payment = this.getPrice();
-        player.addMoney( - payment);
-        this.setOwner(player);
+            int payment = this.getPrice();
+            player.addMoney( - payment);
+            this.setOwner(player);
+        }
     }
 
     @Override
