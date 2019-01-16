@@ -18,8 +18,8 @@ public class DiceController extends Controller{
             gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
             return DefaultActions[0];
         }
-        gameController.getGame().setDice(new int[]{3, 3}, 6);
-        gameController.getGame().throwDice(true);
+        //gameController.getGame().setDice(new int[]{3, 3}, 6);
+        gameController.getGame().throwDice(false);
         gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
         return DefaultActions[0];
     }
