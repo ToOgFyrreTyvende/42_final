@@ -22,7 +22,7 @@ class GameTest {
 
         testBoard = new GameBoard();
 
-        testDice = new DiceStub(1);
+        testDice = new DiceStub(1, false);
 
         testGame = new Game(testBoard, testNames);
 

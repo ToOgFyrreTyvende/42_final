@@ -1,12 +1,19 @@
 package Model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class playerTest {
 
-    private Player player = new Player("Test");
+    private Player player;
+    private final String playerName = "Test";
+
+    @BeforeEach
+    void setUp() {
+        player = new Player(playerName);
+    }
 
     @Test
     void playerInitTest(){
@@ -23,12 +30,15 @@ class playerTest {
     }
 
     @Test
-    void playerAccountTest(){
+    void playerMoneyTest(){
         int testExtraMoney = 100;
         player.addMoney(testExtraMoney);
         // Vi tilføjer 1 til ekstra pengene, siden en player starter med kun at have 1 M
         // - før spillet tjekker hvor mange spillere der er og sætter deres pengeværdi udfra dette
         assertEquals(testExtraMoney + 1, player.getMoney());
+        player.addMoney(-testExtraMoney);
+        assertEquals( 1, player.getMoney());
+
     }
 
     @Test

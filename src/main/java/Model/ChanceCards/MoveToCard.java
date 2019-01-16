@@ -13,20 +13,20 @@ public class MoveToCard extends ChanceCard {
     private boolean isOwned = false;
     private boolean isJail = false;
 
-    MoveToCard(String text, String name, boolean isJail) {
+    public MoveToCard(String text, String name, boolean isJail) {
         super(text, name);
         this.fieldIndex = fieldIndex;
         this.isSpecific = isSpecific;
         this.isJail = true;
     }
 
-    MoveToCard(String text, String name, int fieldOffset) {
+    public MoveToCard(String text, String name, int fieldOffset) {
         super(text, name);
         this.fieldIndex = fieldOffset;
         this.isFieldOffset = true;
     }
 
-    MoveToCard(String text, String name, int fieldIndex, boolean isSpecific) {
+    public MoveToCard(String text, String name, int fieldIndex, boolean isSpecific) {
         super(text, name);
         this.fieldIndex = fieldIndex;
         this.isSpecific = isSpecific;

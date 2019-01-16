@@ -75,7 +75,7 @@ public class GameBoard {
         return Global.JAIL_INDEX;
     }
 
-    private ChanceCard[] getChanceCards() {
+    public ChanceCard[] getChanceCards() {
         return chanceCards;
     }
 
