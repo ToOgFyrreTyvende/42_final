@@ -86,7 +86,7 @@ public class NormalGameLogic{
             }
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
             landedField.fieldAction(game.getActivePlayer());
-            game.getActivePlayer().setPreviousField(game.getActivePlayer().getField());
+            game.getActivePlayer().setPreviousField(fieldId);
 
             if (game.getActivePlayer().isChanceField()){
                 chanceFieldAction(game.getActivePlayer());
