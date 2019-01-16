@@ -6,6 +6,9 @@ import Model.Game;
 import Model.Global;
 import Model.Player;
 
+/**
+ * An implementation of normal game logic in the monopoly game
+ */
 public class NormalGameLogic{
 
     private Game game;
