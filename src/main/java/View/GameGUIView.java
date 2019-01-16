@@ -128,7 +128,7 @@ public class GameGUIView extends GameView {
             }
         }
 
-        this.fields[player.getField()].setCar(playerGUI, true);
+        this.fields[player.getField() % Global.FIELD_COUNT].setCar(playerGUI, true);
     }
 
     @Override

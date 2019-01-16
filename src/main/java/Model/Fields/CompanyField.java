@@ -8,6 +8,9 @@ import gui_resources.Attrs;
 
 import java.awt.*;
 
+/**
+ * This class is a simpler version of PropertyField
+ */
 public class CompanyField extends Field {
 
     private Color color;
@@ -16,6 +19,16 @@ public class CompanyField extends Field {
     private int rent;
     private Player owner;
 
+    /**
+     * A CompanyField can be purchased, however they do not have variable rent.
+     * A game rule says to double rent if all same company fields are owned.
+     * @param name
+     * @param subText
+     * @param description
+     * @param price
+     * @param color
+     * @param isShipping
+     */
     public CompanyField(String name, String subText, String description, int price, Color color, boolean isShipping) {
         super(name, subText, description);
         this.price = price;
@@ -24,6 +37,12 @@ public class CompanyField extends Field {
         this.isShipping = isShipping;
     }
 
+    /**
+     * When a player lands on an owned field, they will pay rent to the owner.
+     * If not another part of the game can take care of letting it be bought
+     * In both cases, the main player log is written to
+     * @param player that has landed on the field
+     */
     @Override
     public void fieldAction(Player player) {
         if (this.isOwned()){
@@ -37,6 +56,11 @@ public class CompanyField extends Field {
         }
     }
 
+    /**
+     * If the owner is not out of the game (bankrupt) rent is paid.
+     * Otherwise the action is ignored
+     * @param player the player who will be paying "rent"
+     */
     private void payToPlayerLogic(Player player) {
         if (!owner.isBankrupt()) {
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
@@ -50,6 +74,11 @@ public class CompanyField extends Field {
         }
     }
 
+    /**
+     * The actual rent payment of the house.
+     * Simply calcualte the rent, pay the owner, remove money from player.
+     * @param player
+     */
     private void payToPlayerField(Player player){
         Player owner = this.getOwner();
         int payment = this.getRent();
@@ -57,6 +86,10 @@ public class CompanyField extends Field {
         owner.addMoney(payment);
     }
 
+    /**
+     * Method to buy a CompanyField from given price array. Also write to log.
+     * @param player the player who will buy the company
+     */
     public void buyField(Player player) {
         if (!isOwned()){
             player.setLastAction(player.getLastAction() + "\n - Har købt " +

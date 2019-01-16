@@ -21,7 +21,6 @@ public class Global {
     public static final int MIN_PLAYERS = 3;
     public static final int MAX_PLAYERS = 6;
 
-    public static final int TOTAL_FIELDS = 40;
     public static final int COLORED_PROPERTIES = 22;
 
     public static final int FIELD_COUNT = 40;
