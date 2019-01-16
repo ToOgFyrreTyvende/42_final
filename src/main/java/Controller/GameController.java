@@ -120,7 +120,7 @@ public class GameController {
 
                     case "CompanyField":
                         currentController = propertyController;
-                        propertyController.setMenuActions(PropertyController.PropertyActions);
+                        propertyController.setMenuActions(PropertyController.CompanyActions);
                         break;
 
 

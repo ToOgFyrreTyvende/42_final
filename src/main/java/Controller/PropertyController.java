@@ -53,7 +53,7 @@ public class PropertyController extends Controller {
                 break;
 
             case "Køb firma":
-                newMenu = PropertyManagementActions;
+                newMenu = gameController.buildPropertyMenu();
                 buyCompanyField();
                 break;
             case "Køb ejendom":
