@@ -121,8 +121,6 @@ public class GameGUIView extends GameView {
         int playerIndex = getPlayerIndex(player);
 
         GUI_Player playerGUI = guiPlayers[playerIndex];
-        //GUI_Field _field = this.fields[player.getPreviousField()];
-        System.out.println(player.getField());
 
         for (int i = 0; i < fields.length; i++) {
             if(fields[i].hasCar(playerGUI)){
