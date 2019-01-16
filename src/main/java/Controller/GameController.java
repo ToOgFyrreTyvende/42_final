@@ -72,6 +72,9 @@ public class GameController {
                 }
                 String result = currentController.handleActions(action);
 
+                renderBuilding();
+                playerInfoUpdate(activePlayer);
+
                 if (result.equals("Afslut tur") || result.equals("Spring over")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
@@ -84,8 +87,6 @@ public class GameController {
                 }
 
 
-                renderBuilding();
-                playerInfoUpdate(activePlayer);
 
                 if(currentController == userChoiceController ||
                         currentController == propertyController ){
@@ -140,6 +141,7 @@ public class GameController {
         this.propertyController.setMenuActions(buildPropertyMenu());
         this.propertyController.setChosenField(null);
         this.propertyController.setDropdown(false);
+        this.propertyController.setBoughtBuilding(false);
     }
 
     public String[] buildPropertyMenu(){
@@ -153,6 +155,7 @@ public class GameController {
     }
 
     public void playerInfoUpdate(Player player){
+        updateUIPlayer(player, player.getPreviousField());
         view.setCenterText(player.toString());
     }
 

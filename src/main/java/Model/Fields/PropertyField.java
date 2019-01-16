@@ -24,7 +24,7 @@ public class PropertyField extends Field {
         super(name, subText, description);
         this.prices = prices;
         this.color = color;
-        this.currentRentIndex = 0;
+        this.currentRentIndex = 1;
     }
 
     // #--------------Get--------------#

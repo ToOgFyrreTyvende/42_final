@@ -14,14 +14,18 @@ public class GetPaidCard extends ChanceCard {
     }
 
     private void paidByOthers(Player activePlayer, int money, Player[] players) {
-        // Vi trækker penge fra alle players
+        int activePlayerCount = 0;
+        // Vi trækker penge fra alle aktive players
         for (Player player : players) {
-            player.addMoney(- money);
+            if (!player.isBankrupt() && activePlayer != player) {
+                player.addMoney(-money);
+                activePlayerCount++;
+            }
         }
 
         // Siden vi fjerner antallet af penge fra alle spillere, skal der tilføjes mængden af penge
         // ganget med alle players til stede for at spilleren får den rigtige mængde
-        int moneyToGet = money * players.length - 1;
+        int moneyToGet = money * activePlayerCount;
         activePlayer.addMoney(moneyToGet);
     }
 
