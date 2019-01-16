@@ -63,7 +63,7 @@ public class GameController {
                     currentController = jailController;
                 }
                 currentGameMenu = currentController.getMenuActions();
-                //System.out.println(currentController.getClass().getSimpleName());
+                System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
                     action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
@@ -72,22 +72,30 @@ public class GameController {
                 }
                 String result = currentController.handleActions(action);
 
+                playerInfoUpdate(activePlayer);
                 if (result.equals("Afslut tur") || result.equals("Spring over")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
-                }else if (result.equals("Jail Rul terning")){
-                    getGame().endPlayerTurn();
-                    turnOver = true;
-                    activePlayer = game.getActivePlayer();
-                    continue;
+                }else if (result.equals("Jail Rul terning")) {
+                    if (activePlayer.isLucky()){
+                        currentController = diceController;
+                        continue;
+                    } else {
+                        getGame().endPlayerTurn();
+                        turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        continue;
+                    }
                 }
 
 
                 renderBuilding();
-                playerInfoUpdate(activePlayer);
 
-                if(currentController == userChoiceController ||
+                if (result.equals("Betal 1000 kr.") || result.equals("Brug løsladelseskort")){
+                    currentController = diceController;
+                    continue;
+                }else if (currentController == userChoiceController ||
                         currentController == propertyController ){
                     currentController = propertyController;
                     continue;
