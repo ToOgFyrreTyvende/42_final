@@ -29,6 +29,9 @@ public class JailField extends Field {
     }
 
     @Override
-    public void fieldAction(Player player) {
+    public void fieldAction(Player player){
+        player.setLastAction(player.getLastAction() + "\n - Er på besøg i fængsel.");
+
+        System.out.println("[INFO] " + player.getName() + " er på besøg i fængsel.");
     }
 }

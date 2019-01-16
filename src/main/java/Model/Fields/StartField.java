@@ -28,7 +28,4 @@ public class StartField extends Field {
         return super.getDescription();
     }
 
-    @Override
-    public void fieldAction(Player player) {
-    }
 }

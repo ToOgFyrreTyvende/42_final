@@ -24,7 +24,13 @@ public abstract class Field {
         this.description = description;
     }
 
-    abstract public void fieldAction(Player player);
+    public void fieldAction(Player player){
+        player.setLastAction(player.getLastAction() + "\n - Er landet på " +
+                this.getName());
+
+        System.out.println("[INFO] " + player.getName() + " er landet på " +
+                this.getName());
+    }
 
     // #--------------Get--------------#
     public String getName() {

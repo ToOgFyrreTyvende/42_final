@@ -28,8 +28,4 @@ public class FreeParkingField extends Field {
         return super.getDescription();
     }
 
-    @Override
-    public void fieldAction(Player player) {
-        player.setLastAction(" - Er landet på gratis parkering.");
-    }
 }

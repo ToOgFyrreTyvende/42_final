@@ -43,7 +43,7 @@ public class FieldFactory {
                 new PropertyField("Hellerupvej", "Pris: kr. 3600", "Hellerupvej", propertyPrices()[9], Color.lightGray),
                 new PropertyField("Strandvejen", "Pris: kr. 4000", "Strandvejen", propertyPrices()[10], Color.lightGray),
 
-                new FreeParkingField("Fri", "Gratis Parkering", "Hold en fridag"),
+                new FreeParkingField("Gratis parkering", "Gratis parkering", "Hold en fridag"),
 
                 new PropertyField("Trianglen", "Pris: kr. 4400", "Trianglen", propertyPrices()[11], Color.red),
 

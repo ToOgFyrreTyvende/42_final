@@ -125,6 +125,8 @@ public class NormalGameLogic{
 
     public void endPlayerTurn(){
         if (!game.isEnded()){
+            game.getActivePlayer().setChanceCard(null);
+            game.getActivePlayer().setLastAction("");
             System.out.println("[TURN INFO] Sat new player to index " + this.newIndex);
             game.setActivePlayer(players[this.newIndex]);
             checkRound();

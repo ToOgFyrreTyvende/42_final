@@ -51,7 +51,7 @@ public class GetPaidCard extends ChanceCard {
                     + " kr. fra hver spiller.");
         }
         else{
-            player.setLastAction(player.getLastAction() + "\n - har fået " + this.getMoney()
+            player.setLastAction(player.getLastAction() + "\n - Har fået " + this.getMoney()
                     + " kr. fra banken.");
             player.addMoney(this.getMoney());
         }

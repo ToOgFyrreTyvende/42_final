@@ -1,6 +1,7 @@
 package Model;
 
 import Model.ChanceCards.ChanceCard;
+import Model.Fields.Field;
 
 /**
  * ------------------------------------------------------------/
@@ -131,7 +132,7 @@ public class Player {
     @Override
     public String toString() {
         if (this.lastAction.equals("")) {
-            return this.getName() + " er landet på felt nr. " + (this.getField() + 1) + ".";
+            return this.getName() + " er landet på " + (this.getField() + 1) + ".";
         }else {
             return this.getName() + " " + this.getLastAction();
         }

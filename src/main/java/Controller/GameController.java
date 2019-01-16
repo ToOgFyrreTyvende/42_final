@@ -153,11 +153,12 @@ public class GameController {
     }
 
     public void playerInfoUpdate(Player player){
+        view.setCenterText(player.toString());
+    }
+
+    public void updateDice(Player player){
         updateUIPlayer(player, player.getPreviousField());
         view.setDice(player.getLastDicePair());
-        view.setCenterText(player.toString());
-        player.setChanceCard(null);
-        player.setLastAction("");
     }
 
     public void buyFieldPlayerIsOn(Player player){
