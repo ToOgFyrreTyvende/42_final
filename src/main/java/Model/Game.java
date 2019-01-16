@@ -40,7 +40,7 @@ public class Game {
 
         createPlayers(playerNames);
 
-        dice = new Dice();
+        dice = new DemoDice();
 
         activePlayer = players[0];
 

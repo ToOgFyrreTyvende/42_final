@@ -72,14 +72,20 @@ public class GameController {
                 }
                 String result = currentController.handleActions(action);
 
-                renderBuilding();
-                playerInfoUpdate(activePlayer);
-
+                // Dette if kommer før resten af result.equals ifs, siden
+                // vi ikke ønsker, at kalde playerInfoUpdate.
+                // Hvis vi gør det, så kommer der eksempelvis "2 er landet på felt #" som tekst, hvilket vi er
+                // ligeglade med.
                 if (result.equals("Afslut tur")) {
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
-                }else if(result.equals("Spring over")){
+                }
+
+                renderBuilding();
+                playerInfoUpdate(activePlayer);
+
+                if(result.equals("Spring over")){
                     propertyController.setMenuActions(buildPropertyMenu());
 
                 } else if (result.equals("Jail Rul terning")){
@@ -116,10 +122,7 @@ public class GameController {
                         currentController = propertyController;
                         propertyController.setMenuActions(PropertyController.PropertyActions);
                         break;
-                    /*case "PropertyFieldOwned":
-                        currentController = endTurnController;
-                        currentGameMenu = EndTurnController.EndActions;
-                        break;*/
+                    */
 
                     case "TaxFieldChoice":
                         currentController = userChoiceController;
@@ -138,13 +141,6 @@ public class GameController {
                 view.endText("spillet er slut!");
             }
 
-                /*if (!activePlayer.isInJail()){
-                    game.throwDice();
-                    playerInfoUpdate(activePlayer);
-
-                }else{
-                    currentGameMenu = jailController.JailActions;
-                }*/
            }
     }
 
