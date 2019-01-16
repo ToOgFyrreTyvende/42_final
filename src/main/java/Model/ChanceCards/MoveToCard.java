@@ -48,7 +48,7 @@ public class MoveToCard extends ChanceCard {
             this.fieldIndex = Global.JAIL_INDEX;
             player.setInJail(true);
         }else if(this.isFieldOffset){
-            this.fieldIndex = (player.getField() + this.fieldIndex) % Global.FIELD_COUNT;
+            this.fieldIndex = Math.floorMod(player.getField() + this.fieldIndex, Global.FIELD_COUNT);
         }else if(!this.isSpecific){
             this.fieldIndex = game.getGameBoard().getClosestShipping(player.getField());
             Field tempField = game.getGameBoard().getFieldModel(this.fieldIndex);
