@@ -19,7 +19,7 @@ public class GameController {
     private Controller currentController;
     private String[] currentGameMenu;
 
-    
+
     // #----------Constructor----------#
     public GameController(GameBoard board, GameView view){
         this.gameBoard = board;
@@ -42,8 +42,8 @@ public class GameController {
         int playerAmount = this.view.getPlayerCount();
         String[] playerNames = new String[playerAmount];
 
-        for (int i = 0; i < playerAmount; i++) {
-                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers navn."));
+        for (int i = 0; i < playerAmount; i++){
+            playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i + 1) + ". spillers navn."));
         }
 
         game = new Game(this.gameBoard, playerNames);
@@ -53,12 +53,12 @@ public class GameController {
 
     private void testPlayTurn(Player player){
         Player activePlayer = player;
-        while(!this.game.isEnded()){
+        while (!this.game.isEnded()){
             resetControllers();
             currentController = diceController;
             boolean turnOver = false;
             game.setupNextPlayer();
-            while (!turnOver) {
+            while (!turnOver){
                 if (activePlayer.isInJail()){
                     currentController = jailController;
                 }
@@ -66,9 +66,9 @@ public class GameController {
                 //System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
-                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
-                }else{
-                    action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
+                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName() + "'s tur. Vælg venligst fra listen", currentGameMenu);
+                } else {
+                    action = view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Vælg venligst en handling", currentGameMenu);
                 }
                 String result = currentController.handleActions(action);
 
@@ -76,7 +76,7 @@ public class GameController {
                 // vi ikke ønsker, at kalde playerInfoUpdate.
                 // Hvis vi gør det, så kommer der eksempelvis "2 er landet på felt #" som tekst, hvilket vi er
                 // ligeglade med.
-                if (result.equals("Afslut tur")) {
+                if (result.equals("Afslut tur")){
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
@@ -85,7 +85,7 @@ public class GameController {
                 renderBuilding();
                 playerInfoUpdate(activePlayer);
 
-                if(result.equals("Spring over")){
+                if (result.equals("Spring over")){
                     propertyController.setMenuActions(buildPropertyMenu());
 
                 } else if (result.equals("Jail Rul terning")){
@@ -101,18 +101,17 @@ public class GameController {
                 }
 
 
-
                 if (result.equals("Betal 1000 kr.") || result.equals("Brug løsladelseskort")){
                     currentController = diceController;
                     continue;
-                }else if (currentController == userChoiceController ||
-                        currentController == propertyController ){
+                } else if (currentController == userChoiceController ||
+                        currentController == propertyController){
                     currentController = propertyController;
                     continue;
                 }
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
-                switch (fieldTypeString) {
+                switch (fieldTypeString){
                     case "PropertyField":
                         currentController = propertyController;
                         propertyController.setMenuActions(PropertyController.PropertyActions);
@@ -140,11 +139,10 @@ public class GameController {
                         this.game.getWinner().getName());
                 view.endText("spillet er slut!");
             }
-
-           }
+        }
     }
 
-    private void resetControllers() {
+    private void resetControllers(){
         this.propertyController.setMenuActions(buildPropertyMenu());
         this.propertyController.setChosenField(null);
         this.propertyController.setDropdown(false);
@@ -156,7 +154,7 @@ public class GameController {
                 getGameBoard().getPlayerProperties(
                         getGame().getActivePlayer()).length > 0){
             return PropertyController.PropertyManagementActions;
-        }else{
+        } else {
             return new String[]{PropertyController.PropertyManagementActions[1]};
         }
     }
@@ -220,47 +218,47 @@ public class GameController {
         view.renderPlayerData(player, previousField);
     }
 
-    Game getGame() {
+    Game getGame(){
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(Game game){
         this.game = game;
     }
 
-    public GameView getView() {
+    public GameView getView(){
         return view;
     }
 
-    public void setView(GameView view) {
+    public void setView(GameView view){
         this.view = view;
     }
 
-    public GameBoard getGameBoard() {
+    public GameBoard getGameBoard(){
         return gameBoard;
     }
 
-    public void setGameBoard(GameBoard gameBoard) {
+    public void setGameBoard(GameBoard gameBoard){
         this.gameBoard = gameBoard;
     }
 
-    public Controller getCurrentController() {
+    public Controller getCurrentController(){
         return currentController;
     }
 
-    public void setCurrentController(Controller currentController) {
+    public void setCurrentController(Controller currentController){
         this.currentController = currentController;
     }
 
-    public String[] getCurrentGameMenu() {
+    public String[] getCurrentGameMenu(){
         return currentGameMenu;
     }
 
-    public void setCurrentGameMenu(String[] currentGameMenu) {
+    public void setCurrentGameMenu(String[] currentGameMenu){
         this.currentGameMenu = currentGameMenu;
     }
 
-    public void renderBuilding() {
+    public void renderBuilding(){
         view.renderBuildings();
     }
 }
