@@ -1,7 +1,5 @@
 package Controller;
-
-import Model.ChanceCards.ChanceCard;
-import Model.ChanceCards.OutOfJailCard;
+/*
 import Model.GameBoard;
 import Model.Player;
 import org.junit.jupiter.api.Test;
@@ -10,10 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JailControllerTest {
 
-    //private GameBoard gb = new GameBoard();
-    //private JailController jc = new JailController();
 
-    //@Test
+    private GameBoard gb = new GameBoard();
+    private JailController jailTest = new JailController();
+
+    @Test
     void payBail() {
         Player dummy = new Player("dummy");
         dummy.addMoney(1000);
@@ -22,7 +21,7 @@ class JailControllerTest {
         assertEquals(1, Currrentmoney);
     }
 
-    //@Test
+    @Test
     void feelingLucky() {
         Player dummy2 = new Player("twommy");
         int outOfJail = 0;
@@ -42,11 +41,11 @@ class JailControllerTest {
 
     @Test
     void bailCard() {
-        /*gb.setChanceCards();
+        gb.setChanceCards();
         Player dummy3 = new Player("threemmy");
         dummy3.setInJail(true);
-        jc.handleActions(jc.JailActions[2],dummy3);
+        jailTest.handleActions(jailTest.JailActions[2],dummy3);
         assertTrue(dummy3.isInJail());
-        dummy3.isOutOfJailFree(); */
+        dummy3.isOutOfJailFree();
     }
-}
+}*/
