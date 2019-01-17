@@ -15,7 +15,7 @@ class GameTest {
     private DiceStub testDice;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         testNames = new String[2];
         testNames[0] = "dummyOne";
         testNames[1] = "dummyTwo";
@@ -30,13 +30,13 @@ class GameTest {
     }
 
     @Test
-    void PlayersTest() {
+    void PlayersTest(){
         testGame.setPlayers(testPlayers);
         assertSame(testGame.getPlayers(), testPlayers);
     }
 
     //@Test
-    void playTurnTest() {
+    void playTurnTest(){
         testGame.setEnded(false);
         //testGame.playTurn();
         assertSame(testGame.getActivePlayer(), testGame.getPlayers()[1]);
@@ -46,7 +46,7 @@ class GameTest {
     }
 
     @Test
-    void gameRulesJailTest() {
+    void gameRulesJailTest(){
         // Sætter aktiv player i fængsel
         testGame.getActivePlayer().setInJail(true);
         // Sætter aktiv player på fængsel feltet
@@ -63,14 +63,14 @@ class GameTest {
     }
 
     @Test
-    void gameRulesStartTest() {
+    void gameRulesStartTest(){
         // Sætter spillet til at bruge vores DiceStub som kun ruller værdien 1
         testGame.setDice(testDice);
         // Sætter player 1's pengeværdi til 2000
         int testVal = 2000;
         testGame.getPlayers()[0].setMoney(testVal);
         // Sætter player 1's forrige position til brættets sidste felt
-        testGame.getPlayers()[0].setPreviousField(Global.FIELD_COUNT-1);
+        testGame.getPlayers()[0].setPreviousField(Global.FIELD_COUNT - 1);
         // Kører gamerules() med 0 som fieldId
         testGame.getGameLogic().gameRules(0);
         // Tjækker player 1's pengeværdi er steget med 4000

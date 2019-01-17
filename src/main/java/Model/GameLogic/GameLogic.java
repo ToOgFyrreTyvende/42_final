@@ -10,9 +10,11 @@ public abstract class GameLogic {
         this.game = game;
     }
 
-    
+
     abstract public Player BeforeTurn();
+
     abstract public Player PlayTurn();
+
     abstract public int AfterTurn();
 
 }

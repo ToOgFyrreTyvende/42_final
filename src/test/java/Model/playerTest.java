@@ -11,7 +11,7 @@ class playerTest {
     private final String playerName = "Test";
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         player = new Player(playerName);
     }
 
@@ -37,12 +37,12 @@ class playerTest {
         // - før spillet tjekker hvor mange spillere der er og sætter deres pengeværdi udfra dette
         assertEquals(testExtraMoney + 1, player.getMoney());
         player.addMoney(-testExtraMoney);
-        assertEquals( 1, player.getMoney());
+        assertEquals(1, player.getMoney());
 
     }
 
     @Test
-    void LastResultTest() {
+    void LastResultTest(){
         int testVal = 1;
         player.setLastDiceResult(testVal);
         // Sætter spilleren's "sidstSlaaet" til 1 og tjekker at både get og set metoden virker

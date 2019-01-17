@@ -2,18 +2,18 @@ package Controller;
 
 import Model.Game;
 
-public class DiceController extends Controller{
+public class DiceController extends Controller {
     public static final String[] DefaultActions = new String[]{"Rul terning"};
 
-    public DiceController(GameController gameController) {
+    public DiceController(GameController gameController){
         super(gameController, DefaultActions);
     }
 
     @Override
-    String handleActions(String action) {
-        if(gameController.getGame().getActivePlayer().isLucky()){
+    String handleActions(String action){
+        if (gameController.getGame().getActivePlayer().isLucky()){
             gameController.getGame().getActivePlayer().setLucky(false);
-            gameController.getGame().setDice(gameController.getGame().getActivePlayer().getLastDicePair(),gameController.getGame().getActivePlayer().getLastDiceResult() );
+            gameController.getGame().setDice(gameController.getGame().getActivePlayer().getLastDicePair(), gameController.getGame().getActivePlayer().getLastDiceResult());
             gameController.getGame().throwDice(true);
             gameController.playerInfoUpdate(gameController.getGame().getActivePlayer());
             return DefaultActions[0];
@@ -26,12 +26,12 @@ public class DiceController extends Controller{
 
 
     @Override
-    public String[] getMenuActions() {
+    public String[] getMenuActions(){
         return super.getMenuActions();
     }
 
     @Override
-    public void setMenuActions(String[] menuActions) {
+    public void setMenuActions(String[] menuActions){
         super.setMenuActions(menuActions);
     }
 }
