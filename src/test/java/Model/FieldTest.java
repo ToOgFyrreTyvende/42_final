@@ -17,7 +17,7 @@ class FieldTest {
 
     //Måske også test andre fields en propertyfield?
     @BeforeEach
-    void setUp() {
+    void setUp(){
         //Vi opretter 2 spillere
 
         player1 = new Player("Markus");
@@ -27,13 +27,13 @@ class FieldTest {
         player2.setMoney(10);
 
         // Prisen på feltet vi opretter er 2, altså er price[0] = 2
-        field = new PropertyField("Skaterparken", "","",new int[]{2,2,3,4,5,6,7,8}, Color.green);
+        field = new PropertyField("Skaterparken", "", "", new int[]{2, 2, 3, 4, 5, 6, 7, 8}, Color.green);
 
     }
 
 
     @Test
-    void PropertyFieldTest() {
+    void PropertyFieldTest(){
         // spiller 1 køber feltet for 2 "penge"
         field.buyField(player1);
 
@@ -47,7 +47,7 @@ class FieldTest {
     }
 
     @Test
-    void PropertyFieldBankruptTest() {
+    void PropertyFieldBankruptTest(){
         // spiller 1 køber feltet for 2 "penge"
         field.buyField(player1);
 

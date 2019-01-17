@@ -21,7 +21,7 @@ class GameControllerTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         testBoard = new GameBoard();
 
         testView = new ViewStub();
@@ -30,7 +30,7 @@ class GameControllerTest {
     }
 
     //@Test
-    void spilAktivtTest() {
+    void spilAktivtTest(){
         assertTrue(testGameCtrl.getGame().isEnded());
     }
 }

@@ -22,6 +22,7 @@ public class CompanyField extends Field {
     /**
      * A CompanyField can be purchased, however they do not have variable rent.
      * A game rule says to double rent if all same company fields are owned.
+     *
      * @param name
      * @param subText
      * @param description
@@ -29,10 +30,10 @@ public class CompanyField extends Field {
      * @param color
      * @param isShipping
      */
-    public CompanyField(String name, String subText, String description, int price, Color color, boolean isShipping) {
+    public CompanyField(String name, String subText, String description, int price, Color color, boolean isShipping){
         super(name, subText, description);
         this.price = price;
-        this.rent = price/2; // SKAL ÆNDRET SENERE !!!
+        this.rent = price / 2; // SKAL ÆNDRET SENERE !!!
         this.color = color;
         this.isShipping = isShipping;
     }
@@ -41,13 +42,14 @@ public class CompanyField extends Field {
      * When a player lands on an owned field, they will pay rent to the owner.
      * If not another part of the game can take care of letting it be bought
      * In both cases, the main player log is written to
+     *
      * @param player that has landed on the field
      */
     @Override
-    public void fieldAction(Player player) {
+    public void fieldAction(Player player){
         if (this.isOwned()){
             payToPlayerLogic(player);
-        }else{
+        } else {
             player.setLastAction(player.getLastAction() + "\n - Er landet på " +
                     this.getName());
 
@@ -59,10 +61,11 @@ public class CompanyField extends Field {
     /**
      * If the owner is not out of the game (bankrupt) rent is paid.
      * Otherwise the action is ignored
+     *
      * @param player the player who will be paying "rent"
      */
-    private void payToPlayerLogic(Player player) {
-        if (!owner.isBankrupt()) {
+    private void payToPlayerLogic(Player player){
+        if (!owner.isBankrupt()){
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
                     this.getOwner().getName() + ".");
@@ -77,20 +80,22 @@ public class CompanyField extends Field {
     /**
      * The actual rent payment of the house.
      * Simply calcualte the rent, pay the owner, remove money from player.
+     *
      * @param player
      */
     private void payToPlayerField(Player player){
         Player owner = this.getOwner();
         int payment = this.getRent();
-        player.addMoney( - payment);
+        player.addMoney(-payment);
         owner.addMoney(payment);
     }
 
     /**
      * Method to buy a CompanyField from given price array. Also write to log.
+     *
      * @param player the player who will buy the company
      */
-    public void buyField(Player player) {
+    public void buyField(Player player){
         if (!isOwned()){
             player.setLastAction(player.getLastAction() + "\n - Har købt " +
                     this.getName() + " for " +
@@ -98,26 +103,26 @@ public class CompanyField extends Field {
 
             System.out.println("[INFO] " + player.getName() + " har købt " +
                     this.getName() + " for " +
-                    this.getPrice()+ " kr.");
+                    this.getPrice() + " kr.");
 
             int payment = this.getPrice();
-            player.addMoney( - payment);
+            player.addMoney(-payment);
             this.setOwner(player);
         }
     }
 
     @Override
-    public String getName() {
+    public String getName(){
         return super.getName();
     }
 
     @Override
-    public String getSubText() {
+    public String getSubText(){
         return super.getSubText();
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(){
         return super.getDescription();
     }
 
@@ -126,43 +131,43 @@ public class CompanyField extends Field {
         return owner != null;
     }
 
-    public Color getColor() {
+    public Color getColor(){
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(Color color){
         this.color = color;
     }
 
-    public boolean isShipping() {
+    public boolean isShipping(){
         return isShipping;
     }
 
-    public void setShipping(boolean shipping) {
+    public void setShipping(boolean shipping){
         isShipping = shipping;
     }
 
-    public int getPrice() {
+    public int getPrice(){
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(int price){
         this.price = price;
     }
 
-    public Player getOwner() {
+    public Player getOwner(){
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(Player owner){
         this.owner = owner;
     }
 
-    public int getRent() {
+    public int getRent(){
         return rent;
     }
 
-    public void setRent(int rent) {
+    public void setRent(int rent){
         this.rent = rent;
     }
 }

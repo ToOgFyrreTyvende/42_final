@@ -8,23 +8,23 @@ import java.awt.*;
 
 public class FreeParkingField extends Field {
 
-    FreeParkingField(String name, String subText, String description) {
+    FreeParkingField(String name, String subText, String description){
         super(name, subText, description);
     }
 
     // #--------------Get--------------#
     @Override
-    public String getName() {
+    public String getName(){
         return super.getName();
     }
 
     @Override
-    public String getSubText() {
+    public String getSubText(){
         return super.getSubText();
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(){
         return super.getDescription();
     }
 
