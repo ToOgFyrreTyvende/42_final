@@ -54,7 +54,7 @@ public class JailController extends Controller{
             diceThrow[i] = random5;
         }
 
-        int diceThrowResult = diceThrow[0]=diceThrow[1];
+        int diceThrowResult = diceThrow[0] + diceThrow[1];
 
             if(diceThrow[0]!=diceThrow[1]){
                 player.setLastAction(player.getLastAction() + "\n - Slog "+ diceThrow[0]+ " og " + diceThrow[1] + " og kom ikke ud af fængsel.");
