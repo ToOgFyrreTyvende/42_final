@@ -13,13 +13,12 @@ class FieldTest {
     Player player1;
     Player player2;
 
-    PropertyField field;
+    PropertyField propField;
 
     //Måske også test andre fields en propertyfield?
     @BeforeEach
     void setUp() {
         //Vi opretter 2 spillere
-
         player1 = new Player("Markus");
         player2 = new Player("Sebastian");
 
@@ -27,7 +26,7 @@ class FieldTest {
         player2.setMoney(10);
 
         // Prisen på feltet vi opretter er 2, altså er price[0] = 2
-        field = new PropertyField("Skaterparken", "","",new int[]{2,2,3,4,5,6,7,8}, Color.green);
+        propField = new PropertyField("Skaterparken", "","",new int[]{2,2,3,4,5,6,7,8}, Color.green);
 
     }
 
@@ -35,10 +34,10 @@ class FieldTest {
     @Test
     void PropertyFieldTest() {
         // spiller 1 køber feltet for 2 "penge"
-        field.buyField(player1);
+        propField.buyField(player1);
 
         // spiller 2 udfører felthandling på samme felt
-        field.fieldAction(player2);
+        propField.fieldAction(player2);
 
         // Vi forventer spiller 1 har 2 mindre penge
         assertEquals(8, player2.getMoney());
@@ -49,13 +48,13 @@ class FieldTest {
     @Test
     void PropertyFieldBankruptTest() {
         // spiller 1 køber feltet for 2 "penge"
-        field.buyField(player1);
+        propField.buyField(player1);
 
         // vi sætter spiller 1 som fallit
         player1.setBankrupt(true);
 
         // spiller 2 udfører felthandling på samme felt
-        field.fieldAction(player2);
+        propField.fieldAction(player2);
 
         // Vi forventer spiller 1 har samme mængde penge
         assertEquals(10, player2.getMoney());
