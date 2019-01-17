@@ -27,7 +27,7 @@ class FieldTest {
         player2.setMoney(420);
 
         // Prisen på feltet vi opretter er 1, altså er price[0] = 1
-        propField = new PropertyField("Skaterparken", "", "", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, Color.green);
+        propField = new PropertyField("Skaterparken", "", "", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 10, 10}, Color.green);
         shipField = new CompanyField("Oslo færgen", "", "", 20, Color.red, true);
         brewField = new CompanyField("Coca-Cola", "", "", 40, Color.yellow, false);
     }
@@ -80,8 +80,16 @@ class FieldTest {
         // spiller 2 udfører felthandling på samme felt
         propField.fieldAction(player2);
 
-        // vi tjekker at spiller 2 har mistet 3,- for leje af grund med 1 hus
+        // vi tjekker at spiller 2 har mistet 3,- for leje af grund med 1 hus og at spiller 1 har modtaget dette
         assertEquals(417, player2.getMoney());
+        assertEquals(414, player1.getMoney());
+
+        // spiller 1 sælger 1 hus på feltet
+        propField.sellHouse();
+
+        // Vi tjekker at modtaget 4,- for huset og at feltet har 0 huse
+        assertEquals(418, player1.getMoney());
+        assertEquals(0, propField.getHouses());
     }
 
     @Test
@@ -95,7 +103,7 @@ class FieldTest {
         propField.buyHotel();
 
         // Vi tjekker at feltet ikke har et hotel og spilleren ikke har mistet penge
-        assertTrue(!propField.isHotel());
+        assertFalse(propField.isHotel());
         assertEquals(420, player1.getMoney());
 
         // Vi sætter feltet til at have 4 huse
@@ -104,16 +112,34 @@ class FieldTest {
         // spiller 1 køber 1 hotel for 9,-
         propField.buyHotel();
 
-        // Vi tjekker at feltet har hotel på og at spilleren har mistet 9,-
+        // Vi tjekker at feltet har hotel på og at spilleren har mistet 10,-
+        // og         at propField's currentRentIndex er sat til 6
         assertTrue(propField.isHotel());
-        assertEquals(411, player1.getMoney());
+        assertEquals(410, player1.getMoney());
+        assertEquals(6, propField.getCurrentRentIndex());
 
         // spiller 2 udfører felthandling på feltet
         propField.fieldAction(player2);
 
-        // Vi tjekker at spiller 2 har mistet 7,- og at spiller 1 har modtaget 7,-
+        // Vi tjekker at spiller 2 har mistet 7,-
+        // og         at spiller 1 har modtaget 7,-
+        // og         at prisen for leje med hotel på feltet (7,-) er lig propField.getPrices() eller propField.getRent()
+        assertEquals(7, propField.getPrices()[6]);
+        assertEquals(7, propField.getRent());
         assertEquals(413, player2.getMoney());
-        assertEquals(418, player1.getMoney());
+        assertEquals(417, player1.getMoney());
+
+        // spiller 1 sælger hotellet
+        propField.sellHotel();
+
+        // Vi tjekker at spiller 1 har modtaget 5,- for hotellet
+        // og         at feltet ikke har et hotel
+        // og         at soldHotel bliver sat til true
+        // og         at currentRentIndex er sat til 5
+        assertEquals(422, player1.getMoney());
+        assertFalse(propField.isHotel());
+        assertTrue(propField.isSoldHotel());
+        assertEquals(5, propField.getCurrentRentIndex());
     }
 
     @Test
