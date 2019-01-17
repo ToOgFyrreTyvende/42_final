@@ -7,7 +7,7 @@ public class ToJailField extends Field {
 
     private final int JAIL_ID = Global.JAIL_INDEX;
 
-    ToJailField(String name, String subText, String description){
+    public ToJailField(String name, String subText, String description){
         super(name, subText, description);
     }
 
