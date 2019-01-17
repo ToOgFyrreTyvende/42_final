@@ -78,12 +78,12 @@ public class JailController extends Controller{
     public void bailCard(String action,Player player){
         if(player.isOutOfJailFree()){
             player.setLastAction(player.getLastAction() + "\n - Har brugt sit løsladelseskort.");
-            System.out.println("[INFO] " + player.getName() + " kom ud af fængslet med deres 'frikort'");
+            System.out.println("[INFO] " + player.getName() + " har brugt sit løsladelseskort");
             player.setInJail(false);
             player.setOutOfJailFree(false);
         } else {
-            player.setLastAction(player.getLastAction() + "\n - Har ikke et 'frikort' saa du kan ikke goere dette.");
-            System.out.println("[INFO] " + player.getName() + " Har ikke et 'frikort' saa du kan ikke goere dette.");
+            player.setLastAction(player.getLastAction() + "\n - Har ikke et løsladelseskort.");
+            System.out.println("[INFO] " + player.getName() + " Har ikke et løsladelseskort.");
         }
     }
 }
