@@ -22,6 +22,7 @@ public class Player {
     private boolean chanceField = false;
     private boolean outOfJailFree = false;
     private boolean Lucky = false;
+    private int Jailtime = 0;
 
     /**
      * lastAction is a log of actions. This should be added to and not overwritten!
@@ -180,5 +181,16 @@ public class Player {
 
     public void setLucky(boolean lucky) {
         Lucky = lucky;
+    }
+
+    public int getJailtime() {
+        return Jailtime;
+    }
+
+    public void setJailtime(int jailtime) {
+        Jailtime = jailtime;
+    }
+    public void addJailtime(int jailtime){
+        Jailtime = Jailtime + jailtime;
     }
 }

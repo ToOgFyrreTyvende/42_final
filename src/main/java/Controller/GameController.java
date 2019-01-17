@@ -88,6 +88,9 @@ public class GameController {
                 if(result.equals("Spring over")){
                     propertyController.setMenuActions(buildPropertyMenu());
 
+                } else if (result.equals("Ikke mere Rul ternning")) {
+                        currentController = jailController;
+                        continue;
                 } else if (result.equals("Jail Rul terning")){
                     if (activePlayer.isLucky()){
                         currentController = diceController;
