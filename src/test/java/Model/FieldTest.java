@@ -15,8 +15,10 @@ class FieldTest {
 
     PropertyField propField;
     CompanyField shipField, brewField;
+    ToJailField jailField;
 
-    //Måske også test andre fields end propertyfield?
+    // Måske også test andre fields end propertyfield?
+    // Yup, already done dude
     @BeforeEach
     void setUp(){
         //Vi opretter 2 spillere
@@ -30,6 +32,7 @@ class FieldTest {
         propField = new PropertyField("Skaterparken", "", "", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 10, 10}, Color.green);
         shipField = new CompanyField("Oslo færgen", "", "", 20, Color.red, true);
         brewField = new CompanyField("Coca-Cola", "", "", 40, Color.yellow, false);
+        jailField = new ToJailField("Gå i fængsel", "toJailTest", "toJailDescriptionTest");
     }
 
 
@@ -186,5 +189,16 @@ class FieldTest {
         // Vi tjekker at spiller 1 har 400,- efter at have købt feltet, samt at spiller 1 er gået fallit
         assertEquals(400, player1.getMoney());
         assertTrue(player1.isBankrupt());
+    }
+
+    @Test
+    void ToJailFieldTest(){
+        // spiller 1 udfører felthandling på ToJailField
+        jailField.fieldAction(player1);
+
+        // Vi tjekker at spiller 1 er sat i fængsel
+        // og         at spiller 1's field er blevet sat til den globale værdi Global.JAIL_INDEX (en int med værdien 10)
+        assertTrue(player1.isInJail());
+        assertEquals(10, player1.getField());
     }
 }
