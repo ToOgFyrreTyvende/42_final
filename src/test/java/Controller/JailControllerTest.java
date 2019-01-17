@@ -14,7 +14,7 @@ class JailControllerTest {
     //private JailController jc = new JailController();
 
     //@Test
-    void payBail() {
+    void payBail(){
         Player dummy = new Player("dummy");
         dummy.addMoney(1000);
         //jc.handleActions(jc.JailActions[0]);
@@ -23,7 +23,7 @@ class JailControllerTest {
     }
 
     //@Test
-    void feelingLucky() {
+    void feelingLucky(){
         Player dummy2 = new Player("twommy");
         int outOfJail = 0;
         int inJail = 0;
@@ -33,7 +33,7 @@ class JailControllerTest {
 
             if (!dummy2.isInJail()){
                 outOfJail += 1;
-            } else if(dummy2.isInJail()){
+            } else if (dummy2.isInJail()){
                 inJail += 1;
             }
         }
@@ -41,7 +41,7 @@ class JailControllerTest {
     }
 
     @Test
-    void bailCard() {
+    void bailCard(){
         /*gb.setChanceCards();
         Player dummy3 = new Player("threemmy");
         dummy3.setInJail(true);

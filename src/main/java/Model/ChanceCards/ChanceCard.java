@@ -1,4 +1,5 @@
 package Model.ChanceCards;
+
 import Model.Game;
 import Model.Player;
 
@@ -11,7 +12,7 @@ abstract public class ChanceCard {
     private String text;
     private String name;
 
-    public ChanceCard(String text, String name) {
+    public ChanceCard(String text, String name){
         this.text = text;
         this.name = name;
     }
@@ -20,14 +21,15 @@ abstract public class ChanceCard {
      * Every type of ChanceCard can implement a card action.
      * If nothing is implemented, a flag in the player model is set.
      * This would be considered a polymorphic call to execute.
+     *
      * @param player that is using the ChanceCard
-     * @param game instance of the game, to manipulate more than jsut the player (mostly not needed)
+     * @param game   instance of the game, to manipulate more than jsut the player (mostly not needed)
      */
     public void cardAction(Player player, Game game){
         player.setChanceCard(this);
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 }

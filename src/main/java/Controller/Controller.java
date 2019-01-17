@@ -7,26 +7,26 @@ abstract public class Controller {
     protected GameController gameController;
     protected boolean isDropdown = false;
 
-    public Controller(GameController gameController, String[] menuActions) {
+    public Controller(GameController gameController, String[] menuActions){
         this.menuActions = menuActions;
         this.gameController = gameController;
     }
 
     abstract String handleActions(String action);
 
-    public String[] getMenuActions() {
+    public String[] getMenuActions(){
         return menuActions;
     }
 
-    public void setMenuActions(String[] menuActions) {
+    public void setMenuActions(String[] menuActions){
         this.menuActions = menuActions;
     }
 
-    protected boolean isDropdown() {
+    protected boolean isDropdown(){
         return isDropdown;
     }
 
-    protected void setDropdown(boolean dropdown) {
+    protected void setDropdown(boolean dropdown){
         isDropdown = dropdown;
     }
 }

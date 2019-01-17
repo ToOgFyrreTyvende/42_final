@@ -14,7 +14,7 @@ public class ChanceCardTest {
     MoveToCard moveToCard;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         testGame = new Game(new GameBoard(), new String[]{"player1"});
         this.player1 = testGame.getPlayers()[0];
 
@@ -22,13 +22,13 @@ public class ChanceCardTest {
     }
 
     @Test
-    void moveToCardTest() {
+    void moveToCardTest(){
         moveToCard.cardAction(player1, testGame);
         assertEquals(1, player1.getField());
     }
 
     @Test
-    void moveToCardBackwardsTest() {
+    void moveToCardBackwardsTest(){
         moveToCard = new MoveToCard("gå 1 tilbage", "gå 1 tilbage", -1);
         moveToCard.cardAction(player1, testGame);
         // Spilleren har her gået tilbage til felt nr. 40 elelr indec 39!
