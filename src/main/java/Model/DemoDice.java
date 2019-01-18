@@ -42,7 +42,15 @@ public class DemoDice extends Dice{
                 new int[]{5,5},
                 new int[]{5,5},
 
-                new int[]{3,3},
+                new int[]{2,3},
+                new int[]{5,5},
+                new int[]{5,5},
+
+                new int[]{2,3},
+                new int[]{5,5},
+                new int[]{5,5},
+
+                new int[]{2,3},
                 new int[]{5,5},
                 new int[]{5,5},
 
