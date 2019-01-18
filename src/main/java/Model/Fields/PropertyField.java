@@ -79,7 +79,7 @@ public class PropertyField extends Field {
      * @param player the player who will be paying rent
      */
     private void payToPlayerLogic(Player player){
-        if (!owner.isBankrupt()){
+        if (!owner.isBankrupt() && player != owner){
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
                     this.getOwner().getName() + ".");
