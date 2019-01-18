@@ -1,17 +1,15 @@
 package Model;
 
 import Model.ChanceCards.ChanceCard;
+import Model.Fields.Field;
 
 /**
- * ------------------------------------------------------------/
- * Denne klasse kaldes for at oprette en ny spiller
- * Model.Player kan have et brugervalgt name som bruges under
- * kørsel af spillet
- * ------------------------------------------------------------/
+ * This class models a "player" in the Monopoly game.
+ * A player has available money, and lot sof attributes that corrospond with
+ * a player in a real monopoly game.
  */
 public class Player {
-    // We need previous field to remove user from it in the GUI
-
+    // Previous field is used to track chance card actions mostly.
     private int previousField = 0;
     private int field = 0;
     private String name;
@@ -23,33 +21,42 @@ public class Player {
     private ChanceCard chanceCard;
     private boolean chanceField = false;
     private boolean outOfJailFree = false;
+    private boolean Lucky = false;
+    private int Jailtime = 0;
 
+    /**
+     * lastAction is a log of actions. This should be added to and not overwritten!
+     */
     private String lastAction = "";
 
     private boolean bankrupt = false;
 
-    // #----------Constructor----------#
+    /**
+     * A player is constructed with a name. Everything else are defaults.
+     *
+     * @param name the name of the player
+     */
     public Player(String name){
         // Vælg spiller name selv
         this.name = name;
     }
 
-    // #------------Get/Set------------#
+
     public int getField(){
-        // Returnerer nuværende field af spiller
         return field;
     }
+
     public int setField(int newField){
         // Returnerer nye field af spiller
         field = newField;
         return field;
     }
 
-    public boolean isInJail() {
+    public boolean isInJail(){
         return inJail;
     }
 
-    public void setInJail(boolean inJail) {
+    public void setInJail(boolean inJail){
         this.inJail = inJail;
     }
 
@@ -61,41 +68,44 @@ public class Player {
         this.currentMoney = money;
     }
 
-    public void setLastDiceResult(int lastDiceResult) {
+    public void setLastDiceResult(int lastDiceResult){
         this.lastDiceResult = lastDiceResult;
     }
 
-    public void setLastDicePair(int[] lastDicePair) {
+    public void setLastDicePair(int[] lastDicePair){
         this.lastDicePair = lastDicePair;
     }
 
-    public void setChanceCard(ChanceCard chanceCard) {
+    public void setChanceCard(ChanceCard chanceCard){
         this.chanceCard = chanceCard;
     }
 
-    public void setOutOfJailFree(boolean outOfJailFree) {
+    public void setOutOfJailFree(boolean outOfJailFree){
         this.outOfJailFree = outOfJailFree;
     }
 
-    public void setChanceField(boolean chanceField) {
+    public void setChanceField(boolean chanceField){
         this.chanceField = chanceField;
     }
 
-    public boolean isBankrupt() {return this.bankrupt;}
+    public boolean isBankrupt(){
+        return this.bankrupt;
+    }
 
-    public void setBankrupt(boolean bankrupt) {this.bankrupt = bankrupt;}
+    public void setBankrupt(boolean bankrupt){
+        this.bankrupt = bankrupt;
+    }
 
-    // #--------------Get--------------#
     public String getName(){
         // Returnerer spiller navn
         return name;
     }
 
-    public int getLastDiceResult() {
+    public int getLastDiceResult(){
         return lastDiceResult;
     }
 
-    public int[] getLastDicePair() {
+    public int[] getLastDicePair(){
         return lastDicePair;
     }
 
@@ -103,45 +113,93 @@ public class Player {
         return null;
     }
 
-    public ChanceCard getChanceCard() {
+    public ChanceCard getChanceCard(){
         return chanceCard;
     }
 
-    public boolean isOutOfJailFree() {
+    public boolean isOutOfJailFree(){
         return outOfJailFree;
     }
 
-    public boolean isChanceField() {
+    public boolean isChanceField(){
         return chanceField;
     }
 
-    public String getLastAction() {
+    public String getLastAction(){
         return lastAction;
     }
 
-    // #-------------Other-------------#
+    /**
+     * Add a set amount of money to a player.
+     *
+     * @param money amount to add to player. Can be negative to subtract!
+     */
     public void addMoney(int money){
         this.currentMoney = currentMoney + money;
     }
 
-    public void setLastAction(String lastAction) {
+    /**
+     * Sets the text that pops up as a chance card for the player as a log of actions.
+     * Should be used to add log items. Therefore the previous action are supplied in addition to
+     * new actions.
+     *
+     * @param lastAction text to log user actions
+     */
+    public void setLastAction(String lastAction){
         this.lastAction = lastAction;
     }
 
+    /**
+     * This returns all actions as a log of the players action.
+     *
+     * @return log of all player actions as a long string
+     */
     @Override
-    public String toString() {
-        if (this.lastAction.equals("")) {
-            return "Player: " + this.getName() + " er landet på felt nr. " + (this.getField() + 1);
-        }else {
-            return "Player: " + this.getName() + " " + this.getLastAction();
+    public String toString(){
+        if (this.lastAction.equals("")){
+            return "Spiller: " + this.getName() + " er landet på " + (this.getField() + 1) + ".";
+        } else {
+            return "Spiller: " + this.getName() + " " + this.getLastAction();
         }
     }
 
-    public int getPreviousField() {
+    public int getPreviousField(){
         return previousField;
     }
 
-    public void setPreviousField(int previousField) {
+    public void setPreviousField(int previousField){
         this.previousField = previousField;
+    }
+
+    /**
+     * A player can be put in a situation where they need to play 10% of their current currency amount.
+     */
+    public void payTenPercent(){
+        int payment = currentMoney / 10;
+        addMoney(-payment);
+    }
+
+    /**
+     * Used to determine if a player was able to luck themselves out of jail by throwing 2 identical dice
+     *
+     * @return boolean whether or not they were able to throw identical dice
+     */
+    public boolean isLucky(){
+        return Lucky;
+    }
+
+    public void setLucky(boolean lucky){
+        Lucky = lucky;
+    }
+
+    public int getJailtime() {
+        return Jailtime;
+    }
+
+    public void setJailtime(int jailtime) {
+        Jailtime = jailtime;
+    }
+    public void addJailtime(int jailtime){
+        Jailtime = Jailtime + jailtime;
     }
 }

@@ -6,7 +6,10 @@ import Model.Game;
 import Model.Global;
 import Model.Player;
 
-public class NormalGameLogic{
+/**
+ * An implementation of normal game logic in the monopoly game
+ */
+public class NormalGameLogic {
 
     private Game game;
     private Player[] players;
@@ -15,7 +18,7 @@ public class NormalGameLogic{
     private int bankruptcies = 0;
 
 
-    public NormalGameLogic(Game game) {
+    public NormalGameLogic(Game game){
         this.game = game;
         this.players = game.getPlayers();
     }
@@ -25,11 +28,11 @@ public class NormalGameLogic{
             this.nowIndex = java.util.Arrays.asList(players).indexOf(game.getActivePlayer());
             int tempindex = nowIndex;
             //this.newIndex = (nowIndex + 1) % players.length;
-            for (int i = 0; i < players.length; i++) {
+            for (int i = 0; i < players.length; i++){
                 if (!players[(tempindex + 1) % players.length].isBankrupt()){
                     newIndex = (tempindex + 1) % players.length;
                     break;
-                }else {
+                } else {
                     tempindex++;
                 }
             }
@@ -42,8 +45,7 @@ public class NormalGameLogic{
             int diceThrow;
             if (!alreadyThrown){
                 diceThrow = game.setAndGetDiceResult();
-
-            }else{
+            } else {
                 diceThrow = game.getDiceResult();
             }
 
@@ -55,23 +57,21 @@ public class NormalGameLogic{
             UpdateActivePlayerWithThrow(fieldId, diceThrow);
 
 
-
-        }
-        else{
+        } else {
             endPlayerTurn();
         }
     }
 
-    public int gameRules(int fieldId) {
+    public int gameRules(int fieldId){
         if (game.getActivePlayer().isInJail()){
             if (!game.getActivePlayer().isOutOfJailFree()){
                 System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har betalt " +
-                        Global.JAIL_PRICE + " For at komme ud af fængslet");
-                game.getActivePlayer().setLastAction("\n - Har betalt for fængsel.");
+                        Global.JAIL_PRICE + " for at komme ud af fængslet.");
+                game.getActivePlayer().setLastAction("\n - Har betalt" + Global.JAIL_PRICE + " kr. for at blive løsladt.");
                 game.getActivePlayer().addMoney(-Global.JAIL_PRICE);
-            }else{
-                game.getActivePlayer().setLastAction("\n - Har brugt sit løsladelses chancekort.");
-                System.out.println("[INFO] " + game.getActivePlayer().getName() + " Kom ud af fængslet med deres 'frikort'");
+            } else {
+                game.getActivePlayer().setLastAction("\n - Har brugt sit løsladelseskort.");
+                System.out.println("[INFO] " + game.getActivePlayer().getName() + " er blevet løsladt via løsladelseskort.");
             }
 
             game.getActivePlayer().setInJail(false);
@@ -79,13 +79,17 @@ public class NormalGameLogic{
         }
 
         if (!game.isEnded()){
-            if (fieldId < game.getActivePlayer().getField()){
+            if (fieldId < game.getActivePlayer().getPreviousField()){
                 System.out.println("[INFO] " + game.getActivePlayer().getName() + " Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
                 game.getActivePlayer().setLastAction(game.getActivePlayer().getLastAction() + "\n - Har passeret start og har modtaget " + Global.ROUND_MONEY + " kr.");
                 addStartMoney(game.getActivePlayer());
             }
+            game.getActivePlayer().setPreviousField(fieldId);
+            game.getActivePlayer().setField(fieldId);
+
             Field landedField = game.getGameBoard().getFieldModel(fieldId);
             landedField.fieldAction(game.getActivePlayer());
+
 
             if (game.getActivePlayer().isChanceField()){
                 chanceFieldAction(game.getActivePlayer());
@@ -97,7 +101,7 @@ public class NormalGameLogic{
         return fieldId;
     }
 
-    public void chanceFieldAction(Player activePlayer) {
+    public void chanceFieldAction(Player activePlayer){
         activePlayer.setChanceField(false);
 
         ChanceCard card = game.getGameBoard().randomChanceCard();
@@ -107,25 +111,27 @@ public class NormalGameLogic{
 
     }
 
-    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow) {
+    public void UpdateActivePlayerWithThrow(int fieldId, int diceThrow){
         if (game.getActivePlayer().isInJail()){
             game.getActivePlayer().setField(game.getGameBoard().getJail());
             game.getActivePlayer().setLastDiceResult(diceThrow);
             game.getActivePlayer().setLastDicePair(game.getDicePair());
-        }else{
+        } else {
             game.getActivePlayer().setField(fieldId);
             game.getActivePlayer().setLastDiceResult(diceThrow);
             game.getActivePlayer().setLastDicePair(game.getDicePair());
         }
     }
 
-    public void addStartMoney(Player player) {
+    public void addStartMoney(Player player){
         player.addMoney(Global.ROUND_MONEY);
     }
 
     public void endPlayerTurn(){
         if (!game.isEnded()){
-            System.out.println("Sat new player to index " + this.newIndex);
+            game.getActivePlayer().setChanceCard(null);
+            game.getActivePlayer().setLastAction("");
+            System.out.println("[TURN INFO] Sat new player to index " + this.newIndex);
             game.setActivePlayer(players[this.newIndex]);
             checkRound();
         }
@@ -133,14 +139,14 @@ public class NormalGameLogic{
 
     public void checkRound(){
 
-        for (Player player : players) {
-            if (!player.isBankrupt()) {
-                if (player.getMoney() <= 0) {
+        for (Player player : players){
+            if (!player.isBankrupt()){
+                if (player.getMoney() <= 0){
 
                     player.setBankrupt(true);
                     this.bankruptcies++;
 
-                    if (bankruptcies == players.length - 1) {
+                    if (bankruptcies == players.length - 1){
                         game.setEnded(true);
                         game.setWinner(findWinner());
                     }
@@ -149,12 +155,12 @@ public class NormalGameLogic{
         }
     }
 
-    public Player findWinner() {
+    public Player findWinner(){
         Player highest = null;
-        if (game.isEnded()) {
+        if (game.isEnded()){
             int max = 0;
-            for (Player player : players) {
-                if (player.getMoney() > max) {
+            for (Player player : players){
+                if (player.getMoney() > max){
                     max = player.getMoney();
                     highest = player;
                 }
