@@ -23,13 +23,14 @@ public class PropertyField extends Field {
      * a hotel, house price, hotel prisce, price from pawning}
      * the pawn price is not used in any logic yet.
      * The field should have a color too. This is used for some game logic, and for visual purposes
+     *
      * @param name
      * @param subText
      * @param description
-     * @param prices {Price to buy, rent, rent with 1 house, 2 houses, 3 houses, 4 houses, a hotel, house price, hotel prisce, price from pawning}
+     * @param prices      {Price to buy, rent, rent with 1 house, 2 houses, 3 houses, 4 houses, a hotel, house price, hotel prisce, price from pawning}
      * @param color
      */
-    public PropertyField(String name, String subText, String description, int[] prices, Color color) {
+    public PropertyField(String name, String subText, String description, int[] prices, Color color){
         super(name, subText, description);
         this.prices = prices;
         this.color = color;
@@ -37,17 +38,17 @@ public class PropertyField extends Field {
     }
 
     @Override
-    public String getName() {
+    public String getName(){
         return super.getName();
     }
 
     @Override
-    public String getSubText() {
+    public String getSubText(){
         return super.getSubText();
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(){
         return super.getDescription();
     }
 
@@ -55,13 +56,14 @@ public class PropertyField extends Field {
      * When a player lands on an owned field, they will pay rent to the owner.
      * If not another part of the game can take care of letting it be bought
      * In both cases, the main player log is written to
+     *
      * @param player that has landed on the field
      */
     @Override
-    public void fieldAction(Player player) {
+    public void fieldAction(Player player){
         if (this.isOwned()){
             payToPlayerLogic(player);
-        }else{
+        } else {
             player.setLastAction(player.getLastAction() + "\n - Er landet på " +
                     this.getName());
 
@@ -73,10 +75,11 @@ public class PropertyField extends Field {
     /**
      * If the owner is not out of the game (bankrupt) rent is paid.
      * Otherwise the action is ignored
+     *
      * @param player the player who will be paying rent
      */
-    private void payToPlayerLogic(Player player) {
-        if (!owner.isBankrupt()) {
+    private void payToPlayerLogic(Player player){
+        if (!owner.isBankrupt()){
             player.setLastAction(player.getLastAction() + "\n - Har betalt " +
                     this.getRent() + " kr. til " +
                     this.getOwner().getName() + ".");
@@ -91,21 +94,23 @@ public class PropertyField extends Field {
     /**
      * The actual rent payment of the house.
      * Simply calcualte the rent, pay the owner, remove money from player.
+     *
      * @param player
      */
     private void payToPlayerField(Player player){
         Player owner = this.getOwner();
         int payment = this.getRent();
-        player.addMoney( - payment);
+        player.addMoney(-payment);
         owner.addMoney(payment);
     }
 
     /**
      * Method to buy a PropertyField from given price array. Also write to log.
+     *
      * @param player the player who will buy the property
      */
-    public void buyField(Player player) {
-        if (!this.isOwned()) {
+    public void buyField(Player player){
+        if (!this.isOwned()){
             player.setLastAction(player.getLastAction() + "\n - Har købt " +
                     this.getName() + " for " +
                     this.getPrice() + " kr.");
@@ -125,7 +130,7 @@ public class PropertyField extends Field {
      * Player cannot buy houses on a property if they can't afford it.
      */
     public void buyHouse(){
-        if ( houses >= 0 && houses < 4 && owner.getMoney() >= getHousePrice()){
+        if (houses >= 0 && houses < 4 && owner.getMoney() >= getHousePrice()){
             houses++;
             owner.addMoney(-getHousePrice());
 
@@ -162,17 +167,17 @@ public class PropertyField extends Field {
      * Sell house if any are owned. Only get back half of the buying price.
      */
     public void sellHouse(){
-        if ( houses > 0 && houses <= 4){
+        if (houses > 0 && houses <= 4){
             houses--;
-            owner.addMoney((getHousePrice()/2));
+            owner.addMoney((getHousePrice() / 2));
 
             calcRentIndex();
 
             owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hus på " + this.getName()
-                    + "til " + (this.getHousePrice()/2) + " kr.");
+                    + "til " + (this.getHousePrice() / 2) + " kr.");
 
             System.out.println("[INFO] " + owner.getName() + " Har solgt et hus på " + this.getName() +
-                    " til " + (this.getHousePrice()/2) + " kr.");
+                    " til " + (this.getHousePrice() / 2) + " kr.");
         }
     }
 
@@ -183,16 +188,16 @@ public class PropertyField extends Field {
         if (hotel && houses == 4){
             hotel = false;
             soldHotel = true;
-            owner.addMoney((getHotelPrice()/2));
+            owner.addMoney((getHotelPrice() / 2));
 
             calcRentIndex();
 
 
             owner.setLastAction(owner.getLastAction() + "\n - Har solgt et hotel på " + this.getName()
-                    + "til " + (this.getHotelPrice()/2) + " kr.");
+                    + "til " + (this.getHotelPrice() / 2) + " kr.");
 
             System.out.println("[INFO] " + owner.getName() + " Har solgt et hotel på " + this.getName() +
-                    " til " + (this.getHotelPrice()/2) + " kr.");
+                    " til " + (this.getHotelPrice() / 2) + " kr.");
         }
     }
 
@@ -204,15 +209,15 @@ public class PropertyField extends Field {
         return prices[8];
     }
 
-    public int getPrice() {
+    public int getPrice(){
         return prices[0];
     }
 
-    public int getRent() {
+    public int getRent(){
         return prices[currentRentIndex];
     }
 
-    public Player getOwner() {
+    public Player getOwner(){
         return owner;
     }
 
@@ -221,7 +226,7 @@ public class PropertyField extends Field {
         return owner != null;
     }
 
-    public Color getColor() {
+    public Color getColor(){
         return color;
     }
 
@@ -229,60 +234,60 @@ public class PropertyField extends Field {
     /**
      * Calculate rent from the currentRentIndex. This index is incremented every time a house or hotel is bought.
      */
-    public void calcRentIndex() {
+    public void calcRentIndex(){
         if (hotel){
             currentRentIndex = 6;
 
-        }else if (houses > 0 && houses <= 4){
+        } else if (houses > 0 && houses <= 4){
             currentRentIndex = houses + 1;
         }
     }
 
-    private void setOwner(Player owner) {
+    private void setOwner(Player owner){
         this.owner = owner;
     }
 
-    public void setColor(Color color) {
+    public void setColor(Color color){
         this.color = color;
     }
 
-    public int[] getPrices() {
+    public int[] getPrices(){
         return prices;
     }
 
-    public void setPrices(int[] prices) {
+    public void setPrices(int[] prices){
         this.prices = prices;
     }
 
-    public int getCurrentRentIndex() {
+    public int getCurrentRentIndex(){
         return currentRentIndex;
     }
 
-    public void setCurrentRentIndex(int currentRentIndex) {
+    public void setCurrentRentIndex(int currentRentIndex){
         this.currentRentIndex = currentRentIndex;
     }
 
-    public int getHouses() {
+    public int getHouses(){
         return houses;
     }
 
-    public void setHouses(int houses) {
+    public void setHouses(int houses){
         this.houses = houses;
     }
 
-    public boolean isHotel() {
+    public boolean isHotel(){
         return hotel;
     }
 
-    public void setHotel(boolean hotel) {
+    public void setHotel(boolean hotel){
         this.hotel = hotel;
     }
 
-    public boolean isSoldHotel() {
+    public boolean isSoldHotel(){
         return soldHotel;
     }
 
-    public void setSoldHotel(boolean soldHotel) {
+    public void setSoldHotel(boolean soldHotel){
         this.soldHotel = soldHotel;
     }
 }

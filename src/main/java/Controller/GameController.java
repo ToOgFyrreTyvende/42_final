@@ -19,7 +19,7 @@ public class GameController {
     private Controller currentController;
     private String[] currentGameMenu;
 
-    
+
     // #----------Constructor----------#
     public GameController(GameBoard board, GameView view){
         this.gameBoard = board;
@@ -42,8 +42,8 @@ public class GameController {
         int playerAmount = this.view.getPlayerCount();
         String[] playerNames = new String[playerAmount];
 
-        for (int i = 0; i < playerAmount; i++) {
-                playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i+1) + ". spillers navn."));
+        for (int i = 0; i < playerAmount; i++){
+            playerNames[i] = (this.view.getPlayerName("Indtast venligst " + (i + 1) + ". spillers navn."));
         }
 
         game = new Game(this.gameBoard, playerNames);
@@ -53,12 +53,12 @@ public class GameController {
 
     private void testPlayTurn(Player player){
         Player activePlayer = player;
-        while(!this.game.isEnded()){
+        while (!this.game.isEnded()){
             resetControllers();
             currentController = diceController;
             boolean turnOver = false;
             game.setupNextPlayer();
-            while (!turnOver) {
+            while (!turnOver){
                 if (activePlayer.isInJail()){
                     currentController = jailController;
                 }
@@ -66,9 +66,9 @@ public class GameController {
                 //System.out.println(currentController.getClass().getSimpleName());
                 String action;
                 if (currentController.isDropdown()){
-                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName()+ "'s tur. Vælg venligst fra listen", currentGameMenu);
-                }else{
-                    action = view.getRoundChoiceWithText(activePlayer.getName()+ "'s tur. Vælg venligst en handling", currentGameMenu);
+                    action = view.getRoundChoiceDropDownWithText(activePlayer.getName() + "'s tur. Vælg venligst fra listen", currentGameMenu);
+                } else {
+                    action = view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Vælg venligst en handling", currentGameMenu);
                 }
                 String result = currentController.handleActions(action);
 
@@ -76,7 +76,7 @@ public class GameController {
                 // vi ikke ønsker, at kalde playerInfoUpdate.
                 // Hvis vi gør det, så kommer der eksempelvis "2 er landet på felt #" som tekst, hvilket vi er
                 // ligeglade med.
-                if (result.equals("Afslut tur")) {
+                if (result.equals("Afslut tur")){
                     turnOver = true;
                     activePlayer = game.getActivePlayer();
                     continue;
@@ -85,16 +85,22 @@ public class GameController {
                 renderBuilding();
                 playerInfoUpdate(activePlayer);
 
-                if(result.equals("Spring over")){
+                if (result.equals("Spring over")){
                     propertyController.setMenuActions(buildPropertyMenu());
+                } else if (result.equals("Rul terning")){
+                    if (activePlayer.isInJail()){
+                        getGame().endPlayerTurn();
+                        turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        continue;
+                    }
 
                 } else if (result.equals("Ikke mere Rul ternning")) {
                         currentController = jailController;
                         continue;
                 } else if (result.equals("Jail Rul terning")){
                     if (activePlayer.isLucky()){
-                        currentController = diceController;
-                        continue;
+                        activePlayer.setLucky(false);
                     } else {
                         getGame().endPlayerTurn();
                         turnOver = true;
@@ -104,18 +110,17 @@ public class GameController {
                 }
 
 
-
                 if (result.equals("Betal 1000 kr.") || result.equals("Brug løsladelseskort")){
                     currentController = diceController;
                     continue;
-                }else if (currentController == userChoiceController ||
-                        currentController == propertyController ){
+                } else if (currentController == userChoiceController ||
+                        currentController == propertyController){
                     currentController = propertyController;
                     continue;
                 }
 
                 String fieldTypeString = game.getPlayerFieldType(activePlayer);
-                switch (fieldTypeString) {
+                switch (fieldTypeString){
                     case "PropertyField":
                         currentController = propertyController;
                         propertyController.setMenuActions(PropertyController.PropertyActions);
@@ -143,11 +148,10 @@ public class GameController {
                         this.game.getWinner().getName());
                 view.endText("spillet er slut!");
             }
-
-           }
+        }
     }
 
-    private void resetControllers() {
+    private void resetControllers(){
         this.propertyController.setMenuActions(buildPropertyMenu());
         this.propertyController.setChosenField(null);
         this.propertyController.setDropdown(false);
@@ -159,18 +163,18 @@ public class GameController {
                 getGameBoard().getPlayerProperties(
                         getGame().getActivePlayer()).length > 0){
             return PropertyController.PropertyManagementActions;
-        }else{
+        } else {
             return new String[]{PropertyController.PropertyManagementActions[1]};
         }
     }
 
     public void playerInfoUpdate(Player player){
-        updateUIPlayer(player, player.getPreviousField());
+        updateUIPlayer(player);
         view.setCenterText(player.toString());
     }
 
     public void updateDice(Player player){
-        updateUIPlayer(player, player.getPreviousField());
+        updateUIPlayer(player);
         view.setDice(player.getLastDicePair());
     }
 
@@ -178,92 +182,51 @@ public class GameController {
         game.buyFieldPlayerIsOn(player);
     }
 
-    /*
-
-     game.endPlayerTurn();
-
-                if (this.game.isEnded()){
-                    view.renderPlayerData(activePlayer, activePlayer.getPreviousField());
-                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                            this.game.getWinner().getName());
-                    view.endText("spillet er slut!");
-                }
-
-     */
-
-   /* private void playerTurn(Player player){
-
-        Player activePlayer = player;
-        while(!this.game.isEnded()){
-            view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
-
-            int previousField = activePlayer.getField();
-
-            activePlayer = game.playTurn();
-
-            if (activePlayer != null && !this.game.isEnded()){
-                updateUIPlayer(activePlayer, previousField);
-                view.setDice(activePlayer.getLastDicePair());
-                view.setCenterText(activePlayer.toString());
-                activePlayer.setChanceCards(null);
-                activePlayer.setLastAction("");
-
-                activePlayer = game.getActivePlayer();
-            }else {
-                view.renderPlayerData(activePlayer, previousField);
-                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                        this.game.getWinner().getName());
-                view.endText("spillet er slut!");
-            }
-        }
-    }
-   */
-
-    private void updateUIPlayer(Player player, int previousField){
-        view.renderPlayerData(player, previousField);
+    public void updateUIPlayer(Player player){
+        view.renderPlayerData(player, player.getPreviousField());
     }
 
-    Game getGame() {
+    Game getGame(){
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(Game game){
         this.game = game;
     }
 
-    public GameView getView() {
+    public GameView getView(){
         return view;
     }
 
-    public void setView(GameView view) {
+    public void setView(GameView view){
         this.view = view;
     }
 
-    public GameBoard getGameBoard() {
+    public GameBoard getGameBoard(){
         return gameBoard;
     }
 
-    public void setGameBoard(GameBoard gameBoard) {
+    public void setGameBoard(GameBoard gameBoard){
         this.gameBoard = gameBoard;
     }
 
-    public Controller getCurrentController() {
+    public Controller getCurrentController(){
         return currentController;
     }
 
-    public void setCurrentController(Controller currentController) {
+    public void setCurrentController(Controller currentController){
         this.currentController = currentController;
     }
 
-    public String[] getCurrentGameMenu() {
+    public String[] getCurrentGameMenu(){
         return currentGameMenu;
     }
 
-    public void setCurrentGameMenu(String[] currentGameMenu) {
+    public void setCurrentGameMenu(String[] currentGameMenu){
         this.currentGameMenu = currentGameMenu;
     }
 
-    public void renderBuilding() {
+    public void renderBuilding(){
         view.renderBuildings();
     }
 }

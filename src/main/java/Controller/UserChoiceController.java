@@ -3,18 +3,18 @@ package Controller;
 import Model.Global;
 import Model.Player;
 
-public class UserChoiceController extends Controller{
+public class UserChoiceController extends Controller {
     public static final String[] UserChoiceActions = new String[]{
-      "Betal 10%",
-      "Betal 4000 kr."
+            "Betal 10%",
+            "Betal 4000 kr."
     };
 
-    public UserChoiceController(GameController gameController) {
+    public UserChoiceController(GameController gameController){
         super(gameController, UserChoiceActions);
     }
 
     @Override
-    String handleActions(String action) {
+    String handleActions(String action){
         switch (action){
             case "Betal 10%":
                 payTenPercent();
@@ -31,9 +31,6 @@ public class UserChoiceController extends Controller{
     public void payTenPercent(){
         Player player = gameController.getGame().getActivePlayer();
         player.payTenPercent();
-
-
-
 
 
         player.setLastAction(player.getLastAction() + "\n - Har betalt 10% af deres formue i indkomstskat.");
