@@ -3,9 +3,7 @@ import Model.*;
 import View.GameGUIView;
 
 /**
- * ------------------------------------------------------------/
- * Dette er hovedklassen som starter spillet.
- * ------------------------------------------------------------/
+ * The main class that starts the game by instantiating GameBoard, GameGUIView and GameController classes.
  */
 
 public class Main {
