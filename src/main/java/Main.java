@@ -13,6 +13,5 @@ public class Main {
         GameBoard board = new GameBoard();
         GameGUIView view = new GameGUIView();
         GameController game = new GameController(board, view);
-
     }
 }

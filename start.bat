@@ -1,2 +1,2 @@
-java -jar target\42_del3-1.0-SNAPSHOT.jar
+java -jar target\42_final-1.0-SNAPSHOT.jar
 pause

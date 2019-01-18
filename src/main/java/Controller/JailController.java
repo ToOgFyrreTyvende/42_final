@@ -46,20 +46,17 @@ public class JailController extends Controller {
 
     public void feelingLucky(Player player){
 
-        int[] diceThrow = new int[Global.DICE_AMOUNT + 1];
-        for (int i = 0; i < Global.DICE_AMOUNT; i++){
-            float _random3 = (float) Math.random();    // 0-1 float
-            int _random4 = (int) (_random3 * Global.DICE_SIDES);   // 0-5 integer
-            int random5 = _random4 + 1;                 // 1-6 integer
-            diceThrow[i] = random5;
-        }
 
-        int diceThrowResult = diceThrow[0] + diceThrow[1];
+
+        int diceThrowResult = gameController.getGame().setAndGetDiceResult();
+        int[] diceThrow = gameController.getGame().getDicePair();
 
         if (diceThrow[0] != diceThrow[1]){
             player.setLastAction(player.getLastAction() + "\n - Slog " + diceThrow[0] + " og " + diceThrow[1] + " og kom ikke ud af fængsel.");
             System.out.println("[INFO] " + player.getName() + " har slået " + diceThrow[0] + " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
             player.setLucky(false);
+            gameController.updateDice(player);
+
         } else if (diceThrow[0] == diceThrow[1]){
             player.setLastAction(player.getLastAction() + "\n - Slog " + diceThrow[0] + " to gange og kom ud af fængsel.");
             System.out.println("[INFO] " + player.getName() + " har slået " + diceThrow[0] + " to gange og kom ud af fængsel, hvor de så bevægede sig med " + diceThrowResult + " felter.");
@@ -68,6 +65,10 @@ public class JailController extends Controller {
 
             player.setLastDiceResult(diceThrowResult);
             player.setLastDicePair(diceThrow);
+            gameController.getGame().throwDice(true);
+
+            gameController.updateDice(player);
+            gameController.updateUIPlayer(player);
 
         } else {
             System.out.println("Something went wrong");

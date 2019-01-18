@@ -87,11 +87,16 @@ public class GameController {
 
                 if (result.equals("Spring over")){
                     propertyController.setMenuActions(buildPropertyMenu());
-
+                } else if (result.equals("Rul terning")){
+                    if (activePlayer.isInJail()){
+                        getGame().endPlayerTurn();
+                        turnOver = true;
+                        activePlayer = game.getActivePlayer();
+                        continue;
+                    }
                 } else if (result.equals("Jail Rul terning")){
                     if (activePlayer.isLucky()){
-                        currentController = diceController;
-                        continue;
+                        activePlayer.setLucky(false);
                     } else {
                         getGame().endPlayerTurn();
                         turnOver = true;
@@ -160,12 +165,12 @@ public class GameController {
     }
 
     public void playerInfoUpdate(Player player){
-        updateUIPlayer(player, player.getPreviousField());
+        updateUIPlayer(player);
         view.setCenterText(player.toString());
     }
 
     public void updateDice(Player player){
-        updateUIPlayer(player, player.getPreviousField());
+        updateUIPlayer(player);
         view.setDice(player.getLastDicePair());
     }
 
@@ -173,49 +178,8 @@ public class GameController {
         game.buyFieldPlayerIsOn(player);
     }
 
-    /*
-
-     game.endPlayerTurn();
-
-                if (this.game.isEnded()){
-                    view.renderPlayerData(activePlayer, activePlayer.getPreviousField());
-                    view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                            this.game.getWinner().getName());
-                    view.endText("spillet er slut!");
-                }
-
-     */
-
-   /* private void playerTurn(Player player){
-
-        Player activePlayer = player;
-        while(!this.game.isEnded()){
-            view.getRoundChoiceWithText(activePlayer.getName() + "'s tur. Rul venligst terningen.", "Rul terning");
-
-            int previousField = activePlayer.getField();
-
-            activePlayer = game.playTurn();
-
-            if (activePlayer != null && !this.game.isEnded()){
-                updateUIPlayer(activePlayer, previousField);
-                view.setDice(activePlayer.getLastDicePair());
-                view.setCenterText(activePlayer.toString());
-                activePlayer.setChanceCards(null);
-                activePlayer.setLastAction("");
-
-                activePlayer = game.getActivePlayer();
-            }else {
-                view.renderPlayerData(activePlayer, previousField);
-                view.setCenterText("SPILLET ER AFSLUTTET\nVinderen er: " +
-                        this.game.getWinner().getName());
-                view.endText("spillet er slut!");
-            }
-        }
-    }
-   */
-
-    private void updateUIPlayer(Player player, int previousField){
-        view.renderPlayerData(player, previousField);
+    public void updateUIPlayer(Player player){
+        view.renderPlayerData(player, player.getPreviousField());
     }
 
     Game getGame(){

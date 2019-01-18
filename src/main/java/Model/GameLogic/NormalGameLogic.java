@@ -45,7 +45,6 @@ public class NormalGameLogic {
             int diceThrow;
             if (!alreadyThrown){
                 diceThrow = game.setAndGetDiceResult();
-
             } else {
                 diceThrow = game.getDiceResult();
             }
