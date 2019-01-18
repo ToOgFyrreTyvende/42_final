@@ -31,12 +31,12 @@ public class GameController {
         this.diceController = new DiceController(this);
         this.endTurnController = new EndTurnController(this);
 
-        initalizeGame();
+        initializeGame();
         currentController = diceController;
         playTurn(game.getActivePlayer());
     }
 
-    private void initalizeGame(){
+    private void initializeGame(){
         // pga. abstrakt klasse, har vi polymorfi, og kan kalde "getantalspillere" for ethvert view
         int playerAmount = this.view.getPlayerCount();
         String[] playerNames = new String[playerAmount];
