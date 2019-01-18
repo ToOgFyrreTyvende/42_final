@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Fields.PropertyField;
 import Model.Game;
 import Model.GameBoard;
 import Model.Player;
@@ -34,7 +33,7 @@ public class GameController {
 
         initalizeGame();
         currentController = diceController;
-        testPlayTurn(game.getActivePlayer());
+        playTurn(game.getActivePlayer());
     }
 
     private void initalizeGame(){
@@ -51,7 +50,7 @@ public class GameController {
         this.view.resetBoard();
     }
 
-    private void testPlayTurn(Player player){
+    private void playTurn(Player player){
         Player activePlayer = player;
         while (!this.game.isEnded()){
             resetControllers();
