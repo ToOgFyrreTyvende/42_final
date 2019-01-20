@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Fields.PropertyField;
 import Model.Game;
 import Model.GameBoard;
 import Model.Player;
@@ -32,12 +31,12 @@ public class GameController {
         this.diceController = new DiceController(this);
         this.endTurnController = new EndTurnController(this);
 
-        initalizeGame();
+        initializeGame();
         currentController = diceController;
-        testPlayTurn(game.getActivePlayer());
+        playTurn(game.getActivePlayer());
     }
 
-    private void initalizeGame(){
+    private void initializeGame(){
         // pga. abstrakt klasse, har vi polymorfi, og kan kalde "getantalspillere" for ethvert view
         int playerAmount = this.view.getPlayerCount();
         String[] playerNames = new String[playerAmount];
@@ -51,7 +50,7 @@ public class GameController {
         this.view.resetBoard();
     }
 
-    private void testPlayTurn(Player player){
+    private void playTurn(Player player){
         Player activePlayer = player;
         while (!this.game.isEnded()){
             resetControllers();
