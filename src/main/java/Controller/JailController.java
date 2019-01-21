@@ -61,6 +61,8 @@ public class JailController extends Controller {
             System.out.println("[INFO] " + player.getName() + " har slået " + diceThrow[0] + " og " + diceThrow[1] + " så de kom ikke ud af fængsel.");
             player.setLucky(false);
             player.addJailtime(1);
+            player.setLastDiceResult(diceThrowResult);
+            player.setLastDicePair(diceThrow);
             gameController.updateDice(player);
 
         } else if (diceThrow[0] == diceThrow[1]){
