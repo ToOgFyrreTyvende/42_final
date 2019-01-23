@@ -137,7 +137,7 @@ public class PropertyField extends Field {
             calcRentIndex();
 
             owner.setLastAction(owner.getLastAction() + "\n - Har købt et hus på " + this.getName()
-                    + "til " + this.getHousePrice() + " kr.");
+                    + " til " + this.getHousePrice() + " kr.");
 
             System.out.println("[INFO] " + owner.getName() + " Har købt et hus på " + this.getName() +
                     " til " + this.getHousePrice() + " kr.");

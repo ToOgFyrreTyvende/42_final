@@ -21,7 +21,7 @@ public class JailController extends Controller {
                 payBail(gameController.getGame().getActivePlayer());
                 break;
             case "Rul terning":
-                if (gameController.getGame().getActivePlayer().getJailtime()>2){
+                if (gameController.getGame().getActivePlayer().getJailtime()>1){
                     gameController.getGame().getActivePlayer().setLastAction(gameController.getGame().getActivePlayer().getLastAction() + "\n - Har prøvet nok og skal betale for at komme ud");
                     System.out.println("[INFO] " + gameController.getGame().getActivePlayer().getName() + " det må du ikke");
                     return "Ikke mere Rul ternning";

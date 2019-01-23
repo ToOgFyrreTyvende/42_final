@@ -21,7 +21,6 @@ public class UserChoiceController extends Controller {
                 break;
             case "Betal 4000 kr.":
                 payConstant();
-                gameController.getGame().getActivePlayer().payTenPercent();
                 break;
         }
 
