@@ -17,7 +17,7 @@ public class TaxField extends Field {
     public void fieldAction(Player player){
         player.setLastAction(player.getLastAction() + "\n - Er landet på et beskatningsfelt.");
 
-        System.out.println("[INFO] " + player.getName() + "Er landet på et beskatningsfelt.");
+        System.out.println("[INFO] " + player.getName() + " Er landet på et beskatningsfelt.");
         if (!this.isChoice()){
 
             payTax(player);
