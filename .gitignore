@@ -23,7 +23,8 @@
 hs_err_pid*
 
 # IntelliJ files
-.idea/
+.idea/*
+!/.idea/runConfigurations
 .settings/
 bin/
 classes/
